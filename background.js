@@ -49,8 +49,45 @@ chrome.bookmarks.onCreated.addListener((id, bookmark) => {
 });
 
 chrome.bookmarks.onRemoved.addListener((id, removeInfo) => {
+  // Rastrear favorito deletado
+  trackDeletedBookmark(removeInfo.node);
   debouncedSync();
 });
+
+async function trackDeletedBookmark(node) {
+  const key = generateBookmarkId(node.url, node.title);
+  const result = await chrome.storage.local.get('deletedBookmarks');
+  const deleted = result.deletedBookmarks || {};
+  
+  deleted[key] = {
+    title: node.title,
+    url: node.url,
+    deletedAt: Date.now()
+  };
+  
+  // Limpar registros antigos (mais de 24 horas)
+  const now = Date.now();
+  for (const k in deleted) {
+    if (now - deleted[k].deletedAt > 24 * 60 * 60 * 1000) {
+      delete deleted[k];
+    }
+  }
+  
+  await chrome.storage.local.set({ deletedBookmarks: deleted });
+  console.log('[Sync] Favorito deletado rastreado:', key);
+}
+
+async function getDeletedBookmarks() {
+  const result = await chrome.storage.local.get('deletedBookmarks');
+  return result.deletedBookmarks || {};
+}
+
+async function clearDeletedBookmark(key) {
+  const result = await chrome.storage.local.get('deletedBookmarks');
+  const deleted = result.deletedBookmarks || {};
+  delete deleted[key];
+  await chrome.storage.local.set({ deletedBookmarks: deleted });
+}
 
 chrome.bookmarks.onChanged.addListener((id, changeInfo) => {
   debouncedSync();
@@ -252,18 +289,27 @@ async function getOrCreateFolder(title, folderMap) {
 // Funções de Merge
 // ============================================
 
-function mergeBookmarks(localMap, gistMap) {
+function mergeBookmarks(localMap, gistMap, deletedBookmarks) {
   const merged = new Map();
   const now = Date.now();
   
   // Processar todos os favoritos do Gist
   for (const [key, gistBm] of gistMap) {
     const localBm = localMap.get(key);
+    const wasDeletedLocally = !!deletedBookmarks[key];
     
-    if (!localBm) {
-      // Existe no Gist, não existe local → criar no local
+    if (!localBm && !wasDeletedLocally) {
+      // Existe no Gist, não existe local E não foi deletado localmente → criar no local
       merged.set(key, { ...gistBm, action: 'create' });
-    } else {
+    } else if (!localBm && wasDeletedLocally) {
+      // Existe no Gist mas foi deletado localmente → marcar como delete no Gist
+      merged.set(key, { 
+        ...gistBm, 
+        action: 'delete',
+        title: deletedBookmarks[key].title,
+        url: deletedBookmarks[key].url
+      });
+    } else if (localBm) {
       // Existe em ambos - verificar deleted e dateModified
       if (gistBm.deleted && !localBm.deleted) {
         // Deletado no Gist → deletar local
@@ -306,6 +352,8 @@ async function executeLocalMerge(merged, folderMap) {
           title: bm.title,
           url: bm.url
         });
+        // Limpar registro de deletado se foi criado novamente
+        await clearDeletedBookmark(key);
         created++;
       } catch (e) {
         console.error('[Sync] Erro ao criar favorito:', e);
@@ -475,8 +523,12 @@ async function handleSync(isAutoSync = false) {
     const myLastSync = gistData.devices?.[deviceId]?.lastSync || 0;
     console.log(`[Sync] Meu último sync: ${myLastSync}`);
     
-    // 4. Fazer merge
-    const merged = mergeBookmarks(localMap, gistMap);
+    // 4. Obter favoritos deletados localmente
+    const deletedBookmarks = await getDeletedBookmarks();
+    console.log(`[Sync] Favoritos deletados:`, Object.keys(deletedBookmarks));
+    
+    // 5. Fazer merge
+    const merged = mergeBookmarks(localMap, gistMap, deletedBookmarks);
     
     // Separar ações
     const toCreate = [...merged.values()].filter(b => b.action === 'create');
