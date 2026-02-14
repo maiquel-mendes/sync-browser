@@ -26,8 +26,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === 'install' || details.reason === 'update') {
     console.log('[Extensão] Instalada/atualizada, verificando sincronização inicial...');
-    setTimeout(() => handleSync(), 3000);
+    setTimeout(() => handleSync(false), 3000);
   }
+});
+
+chrome.runtime.onStartup.addListener(() => {
+  console.log('[Browser] Navegador iniciou, sync em 5s...');
+  setTimeout(() => handleSync(true), 5000);
 });
 
 chrome.bookmarks.onCreated.addListener((id, bookmark) => {
@@ -57,17 +62,48 @@ chrome.bookmarks.onMoved.addListener((id, moveInfo) => {
 let syncTimeout = null;
 function debouncedSync() {
   if (syncTimeout) clearTimeout(syncTimeout);
-  syncTimeout = setTimeout(() => handleSync(), 2000);
+  syncTimeout = setTimeout(() => handleSync(false), 2000);
 }
 
-async function handleSync() {
+async function getLocalTimestamp() {
+  const tree = await chrome.bookmarks.getTree();
+  let maxModified = 0;
+  
+  function findMaxModified(nodes) {
+    for (const node of nodes) {
+      if (node.dateGroupModified && node.dateGroupModified > maxModified) {
+        maxModified = node.dateGroupModified;
+      }
+      if (node.children) {
+        findMaxModified(node.children);
+      }
+    }
+  }
+  
+  findMaxModified(tree);
+  return maxModified || Date.now();
+}
+
+function showNotification(title, message) {
+  chrome.notifications.create({
+    type: 'basic',
+    iconUrl: 'icons/48x48.png',
+    title: title,
+    message: message
+  }, (notificationId) => {
+    console.log('[Notification] Criada:', notificationId);
+  });
+}
+
+async function handleSync(isAutoSync = false) {
   if (isSyncing) return;
 
   const config = await chrome.storage.local.get(['githubToken', 'gistId']);
   console.log('[Sync] Config recuperada no background:', config);
   
   if (!config.githubToken || !config.gistId) {
-    throw new Error('Configure o Token e Gist ID nas opções.');
+    if (!isAutoSync) throw new Error('Configure o Token e Gist ID nas opções.');
+    return;
   }
 
   isSyncing = true;
@@ -76,8 +112,8 @@ async function handleSync() {
   try {
     const localBookmarks = await chrome.bookmarks.getTree();
     const localFlat = flattenBookmarks(localBookmarks);
-    const hasRealBookmarks = localFlat.some(b => b.url); // Apenas favoritos com URL
-    const localTimestamp = Date.now();
+    const hasRealBookmarks = localFlat.some(b => b.url);
+    const localTimestamp = await getLocalTimestamp();
 
     const gistData = await fetchGist(config.githubToken, config.gistId);
     const gistBookmarks = gistData?.bookmarks || [];
@@ -86,22 +122,30 @@ async function handleSync() {
 
     console.log(`[Sync] Local: ${localTimestamp}, Gist: ${gistTimestamp}, hasRealBookmarks: ${hasRealBookmarks}, GistBookmarks: ${hasGistBookmarks}`);
 
+    let syncResult = { changed: false, imported: 0, exported: 0 };
+
     // PRIORIDADE 1: Navegador vazio (sem favoritos reais) - sempre importar do Gist
     if (!hasRealBookmarks && hasGistBookmarks) {
       console.log('[Sync] Navegador vazio - importando do Gist...');
-      await syncGistToLocal(gistBookmarks, localFlat, gistTimestamp);
+      const count = await syncGistToLocal(gistBookmarks, localFlat, gistTimestamp);
+      syncResult.imported = count;
+      syncResult.changed = true;
       await chrome.storage.local.set({ lastSync: gistTimestamp });
     } 
     // PRIORIDADE 2: Gist mais recente - baixar
     else if (gistTimestamp > localTimestamp) {
       console.log('[Sync] Baixando do Gist...');
-      await syncGistToLocal(gistBookmarks, localFlat, gistTimestamp);
+      const count = await syncGistToLocal(gistBookmarks, localFlat, gistTimestamp);
+      syncResult.imported = count;
+      syncResult.changed = true;
       await chrome.storage.local.set({ lastSync: gistTimestamp });
     }
     // PRIORIDADE 3: Local mais recente - subir APENAS se houver favoritos novos
     else if (localTimestamp > gistTimestamp) {
       const newCount = await syncLocalToGist(localBookmarks, gistBookmarks, config.githubToken, config.gistId, localTimestamp);
       if (newCount > 0) {
+        syncResult.exported = newCount;
+        syncResult.changed = true;
         await chrome.storage.local.set({ lastSync: localTimestamp });
       } else {
         await chrome.storage.local.set({ lastSync: gistTimestamp });
@@ -110,11 +154,27 @@ async function handleSync() {
     } else {
       console.log('[Sync] Já sincronizados.');
     }
+
     console.log('[Sync] Concluído!');
+
+    // Mostrar notificação se for sync automático e houve mudanças
+    if (isAutoSync && syncResult.changed) {
+      let msg = '';
+      if (syncResult.imported > 0 && syncResult.exported > 0) {
+        msg = `${syncResult.imported} importados, ${syncResult.exported} exportados`;
+      } else if (syncResult.imported > 0) {
+        msg = `${syncResult.imported} favoritos importados`;
+      } else if (syncResult.exported > 0) {
+        msg = `${syncResult.exported} favoritos exportados`;
+      }
+      if (msg) {
+        showNotification('Favoritos Sincronizados', msg);
+      }
+    }
 
   } catch (error) {
     console.error('[Sync] Erro:', error.message);
-    throw error;
+    if (!isAutoSync) throw error;
   } finally {
     isSyncing = false;
   }

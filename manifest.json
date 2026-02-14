@@ -5,7 +5,8 @@
   "description": "Sincroniza favoritos do navegador com um GitHub Gist privado",
   "permissions": [
     "bookmarks",
-    "storage"
+    "storage",
+    "notifications"
   ],
   "host_permissions": [
     "https://api.github.com/"
