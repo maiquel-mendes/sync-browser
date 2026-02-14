@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações - GitHub Bookmark Sync</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 24px;
+      max-width: 500px;
+      margin: 0 auto;
+      background: #1a1a2e;
+      color: #eee;
+    }
+    h1 { font-size: 20px; margin-bottom: 20px; color: #00d4ff; }
+    .field { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-size: 14px; color: #aaa; }
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #333;
+      border-radius: 6px;
+      background: #16213e;
+      color: #fff;
+      font-size: 14px;
+    }
+    input:focus { outline: none; border-color: #00d4ff; }
+    .hint { font-size: 12px; color: #666; margin-top: 4px; }
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.9; }
+    .btn-primary { background: #00d4ff; color: #1a1a2e; font-weight: 600; width: 100%; }
+    .btn-secondary { background: #333; color: #fff; margin-top: 8px; }
+    #status { margin-top: 16px; padding: 12px; border-radius: 6px; font-size: 14px; display: none; }
+    #status.success { background: #1b4332; color: #95d5b2; display: block; }
+    #status.error { background: #4a1515; color: #f8d7da; display: block; }
+    #status.testing { background: #3d3522; color: #ffe066; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Configurações do Sync</h1>
+  
+  <div class="field">
+    <label for="githubToken">GitHub Personal Access Token (PAT)</label>
+    <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx">
+    <p class="hint">Token com escopo `gist` (ou `repo` para Gists públicos)</p>
+  </div>
+  
+  <div class="field">
+    <label for="gistId">Gist ID</label>
+    <input type="text" id="gistId" placeholder="Ex: 1a2b3c4d5e6f7g8h9i0j">
+    <p class="hint">ID do Gist privado (última parte da URL)</p>
+  </div>
+  
+  <button class="btn-primary" id="saveBtn">Salvar Configurações</button>
+  
+  <div id="status"></div>
+  <button class="btn-secondary" id="testBtn">Testar Conexão</button>
+
+  <script src="options.js"></script>
+</body>
+</html>
