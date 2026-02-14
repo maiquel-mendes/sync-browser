@@ -219,13 +219,19 @@ function buildLocalBookmarkMap(tree, map = new Map(), parentTitle = null) {
     }
     
     const key = generateBookmarkId(node.url, node.title);
+    // Se parentTitle é "Barra de favoritos" ou "Outros favoritos", não incluir
+    // (o destino padrão já é a raiz dessas pastas)
+    const finalParentTitle = (parentTitle === 'Barra de favoritos' || parentTitle === 'Outros favoritos') 
+      ? null 
+      : parentTitle;
+    
     map.set(key, {
       key,
       title: node.title,
       url: node.url,
       dateAdded: node.dateAdded,
       dateModified: node.dateGroupModified || node.dateAdded,
-      parentTitle: parentTitle,
+      parentTitle: finalParentTitle,
       localId: node.id,
       deleted: false
     });
