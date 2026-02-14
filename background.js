@@ -219,9 +219,12 @@ function buildLocalBookmarkMap(tree, map = new Map(), parentTitle = null) {
     }
     
     const key = generateBookmarkId(node.url, node.title);
-    // Se parentTitle é "Barra de favoritos" ou "Outros favoritos", não incluir
+    // Se parentTitle é uma pasta raiz, não incluir
     // (o destino padrão já é a raiz dessas pastas)
-    const finalParentTitle = (parentTitle === 'Barra de favoritos' || parentTitle === 'Outros favoritos') 
+    const finalParentTitle = (parentTitle === 'Barra de favoritos' || 
+                             parentTitle === 'Outros favoritos' ||
+                             parentTitle === 'Bookmarks Bar' ||
+                             parentTitle === 'Other Bookmarks') 
       ? null 
       : parentTitle;
     
@@ -254,7 +257,7 @@ function buildGistBookmarkMap(bookmarks, map = new Map()) {
       url: bm.url,
       dateAdded: bm.dateAdded,
       dateModified: bm.dateModified || bm.dateAdded,
-      parentTitle: bm.parentTitle || 'Barra de favoritos',
+      parentTitle: bm.parentTitle || null,
       deleted: bm.deleted || false
     });
   }
@@ -434,6 +437,15 @@ function prepareGistBookmarks(merged) {
   const bookmarks = [];
   
   for (const [key, bm] of merged) {
+    // Limpar parentTitle se for uma pasta raiz
+    const parentTitle = (bm.parentTitle === 'Barra de favoritos' || 
+                        bm.parentTitle === 'Outros favoritos' ||
+                        bm.parentTitle === 'Bookmarks Bar' ||
+                        bm.parentTitle === 'Other Bookmarks' ||
+                        bm.parentTitle === null)
+      ? null 
+      : bm.parentTitle;
+    
     if (bm.action === 'upload' || bm.action === 'keep') {
       bookmarks.push({
         id: key,
@@ -441,7 +453,7 @@ function prepareGistBookmarks(merged) {
         url: bm.url,
         dateAdded: bm.dateAdded,
         dateModified: bm.dateModified,
-        parentTitle: bm.parentTitle,
+        parentTitle: parentTitle,
         deleted: false
       });
     } else if (bm.action === 'delete') {
@@ -451,7 +463,7 @@ function prepareGistBookmarks(merged) {
         url: bm.url,
         dateAdded: bm.dateAdded,
         dateModified: Date.now(),
-        parentTitle: bm.parentTitle,
+        parentTitle: parentTitle,
         deleted: true
       });
     }
