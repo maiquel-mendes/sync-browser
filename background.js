@@ -360,12 +360,40 @@ async function executeLocalMerge(merged, folderMap) {
       }
     } else if (bm.action === 'delete') {
       try {
+        // Primeiro tentar encontrar por URL (favorito)
         const result = await chrome.bookmarks.search({ title: bm.title, url: bm.url });
         for (const node of result) {
           if (node.id && node.id !== '0' && node.id !== '1') {
-            await chrome.bookmarks.remove(node.id);
+            if (node.url) {
+              // É um favorito comum
+              await chrome.bookmarks.remove(node.id);
+            } else {
+              // É uma pasta - verificar se tem filhos
+              const children = await chrome.bookmarks.getChildren(node.id);
+              if (children.length > 0) {
+                await chrome.bookmarks.removeTree(node.id);
+              } else {
+                await chrome.bookmarks.remove(node.id);
+              }
+            }
             deleted++;
             break;
+          }
+        }
+        // Se não encontrou por URL, tentar apenas por título (pasta)
+        if (deleted === 0 && !bm.url) {
+          const folders = await chrome.bookmarks.search({ title: bm.title });
+          for (const node of folders) {
+            if (node.id && node.id !== '0' && node.id !== '1' && !node.url) {
+              const children = await chrome.bookmarks.getChildren(node.id);
+              if (children.length > 0) {
+                await chrome.bookmarks.removeTree(node.id);
+              } else {
+                await chrome.bookmarks.remove(node.id);
+              }
+              deleted++;
+              break;
+            }
           }
         }
       } catch (e) {
