@@ -473,6 +473,8 @@ async function fetchGist(token, gistId) {
   });
 
   if (response.status === 404) {
+    // Gist não existe, marcar para criar
+    await chrome.storage.local.set({ gistExists: false });
     return { version: 3, lastSync: 0, lastSyncBy: null, devices: {}, bookmarks: [] };
   }
 
@@ -480,6 +482,9 @@ async function fetchGist(token, gistId) {
     const err = await response.json();
     throw new Error(err.message);
   }
+
+  // Gist existe, marcar para atualizar
+  await chrome.storage.local.set({ gistExists: true });
 
   const gist = await response.json();
   const file = gist.files[FILE_NAME];
@@ -495,9 +500,10 @@ async function fetchGist(token, gistId) {
   }
 }
 
-let gistExists = false;
-
 async function updateGist(token, gistId, data) {
+  const config = await chrome.storage.local.get('gistExists');
+  const gistExists = config.gistExists !== false;
+  
   const method = gistExists ? 'PATCH' : 'POST';
   const url = gistExists 
     ? `https://api.github.com/gists/${gistId}`
@@ -528,7 +534,8 @@ async function updateGist(token, gistId, data) {
     throw new Error(err.message);
   }
   
-  gistExists = true;
+  // Marcar que o Gist existe após atualização bem-sucedida
+  await chrome.storage.local.set({ gistExists: true });
   return response.json();
 }
 
