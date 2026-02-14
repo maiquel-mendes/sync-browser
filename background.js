@@ -25,8 +25,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === 'install' || details.reason === 'update') {
     console.log('[Extensão] Instalada/atualizada, verificando sincronização inicial...');
-    const config = await chrome.storage.local.get('autoSync');
-    if (config.autoSync !== false) {
+    const config = await chrome.storage.local.get(['autoSync', 'syncOnStartup']);
+    if (config.autoSync !== false && config.syncOnStartup !== false) {
       setTimeout(() => handleSync(true), 3000);
     }
   }
@@ -34,8 +34,8 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 
 chrome.runtime.onStartup.addListener(() => {
   console.log('[Browser] Navegador iniciou...');
-  chrome.storage.local.get('autoSync').then(config => {
-    if (config.autoSync !== false) {
+  chrome.storage.local.get(['autoSync', 'syncOnStartup']).then(config => {
+    if (config.autoSync !== false && config.syncOnStartup !== false) {
       console.log('[Browser] Sync automático ativado, esperando 5s...');
       setTimeout(() => handleSync(true), 5000);
     } else {
@@ -44,14 +44,33 @@ chrome.runtime.onStartup.addListener(() => {
   });
 });
 
-chrome.bookmarks.onCreated.addListener((id, bookmark) => {
-  debouncedSync();
+chrome.bookmarks.onCreated.addListener(async (id, bookmark) => {
+  const config = await chrome.storage.local.get('autoSync');
+  if (config.autoSync !== false) {
+    debouncedSync();
+  }
 });
 
-chrome.bookmarks.onRemoved.addListener((id, removeInfo) => {
-  // Rastrear favorito deletado
-  trackDeletedBookmark(removeInfo.node);
-  debouncedSync();
+chrome.bookmarks.onRemoved.addListener(async (id, removeInfo) => {
+  const config = await chrome.storage.local.get('autoSync');
+  if (config.autoSync !== false) {
+    trackDeletedBookmark(removeInfo.node);
+    debouncedSync();
+  }
+});
+
+chrome.bookmarks.onChanged.addListener(async (id, changeInfo) => {
+  const config = await chrome.storage.local.get('autoSync');
+  if (config.autoSync !== false) {
+    debouncedSync();
+  }
+});
+
+chrome.bookmarks.onMoved.addListener(async (id, moveInfo) => {
+  const config = await chrome.storage.local.get('autoSync');
+  if (config.autoSync !== false) {
+    debouncedSync();
+  }
 });
 
 async function trackDeletedBookmark(node) {
