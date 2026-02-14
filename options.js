@@ -5,12 +5,15 @@ const testBtn = document.getElementById('testBtn');
 document.addEventListener('DOMContentLoaded', loadSettings);
 
 async function loadSettings() {
-  const result = await chrome.storage.local.get(['githubToken', 'gistId']);
+  const result = await chrome.storage.local.get(['githubToken', 'gistId', 'autoSync']);
   if (result.githubToken) {
     document.getElementById('githubToken').value = result.githubToken;
   }
   if (result.gistId) {
     document.getElementById('gistId').value = result.gistId;
+  }
+  if (result.autoSync !== false) {
+    document.getElementById('autoSync').checked = result.autoSync !== false;
   }
 }
 
@@ -22,19 +25,21 @@ function showStatus(message, type) {
 saveBtn.addEventListener('click', async () => {
   const token = document.getElementById('githubToken').value.trim();
   const gistId = document.getElementById('gistId').value.trim();
+  const autoSync = document.getElementById('autoSync').checked;
   
   if (!token || !gistId) {
     showStatus('Preencha todos os campos!', 'error');
     return;
   }
   
-  await chrome.storage.local.set({ githubToken: token, gistId });
+  await chrome.storage.local.set({ githubToken: token, gistId, autoSync });
   showStatus('Configurações salvas!', 'success');
 });
 
 testBtn.addEventListener('click', async () => {
   const token = document.getElementById('githubToken').value.trim();
   const gistId = document.getElementById('gistId').value.trim();
+  const autoSync = document.getElementById('autoSync').checked;
   
   if (!token || !gistId) {
     showStatus('Preencha todos os campos!', 'error');
@@ -53,7 +58,7 @@ testBtn.addEventListener('click', async () => {
     
     if (response.ok) {
       showStatus('✅ Conexão bem-sucedida! Gist encontrado.', 'success');
-      await chrome.storage.local.set({ githubToken: token, gistId });
+      await chrome.storage.local.set({ githubToken: token, gistId, autoSync });
     } else if (response.status === 404) {
       showStatus('❌ Gist não encontrado. Verifique o ID.', 'error');
     } else if (response.status === 401) {
