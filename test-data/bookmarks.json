@@ -1,32 +1,24 @@
 {
   "version": 3,
-  "lastSync": 1771164332481,
-  "lastSyncBy": "device_9bibjmraj",
+  "lastSync": 1771180582049,
+  "lastSyncBy": "device_9mwbfo56c",
   "devices": {
-    "device_9bibjmraj": {
-      "name": "Chrome (Linux)",
-      "lastSync": 1771164332481
-    },
     "device_9g0yencnl": {
       "name": "Brave (Linux)",
-      "lastSync": 1771164181812
+      "lastSync": 1771180553260
+    },
+    "device_9mwbfo56c": {
+      "name": "Chrome (Linux)",
+      "lastSync": 1771180582049
     }
   },
   "bookmarks": [
     {
-      "id": "bm_folder_ozh6i7",
-      "title": "Outros favoritos",
-      "dateAdded": 1769616644123,
-      "dateModified": 1771106686937,
-      "parentTitle": null,
-      "deleted": false
-    },
-    {
       "id": "bm_url_3g35t8",
       "title": "Entrar",
       "url": "https://login.live.com/oauth20_authorize.srf?client_id=4b3e8f46-56d3-427f-b1e2-d239b2ea6bca&scope=openId+profile+openid+offline_access&redirect_uri=https%3a%2f%2fteams.live.com%2fv2&response_type=code&state=eyJpZCI6IjAxOWM2MDdkLTE0ZWQtN2QxOS1iNDg2LWE1YjMwYWJlMzA0NyIsIm1ldGEiOnsiaW50ZXJhY3Rpb25UeXBlIjoicmVkaXJlY3QifX0%3d%7chttps%3a%2f%2fteams.live.com%2fv2%2f%23%3fenablemcasfort21%3dtrue&response_mode=fragment&nonce=019c607d-14ed-7666-bfa2-37bc53b2a467&prompt=select_account&code_challenge=E8eqmu91Wb5wXt6kT0Q3dQGqo7rzUfeA1LXMAbc2vxk&code_challenge_method=S256&x-client-SKU=msal.js.browser&x-client-Ver=3.30.0&uaid=019c607d14ed757d8a3dd0d51eb3c4f2&msproxy=1&issuer=mso&tenant=consumers&ui_locales=pt-BR&client_info=1&epctrc=0czUdo0wB2X%2fZ51%2bZPfS1jlGE90FYnBeJVhQJFjmbrQ%3d9%3a1%3aCANARY%3a7suaP9tECYA35Zbw3K%2fVBaqdf%2bxSkT4Kll6xqYEcXnk%3d&epct=PAQABDgEAAACvnsHKEvvRQb3Bz3Qc7wnaRXZvU3RzQXJ0aWZhY3RzCAAAAAAAi9-JP1XKj2XeEGXl5QtbeiOovgt07KfYDyNxFwWXDdTpn8KKJovvUMuiWZGxyf8QLO4yzvWwY4h-eDevWZPChuxGlNrsVac9DTb0H-lyRtSxbfE_0QKDoGZ1b8iqYoDvQMaCdFRLCqrLMjvZhyq3o-m-TcMhd7Qe9RNbsq8wHN8zdGUgi4OYODkHVGIqb3dPNiv1VPay98_P5MbETvYz1yAA&jshs=0#",
-      "dateAdded": 1771161987354,
-      "dateModified": 1771161987354,
+      "dateAdded": 1771165162832,
+      "dateModified": 1771165162832,
       "parentTitle": null,
       "deleted": false
     },
@@ -34,8 +26,16 @@
       "id": "bm_url_bsfoh8",
       "title": "CAMDENBOSS - Black ABS Potting Boxes with Lids - 74x49x29mm (Pack of 5) - Walmart.com",
       "url": "https://www.walmart.com/ip/CAMDENBOSS-Black-ABS-Potting-Boxes-with-Lids-74x49x29mm-Pack-of-5/1617127992",
-      "dateAdded": 1771162050261,
-      "dateModified": 1771162050261,
+      "dateAdded": 1771165162841,
+      "dateModified": 1771165162841,
+      "parentTitle": null,
+      "deleted": false
+    },
+    {
+      "id": "bm_folder_tr51x7",
+      "title": "teste2",
+      "dateAdded": 1771165162846,
+      "dateModified": 1771165162847,
       "parentTitle": null,
       "deleted": false
     },
@@ -43,16 +43,16 @@
       "id": "bm_url_h8a138",
       "title": "Personal Access Tokens (Classic)",
       "url": "https://github.com/settings/tokens",
-      "dateAdded": 1771162173655,
-      "dateModified": 1771162173655,
+      "dateAdded": 1771165162847,
+      "dateModified": 1771165162847,
       "parentTitle": "teste2",
       "deleted": false
     },
     {
-      "id": "bm_folder_tr51x7",
-      "title": "teste2",
-      "dateAdded": 1771162376018,
-      "dateModified": 1771162376018,
+      "id": "bm_folder_ozh6i7",
+      "title": "Outros favoritos",
+      "dateAdded": 1769616644123,
+      "dateModified": 1771106686937,
       "parentTitle": null,
       "deleted": false
     }

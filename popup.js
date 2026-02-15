@@ -19,15 +19,26 @@ async function updateLastSync() {
 }
 
 async function checkConfig() {
-  const result = await chrome.storage.local.get(['githubToken', 'gistId']);
+  const result = await chrome.storage.local.get(['githubToken', 'gistId', 'useMockServer', 'mockServerUrl']);
   console.log('[Popup] Config recuperada:', result);
-  if (!result.githubToken || !result.gistId) {
+  
+  const isMockMode = result.useMockServer && result.mockServerUrl;
+  const hasGitHubConfig = result.githubToken && result.gistId;
+  
+  if (!isMockMode && !hasGitHubConfig) {
     syncBtn.disabled = true;
     log('⚠️ Configure o Token e Gist ID!', 'error');
     return;
   }
+  
+  if (isMockMode && !result.mockServerUrl) {
+    syncBtn.disabled = true;
+    log('⚠️ Configure a URL do Servidor Mock!', 'error');
+    return;
+  }
+  
   syncBtn.disabled = false;
-  log('✅ Configuração OK', 'success');
+  log(isMockMode ? '✅ Modo Mock configurado' : '✅ Configuração OK', 'success');
 }
 
 function log(message, type = '') {
