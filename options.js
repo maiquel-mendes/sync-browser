@@ -1,6 +1,7 @@
 const statusEl = document.getElementById('status');
 const saveBtn = document.getElementById('saveBtn');
 const testBtn = document.getElementById('testBtn');
+const resetStorageBtn = document.getElementById('resetStorageBtn');
 
 document.addEventListener('DOMContentLoaded', loadSettings);
 
@@ -120,5 +121,23 @@ testBtn.addEventListener('click', async () => {
     }
   } catch (error) {
     showStatus(`❌ Erro de rede: ${error.message}`, 'error');
+  }
+});
+
+resetStorageBtn.addEventListener('click', async () => {
+  if (!confirm('Tem certeza que deseja resetar o storage local? Isso vai limpar os favoritos deletados rastreados.')) {
+    return;
+  }
+  
+  try {
+    // Limpar apenas as chaves relacionadas a sincronização
+    await chrome.storage.local.set({
+      deletedBookmarks: {},
+      lastSync: 0,
+      gistExists: true
+    });
+    showStatus('✅ Storage local resetado! Favoritos deletados rastreados foram limpos.', 'success');
+  } catch (error) {
+    showStatus(`❌ Erro ao resetar storage: ${error.message}`, 'error');
   }
 });

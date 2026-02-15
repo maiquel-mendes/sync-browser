@@ -149,7 +149,7 @@ function normalizeParentTitle(parentTitle) {
 }
 
 function getDefaultGistData() {
-  return { version: 3, lastSync: 0, lastSyncBy: null, devices: {}, bookmarks: [] };
+  return { version: 3, lastSync: 0, lastSyncBy: null, devices: {}, bookmarks: [], deletedBookmarks: {} };
 }
 
 async function getDeviceId() {
@@ -771,12 +771,18 @@ async function handleSync(isAutoSync = false) {
     const myLastSync = gistData.devices?.[deviceId]?.lastSync || 0;
     console.log(`[Sync] Meu último sync: ${myLastSync}`);
     
-    // 4. Obter favoritos deletados localmente
-    const deletedBookmarks = await getDeletedBookmarks();
-    console.log(`[Sync] Favoritos deletados:`, Object.keys(deletedBookmarks));
+    // 4. Obter favoritos deletados localmente E do Gist
+    const localDeletedBookmarks = await getDeletedBookmarks();
+    const gistDeletedBookmarks = gistData.deletedBookmarks || {};
+    
+    // Mesclar: locais têm preferência sobre os do Gist
+    const allDeletedBookmarks = { ...gistDeletedBookmarks, ...localDeletedBookmarks };
+    console.log(`[Sync] Favoritos deletados (local):`, Object.keys(localDeletedBookmarks));
+    console.log(`[Sync] Favoritos deletados (Gist):`, Object.keys(gistDeletedBookmarks));
+    console.log(`[Sync] Todos deletados:`, Object.keys(allDeletedBookmarks));
     
     // 5. Fazer merge
-    const merged = mergeBookmarks(localMap, gistMap, deletedBookmarks, myLastSync);
+    const merged = mergeBookmarks(localMap, gistMap, allDeletedBookmarks, myLastSync);
     
     // Separar ações
     const toCreate = [...merged.values()].filter(b => b.action === 'create');
@@ -792,6 +798,8 @@ async function handleSync(isAutoSync = false) {
     
     // 6. Atualizar Gist
     const bookmarksToSave = prepareGistBookmarks(merged);
+    const deletedBookmarksToSave = await getDeletedBookmarks();
+    console.log(`[Sync] Salvando ${bookmarksToSave.length} bookmarks e ${Object.keys(deletedBookmarksToSave).length} deletados no Gist`);
     const now = Date.now();
     
     // Atualizar devices
@@ -806,7 +814,8 @@ async function handleSync(isAutoSync = false) {
       lastSync: now,
       lastSyncBy: deviceId,
       devices: devices,
-      bookmarks: bookmarksToSave
+      bookmarks: bookmarksToSave,
+      deletedBookmarks: deletedBookmarksToSave
     });
     
     // 7. Salvar lastSync local
