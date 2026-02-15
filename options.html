@@ -60,6 +60,26 @@
     <p class="hint">ID do Gist privado (última parte da URL)</p>
   </div>
   
+  <hr style="border: none; border-top: 1px solid #333; margin: 24px 0;">
+  <h2 style="font-size: 16px; color: #00d4ff; margin-bottom: 16px;">Modo Desenvolvimento</h2>
+  
+  <div class="field">
+    <label>
+      <input type="checkbox" id="useMockServer" style="width: auto; margin-right: 8px;">
+      Usar Servidor Mock Local
+    </label>
+    <p class="hint">Para testes sem usar a API do GitHub</p>
+  </div>
+  
+  <div class="field">
+    <label for="mockServerUrl">URL do Servidor Mock</label>
+    <input type="text" id="mockServerUrl" placeholder="http://localhost:3000" value="http://localhost:3000">
+    <p class="hint">Execute `node mock-server.js` na pasta da extensão</p>
+  </div>
+  
+  <hr style="border: none; border-top: 1px solid #333; margin: 24px 0;">
+  <h2 style="font-size: 16px; color: #00d4ff; margin-bottom: 16px;">Sincronização Automática</h2>
+  
   <div class="field">
     <label>
       <input type="checkbox" id="autoSync" style="width: auto; margin-right: 8px;">

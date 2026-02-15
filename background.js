@@ -44,34 +44,33 @@ chrome.runtime.onStartup.addListener(() => {
   });
 });
 
-chrome.bookmarks.onCreated.addListener(async (id, bookmark) => {
-  const config = await chrome.storage.local.get('autoSync');
-  if (config.autoSync !== false) {
+// ============================================
+// Event Listeners (consolidado)
+// ============================================
+
+function shouldAutoSync() {
+  // Helper para verificar se autoSync está ativado
+  // Retorna promise para uso em listeners
+  return chrome.storage.local.get('autoSync').then(config => config.autoSync !== false);
+}
+
+async function handleBookmarkChange(id, extra) {
+  if (await shouldAutoSync()) {
     debouncedSync();
   }
-});
+}
 
-chrome.bookmarks.onRemoved.addListener(async (id, removeInfo) => {
-  const config = await chrome.storage.local.get('autoSync');
-  if (config.autoSync !== false) {
+async function handleBookmarkRemove(id, removeInfo) {
+  if (await shouldAutoSync()) {
     trackDeletedBookmark(removeInfo.node);
     debouncedSync();
   }
-});
+}
 
-chrome.bookmarks.onChanged.addListener(async (id, changeInfo) => {
-  const config = await chrome.storage.local.get('autoSync');
-  if (config.autoSync !== false) {
-    debouncedSync();
-  }
-});
-
-chrome.bookmarks.onMoved.addListener(async (id, moveInfo) => {
-  const config = await chrome.storage.local.get('autoSync');
-  if (config.autoSync !== false) {
-    debouncedSync();
-  }
-});
+chrome.bookmarks.onCreated.addListener(handleBookmarkChange);
+chrome.bookmarks.onRemoved.addListener(handleBookmarkRemove);
+chrome.bookmarks.onChanged.addListener(handleBookmarkChange);
+chrome.bookmarks.onMoved.addListener(handleBookmarkChange);
 
 async function trackDeletedBookmark(node) {
   const key = generateBookmarkId(node.url, node.title);
@@ -108,14 +107,6 @@ async function clearDeletedBookmark(key) {
   await chrome.storage.local.set({ deletedBookmarks: deleted });
 }
 
-chrome.bookmarks.onChanged.addListener((id, changeInfo) => {
-  debouncedSync();
-});
-
-chrome.bookmarks.onMoved.addListener((id, moveInfo) => {
-  debouncedSync();
-});
-
 let syncTimeout = null;
 function debouncedSync() {
   if (syncTimeout) clearTimeout(syncTimeout);
@@ -125,6 +116,19 @@ function debouncedSync() {
 // ============================================
 // Funções de Identificação do Dispositivo
 // ============================================
+
+const ROOT_FOLDERS = ['Barra de favoritos', 'Outros favoritos', 'Bookmarks Bar', 'Other Bookmarks'];
+
+function normalizeParentTitle(parentTitle) {
+  if (!parentTitle || parentTitle === '' || ROOT_FOLDERS.includes(parentTitle)) {
+    return null;
+  }
+  return parentTitle;
+}
+
+function getDefaultGistData() {
+  return { version: 3, lastSync: 0, lastSyncBy: null, devices: {}, bookmarks: [] };
+}
 
 async function getDeviceId() {
   const result = await chrome.storage.local.get('deviceId');
@@ -136,21 +140,37 @@ async function getDeviceId() {
   return newId;
 }
 
+function detectOS(userAgent) {
+  if (userAgent.includes('Linux')) return 'Linux';
+  if (userAgent.includes('Windows')) return 'Windows';
+  if (userAgent.includes('Mac')) return 'macOS';
+  return 'Unknown';
+}
+
 async function getDeviceName() {
   const ua = navigator.userAgent;
   let browser = 'Unknown';
-  let os = 'Unknown';
 
-  if (ua.includes('Brave')) browser = 'Brave';
-  else if (ua.includes('Chrome')) browser = 'Chrome';
-  else if (ua.includes('Firefox')) browser = 'Firefox';
-  else if (ua.includes('Safari')) browser = 'Safari';
+  // Verificar Brave primeiro (navigator.brave é mais confiável)
+  if (navigator.brave) {
+    try {
+      const isBrave = await navigator.brave.isBrave();
+      if (isBrave) browser = 'Brave';
+    } catch (e) {
+      // Fallback para userAgent
+      if (ua.includes('Brave')) browser = 'Brave';
+    }
+  } else if (ua.includes('Brave')) {
+    browser = 'Brave';
+  } else if (ua.includes('Chrome')) {
+    browser = 'Chrome';
+  } else if (ua.includes('Firefox')) {
+    browser = 'Firefox';
+  } else if (ua.includes('Safari')) {
+    browser = 'Safari';
+  }
 
-  if (ua.includes('Linux')) os = 'Linux';
-  else if (ua.includes('Windows')) os = 'Windows';
-  else if (ua.includes('Mac')) os = 'macOS';
-
-  return `${browser} (${os})`;
+  return `${browser} (${detectOS(ua)})`;
 }
 
 // ============================================
@@ -195,15 +215,30 @@ function showNotification(title, message) {
 // Funções de Manipulação de Favoritos
 // ============================================
 
-function generateBookmarkId(url, title) {
-  const str = `${url || ''}|${title || ''}`;
+function generateBookmarkId(url, title, parentTitle = null) {
+  // Se tem URL, usar URL como identificador único
+  // Isso garante que renomear ou mover favoritos não cause duplicação
+  if (url) {
+    // Normalizar URL para evitar variações (remover trailing slash, etc)
+    const normalizedUrl = url.replace(/\/$/, '').trim();
+    // Usar hash simples para URL (btoa pode falhar com Unicode)
+    return 'bm_url_' + simpleHash(normalizedUrl);
+  }
+  
+  // Se não tem URL (é uma pasta), usar título + parentTitle
+  const safeTitle = title || '';
+  const safeParent = parentTitle || '';
+  return 'bm_folder_' + simpleHash(safeParent + '|' + safeTitle);
+}
+
+function simpleHash(str) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
     hash = hash & hash;
   }
-  return 'bm_' + Math.abs(hash).toString(36);
+  return Math.abs(hash).toString(36);
 }
 
 function buildLocalBookmarkMap(tree, map = new Map(), parentTitle = null) {
@@ -218,15 +253,8 @@ function buildLocalBookmarkMap(tree, map = new Map(), parentTitle = null) {
       continue;
     }
     
-    const key = generateBookmarkId(node.url, node.title);
-    // Se parentTitle é uma pasta raiz, não incluir
-    // (o destino padrão já é a raiz dessas pastas)
-    const finalParentTitle = (parentTitle === 'Barra de favoritos' || 
-                             parentTitle === 'Outros favoritos' ||
-                             parentTitle === 'Bookmarks Bar' ||
-                             parentTitle === 'Other Bookmarks') 
-      ? null 
-      : parentTitle;
+    const normalizedParentTitle = normalizeParentTitle(parentTitle);
+    const key = generateBookmarkId(node.url, node.title, normalizedParentTitle);
     
     map.set(key, {
       key,
@@ -234,7 +262,7 @@ function buildLocalBookmarkMap(tree, map = new Map(), parentTitle = null) {
       url: node.url,
       dateAdded: node.dateAdded,
       dateModified: node.dateGroupModified || node.dateAdded,
-      parentTitle: finalParentTitle,
+      parentTitle: normalizedParentTitle,
       localId: node.id,
       deleted: false
     });
@@ -250,14 +278,15 @@ function buildGistBookmarkMap(bookmarks, map = new Map()) {
   if (!bookmarks || !Array.isArray(bookmarks)) return map;
   
   for (const bm of bookmarks) {
-    const key = generateBookmarkId(bm.url, bm.title);
+    const normalizedParentTitle = normalizeParentTitle(bm.parentTitle);
+    const key = generateBookmarkId(bm.url, bm.title, normalizedParentTitle);
     map.set(key, {
       key,
       title: bm.title,
       url: bm.url,
       dateAdded: bm.dateAdded,
       dateModified: bm.dateModified || bm.dateAdded,
-      parentTitle: bm.parentTitle || null,
+      parentTitle: normalizedParentTitle,
       deleted: bm.deleted || false
     });
   }
@@ -294,6 +323,12 @@ async function buildFolderMap() {
 }
 
 async function getOrCreateFolder(title, folderMap) {
+  // Se título é null, undefined ou vazio, retornar ID raiz diretamente
+  // (não criar pasta para favoritos na raiz)
+  if (!title || title === '') {
+    return getParentIdFromTitle(title, folderMap);
+  }
+  
   let parentId = getParentIdFromTitle(title, folderMap);
   
   if (folderMap.has(title)) {
@@ -314,7 +349,7 @@ async function getOrCreateFolder(title, folderMap) {
 }
 
 // ============================================
-// Funções de Merge
+// Funções de Merge (Baseado no Dogear Algorithm)
 // ============================================
 
 function mergeBookmarks(localMap, gistMap, deletedBookmarks) {
@@ -325,31 +360,44 @@ function mergeBookmarks(localMap, gistMap, deletedBookmarks) {
   for (const [key, gistBm] of gistMap) {
     const localBm = localMap.get(key);
     const wasDeletedLocally = !!deletedBookmarks[key];
+    const deleteInfo = deletedBookmarks[key];
     
-    if (!localBm && !wasDeletedLocally) {
+    // Se está deletado no Gist, pular (não criar localmente)
+    if (gistBm.deleted) {
+      continue;
+    }
+    
+    // Dogear Rule: Se deletado de um lado mas modificado do outro → IGNORAR DELEÇÃO, REVIVER
+    if (!localBm && wasDeletedLocally) {
+      // Verificar se foi modificado no Gist depois da deleção local
+      if (deleteInfo && gistBm.dateModified > deleteInfo.deletedAt) {
+        // Modificado no Gist depois da deleção local → REVIVER (ignorar delete)
+        merged.set(key, { ...gistBm, action: 'create' });
+      } else {
+        // Gist não foi modificado depois da deleção → marcar como deleted (soft delete)
+        merged.set(key, { 
+          ...gistBm, 
+          action: 'delete',
+          title: deleteInfo?.title || gistBm.title,
+          url: deleteInfo?.url || gistBm.url
+        });
+      }
+    } else if (!localBm && !wasDeletedLocally) {
       // Existe no Gist, não existe local E não foi deletado localmente → criar no local
       merged.set(key, { ...gistBm, action: 'create' });
-    } else if (!localBm && wasDeletedLocally) {
-      // Existe no Gist mas foi deletado localmente → marcar como delete no Gist
-      merged.set(key, { 
-        ...gistBm, 
-        action: 'delete',
-        title: deletedBookmarks[key].title,
-        url: deletedBookmarks[key].url
-      });
     } else if (localBm) {
       // Existe em ambos - verificar deleted e dateModified
-      if (gistBm.deleted && !localBm.deleted) {
-        // Deletado no Gist → deletar local
-        merged.set(key, { ...localBm, action: 'delete' });
-      } else if (localBm.deleted && !gistBm.deleted) {
-        // Deletado local → deletar Gist
+      
+      // Dogear Rule: Se modificado de um lado e deletado do outro → IGNORAR DELEÇÃO, REVIVER
+      if (localBm.deleted && !gistBm.deleted) {
+        // Deletado local, existe no Gist → marcar como deleted no Gist (soft delete)
         merged.set(key, { ...gistBm, action: 'delete' });
       } else if (!gistBm.deleted && !localBm.deleted) {
         // Ambos existem e não deletados - usar o mais recente
         const winner = gistBm.dateModified > localBm.dateModified ? gistBm : localBm;
         merged.set(key, { ...winner, action: 'keep' });
       }
+      // Se ambos deletados → não fazer nada (já está deletado no Gist)
     }
   }
   
@@ -437,14 +485,7 @@ function prepareGistBookmarks(merged) {
   const bookmarks = [];
   
   for (const [key, bm] of merged) {
-    // Limpar parentTitle se for uma pasta raiz
-    const parentTitle = (bm.parentTitle === 'Barra de favoritos' || 
-                        bm.parentTitle === 'Outros favoritos' ||
-                        bm.parentTitle === 'Bookmarks Bar' ||
-                        bm.parentTitle === 'Other Bookmarks' ||
-                        bm.parentTitle === null)
-      ? null 
-      : bm.parentTitle;
+    const parentTitle = normalizeParentTitle(bm.parentTitle);
     
     if (bm.action === 'upload' || bm.action === 'keep') {
       bookmarks.push({
@@ -476,7 +517,39 @@ function prepareGistBookmarks(merged) {
 // Funções da API GitHub
 // ============================================
 
+async function getMockConfig() {
+  const config = await chrome.storage.local.get(['useMockServer', 'mockServerUrl']);
+  return config;
+}
+
 async function fetchGist(token, gistId) {
+  const mockConfig = await getMockConfig();
+  
+  if (mockConfig.useMockServer && mockConfig.mockServerUrl) {
+    console.log('[Mock] Fetching from mock server');
+    try {
+      const response = await fetch(`${mockConfig.mockServerUrl}/gists/${gistId}`);
+      if (response.status === 404) {
+        await chrome.storage.local.set({ gistExists: false });
+        return getDefaultGistData();
+      }
+      await chrome.storage.local.set({ gistExists: true });
+      const gist = await response.json();
+      const file = gist.files[FILE_NAME];
+      if (!file || !file.content || file.content.trim() === '') {
+        return getDefaultGistData();
+      }
+      try {
+        return JSON.parse(file.content);
+      } catch (e) {
+        return getDefaultGistData();
+      }
+    } catch (e) {
+      console.error('[Mock] Error fetching from mock server:', e);
+      throw new Error('Mock server unavailable. Execute "node mock-server.js"');
+    }
+  }
+  
   const response = await fetch(`https://api.github.com/gists/${gistId}`, {
     headers: {
       'Authorization': `token ${token}`,
@@ -485,9 +558,8 @@ async function fetchGist(token, gistId) {
   });
 
   if (response.status === 404) {
-    // Gist não existe, marcar para criar
     await chrome.storage.local.set({ gistExists: false });
-    return { version: 3, lastSync: 0, lastSyncBy: null, devices: {}, bookmarks: [] };
+    return getDefaultGistData();
   }
 
   if (!response.ok) {
@@ -502,19 +574,59 @@ async function fetchGist(token, gistId) {
   const file = gist.files[FILE_NAME];
   
   if (!file || !file.content || file.content.trim() === '') {
-    return { version: 3, lastSync: 0, lastSyncBy: null, devices: {}, bookmarks: [] };
+    return getDefaultGistData();
   }
 
   try {
     return JSON.parse(file.content);
   } catch (e) {
-    return { version: 3, lastSync: 0, lastSyncBy: null, devices: {}, bookmarks: [] };
+    return getDefaultGistData();
   }
 }
 
 async function updateGist(token, gistId, data) {
+  const mockConfig = await getMockConfig();
   const config = await chrome.storage.local.get('gistExists');
   const gistExists = config.gistExists !== false;
+  
+  if (mockConfig.useMockServer && mockConfig.mockServerUrl) {
+    console.log('[Mock] Updating mock server');
+    try {
+      const method = gistExists ? 'PATCH' : 'POST';
+      const url = gistExists 
+        ? `${mockConfig.mockServerUrl}/gists/${gistId}`
+        : `${mockConfig.mockServerUrl}/gists`;
+      
+      const body = JSON.stringify({
+        description: 'Bookmark Sync - Mock Server',
+        public: false,
+        files: {
+          [FILE_NAME]: {
+            content: JSON.stringify(data, null, 2)
+          }
+        }
+      });
+      
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body
+      });
+      
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.message || 'Mock server error');
+      }
+      
+      await chrome.storage.local.set({ gistExists: true });
+      return response.json();
+    } catch (e) {
+      console.error('[Mock] Error updating mock server:', e);
+      throw new Error('Mock server unavailable. Execute "node mock-server.js"');
+    }
+  }
   
   const method = gistExists ? 'PATCH' : 'POST';
   const url = gistExists 
@@ -561,13 +673,30 @@ async function handleSync(isAutoSync = false) {
     return;
   }
 
-  const config = await chrome.storage.local.get(['githubToken', 'gistId', 'autoSync']);
+  const config = await chrome.storage.local.get(['githubToken', 'gistId', 'autoSync', 'useMockServer', 'mockServerUrl']);
   console.log('[Sync] Config:', config);
   
-  if (!config.githubToken || !config.gistId) {
+  if (config.useMockServer && config.mockServerUrl) {
+    console.log('[Sync] Modo MOCK ativado:', config.mockServerUrl);
+  }
+  
+  const isMockMode = config.useMockServer && config.mockServerUrl;
+  
+  if (!isMockMode && (!config.githubToken || !config.gistId)) {
     console.log('[Sync] Configuração incompleta');
     if (!isAutoSync) throw new Error('Configure o Token e Gist ID nas opções.');
     return;
+  }
+  
+  if (isMockMode && !config.mockServerUrl) {
+    console.log('[Sync] Configuração de mock incompleta');
+    if (!isAutoSync) throw new Error('Configure a URL do Servidor Mock nas opções.');
+    return;
+  }
+  
+  if (isMockMode && !config.gistId) {
+    console.log('[Sync] Usando modo mock - definindo Gist ID padrão');
+    config.gistId = 'mock-test-gist';
   }
 
   isSyncing = true;

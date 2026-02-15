@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste - Mock Server</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 20px;
+      background: #1a1a2e;
+      color: #eee;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 20px; margin-bottom: 20px; color: #00d4ff; }
+    h2 { font-size: 14px; margin-bottom: 10px; color: #aaa; margin-top: 20px; }
+    
+    .server-info {
+      background: #16213e;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #666;
+    }
+    .status-dot.connected { background: #4ade80; }
+    .status-dot.error { background: #f87171; }
+    
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      font-weight: 500;
+    }
+    button:hover { opacity: 0.9; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    
+    .btn-primary { background: #00d4ff; color: #1a1a2e; }
+    .btn-success { background: #22c55e; color: #fff; }
+    .btn-warning { background: #f59e0b; color: #1a1a2e; }
+    .btn-danger { background: #ef4444; color: #fff; }
+    .btn-secondary { background: #374151; color: #fff; }
+    .btn-info { background: #3b82f6; color: #fff; }
+    
+    .section {
+      background: #16213e;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 14px;
+      color: #00d4ff;
+      font-weight: 600;
+    }
+    
+    textarea {
+      width: 100%;
+      height: 300px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      color: #e2e8f0;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 12px;
+      padding: 12px;
+      resize: vertical;
+    }
+    textarea:focus { outline: none; border-color: #00d4ff; }
+    
+    .logs {
+      height: 200px;
+      overflow-y: auto;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 10px;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 11px;
+    }
+    .log-entry {
+      padding: 4px 0;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      gap: 10px;
+    }
+    .log-entry:last-child { border-bottom: none; }
+    .log-time { color: #64748b; }
+    .log-method { color: #22c55e; font-weight: bold; min-width: 50px; }
+    .log-method.post { color: #f59e0b; }
+    .log-method.patch { color: #3b82f6; }
+    .log-method.delete { color: #ef4444; }
+    .log-url { color: #94a3b8; }
+    .log-status { font-weight: bold; }
+    .log-status.ok { color: #22c55e; }
+    .log-status.error { color: #ef4444; }
+    
+    .bookmark-count {
+      background: #334155;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    
+    .quick-actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    .quick-actions button {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Mock Server - Página de Testes</h1>
+  
+  <div class="server-info">
+    <div id="statusDot" class="status-dot"></div>
+    <span id="statusText">Conectando...</span>
+    <span style="margin-left: auto; color: #64748b;">URL: <span id="serverUrl">http://localhost:3000</span></span>
+  </div>
+  
+  <div class="btn-group">
+    <button class="btn-info" onclick="checkConnection()">🔄 Verificar Conexão</button>
+    <button class="btn-primary" onclick="fetchData()">📥 Ver Dados</button>
+    <button class="btn-warning" onclick="loadTestData()">📦 Carregar Dados de Teste</button>
+    <button class="btn-danger" onclick="resetData()">🗑️ Resetar Dados</button>
+  </div>
+  
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">📝 Dados Atuais</span>
+      <span id="bookmarkCount" class="bookmark-count">0 favoritos</span>
+    </div>
+    <textarea id="jsonEditor" placeholder="Dados JSON aparecerão aqui..."></textarea>
+    <div class="btn-group" style="margin-top: 10px; margin-bottom: 0;">
+      <button class="btn-success" onclick="saveData()">💾 Salvar Dados</button>
+      <button class="btn-secondary" onclick="formatJson()">🎨 Formatar JSON</button>
+    </div>
+  </div>
+  
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">📤 Simular Sync</span>
+    </div>
+    <div class="quick-actions">
+      <button class="btn-secondary" onclick="simulateSyncEmpty()">Sync: Vazio → Com dados</button>
+      <button class="btn-secondary" onclick="simulateSyncAdd()">Sync: Adicionar 1 favorito</button>
+      <button class="btn-secondary" onclick="simulateSyncDelete()">Sync: Deletar 1 favorito</button>
+    </div>
+  </div>
+  
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title">📋 Logs</span>
+      <button class="btn-secondary" onclick="clearLogs()" style="padding: 4px 10px; font-size: 11px;">Limpar</button>
+    </div>
+    <div id="logs" class="logs">
+      <div class="log-entry">
+        <span class="log-time">Aguardando...</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const serverUrl = 'http://localhost:3000';
+    let currentData = null;
+    
+    function addLog(method, url, status, statusText) {
+      const logs = document.getElementById('logs');
+      const now = new Date().toLocaleTimeString('pt-BR');
+      const statusClass = status >= 200 && status < 300 ? 'ok' : 'error';
+      
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      entry.innerHTML = `
+        <span class="log-time">${now}</span>
+        <span class="log-method ${method.toLowerCase()}">${method}</span>
+        <span class="log-url">${url}</span>
+        <span class="log-status ${statusClass}">${status} ${statusText}</span>
+      `;
+      
+      logs.insertBefore(entry, logs.firstChild);
+    }
+    
+    function clearLogs() {
+      document.getElementById('logs').innerHTML = '';
+    }
+    
+    function setConnected(connected) {
+      const dot = document.getElementById('statusDot');
+      const text = document.getElementById('statusText');
+      if (connected) {
+        dot.className = 'status-dot connected';
+        text.textContent = '🟢 Conectado';
+      } else {
+        dot.className = 'status-dot error';
+        text.textContent = '🔴 Desconectado';
+      }
+    }
+    
+    async function checkConnection() {
+      try {
+        const response = await fetch(`${serverUrl}/data`);
+        if (response.ok) {
+          setConnected(true);
+          addLog('GET', '/data', 200, 'OK');
+          await fetchData();
+        }
+      } catch (e) {
+        setConnected(false);
+        addLog('GET', '/data', 0, 'Connection failed');
+      }
+    }
+    
+    async function fetchData() {
+      try {
+        const response = await fetch(`${serverUrl}/data`);
+        const data = await response.json();
+        currentData = data;
+        
+        document.getElementById('jsonEditor').value = JSON.stringify(data, null, 2);
+        document.getElementById('bookmarkCount').textContent = `${data.bookmarks?.length || 0} favoritos`;
+        
+        addLog('GET', '/data', 200, 'OK');
+      } catch (e) {
+        addLog('GET', '/data', 0, e.message);
+      }
+    }
+    
+    async function resetData() {
+      if (!confirm('Tem certeza que deseja resetar todos os dados?')) return;
+      
+      try {
+        const response = await fetch(`${serverUrl}/reset`, { method: 'POST' });
+        const result = await response.json();
+        
+        addLog('POST', '/reset', 200, result.message || 'OK');
+        await fetchData();
+      } catch (e) {
+        addLog('POST', '/reset', 0, e.message);
+      }
+    }
+    
+    async function loadTestData() {
+      try {
+        const response = await fetch(`${serverUrl}/load`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        
+        addLog('POST', '/load', response.ok ? 200 : 500, response.ok ? 'OK' : 'Error');
+        await fetchData();
+      } catch (e) {
+        addLog('POST', '/load', 0, e.message);
+      }
+    }
+    
+    async function saveData() {
+      const json = document.getElementById('jsonEditor').value;
+      
+      try {
+        const data = JSON.parse(json);
+        const response = await fetch(`${serverUrl}/load`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        addLog('POST', '/load (save)', response.ok ? 200 : 500, result.message || (response.ok ? 'OK' : 'Error'));
+        
+        if (response.ok) {
+          currentData = data;
+          document.getElementById('bookmarkCount').textContent = `${data.bookmarks?.length || 0} favoritos`;
+        }
+      } catch (e) {
+        addLog('POST', '/load (save)', 0, 'Invalid JSON: ' + e.message);
+      }
+    }
+    
+    function formatJson() {
+      try {
+        const json = document.getElementById('jsonEditor').value;
+        const data = JSON.parse(json);
+        document.getElementById('jsonEditor').value = JSON.stringify(data, null, 2);
+      } catch (e) {
+        alert('JSON inválido!');
+      }
+    }
+    
+    // Simulate sync scenarios
+    async function simulateSyncEmpty() {
+      await fetch(`${serverUrl}/reset`, { method: 'POST' });
+      await fetchData();
+    }
+    
+    async function simulateSyncAdd() {
+      await fetchData();
+      if (!currentData) return;
+      
+      const newBookmark = {
+        id: 'bm_test_' + Date.now(),
+        title: 'Novo Link de Teste',
+        url: 'https://example.com/test',
+        dateAdded: Date.now(),
+        dateModified: Date.now(),
+        parentTitle: null,
+        deleted: false
+      };
+      
+      currentData.bookmarks = currentData.bookmarks || [];
+      currentData.bookmarks.push(newBookmark);
+      
+      await fetch(`${serverUrl}/load`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(currentData)
+      });
+      
+      await fetchData();
+    }
+    
+    async function simulateSyncDelete() {
+      await fetchData();
+      if (!currentData || !currentData.bookmarks || currentData.bookmarks.length === 0) return;
+      
+      currentData.bookmarks.pop();
+      
+      await fetch(`${serverUrl}/load`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(currentData)
+      });
+      
+      await fetchData();
+    }
+    
+    // Auto check connection on load
+    checkConnection();
+  </script>
+</body>
+</html>

@@ -5,7 +5,7 @@ const testBtn = document.getElementById('testBtn');
 document.addEventListener('DOMContentLoaded', loadSettings);
 
 async function loadSettings() {
-  const result = await chrome.storage.local.get(['githubToken', 'gistId', 'autoSync', 'syncOnStartup']);
+  const result = await chrome.storage.local.get(['githubToken', 'gistId', 'autoSync', 'syncOnStartup', 'useMockServer', 'mockServerUrl']);
   if (result.githubToken) {
     document.getElementById('githubToken').value = result.githubToken;
   }
@@ -17,6 +17,12 @@ async function loadSettings() {
   }
   if (result.syncOnStartup !== false) {
     document.getElementById('syncOnStartup').checked = result.syncOnStartup !== false;
+  }
+  if (result.useMockServer) {
+    document.getElementById('useMockServer').checked = result.useMockServer;
+  }
+  if (result.mockServerUrl) {
+    document.getElementById('mockServerUrl').value = result.mockServerUrl;
   }
 }
 
@@ -30,28 +36,68 @@ saveBtn.addEventListener('click', async () => {
   const gistId = document.getElementById('gistId').value.trim();
   const autoSync = document.getElementById('autoSync').checked;
   const syncOnStartup = document.getElementById('syncOnStartup').checked;
+  const useMockServer = document.getElementById('useMockServer').checked;
+  const mockServerUrl = document.getElementById('mockServerUrl').value.trim();
   
-  if (!token || !gistId) {
-    showStatus('Preencha todos os campos!', 'error');
+  if (!useMockServer && (!token || !gistId)) {
+    showStatus('Preencha o Token e Gist ID!', 'error');
     return;
   }
   
-  await chrome.storage.local.set({ githubToken: token, gistId, autoSync, syncOnStartup });
+  if (useMockServer && !mockServerUrl) {
+    showStatus('Preencha a URL do Servidor Mock!', 'error');
+    return;
+  }
+  
+  await chrome.storage.local.set({ 
+    githubToken: token, 
+    gistId, 
+    autoSync, 
+    syncOnStartup,
+    useMockServer,
+    mockServerUrl
+  });
   showStatus('Configurações salvas!', 'success');
 });
 
 testBtn.addEventListener('click', async () => {
+  const useMockServer = document.getElementById('useMockServer').checked;
+  const mockServerUrl = document.getElementById('mockServerUrl').value.trim();
   const token = document.getElementById('githubToken').value.trim();
   const gistId = document.getElementById('gistId').value.trim();
   const autoSync = document.getElementById('autoSync').checked;
   const syncOnStartup = document.getElementById('syncOnStartup').checked;
   
-  if (!token || !gistId) {
-    showStatus('Preencha todos os campos!', 'error');
+  if (useMockServer) {
+    if (!mockServerUrl) {
+      showStatus('Preencha a URL do Servidor Mock!', 'error');
+      return;
+    }
+    
+    showStatus('Testando conexão com servidor mock...', 'testing');
+    
+    try {
+      const response = await fetch(`${mockServerUrl}/data`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        showStatus(`✅ Conexão bem-sucedida! ${data.bookmarks.length} favoritos no servidor mock.`, 'success');
+        await chrome.storage.local.set({ useMockServer, mockServerUrl, autoSync, syncOnStartup });
+      } else {
+        showStatus('❌ Servidor mock não respondeu corretamente.', 'error');
+      }
+    } catch (error) {
+      showStatus(`❌ Erro de conexão: ${error.message}. Execute 'node mock-server.js'!`, 'error');
+    }
     return;
   }
   
-  showStatus('Testando conexão...', 'testing');
+  if (!token || !gistId) {
+    showStatus('Preencha o Token e Gist ID!', 'error');
+    return;
+  }
+  
+  showStatus('Testando conexão com GitHub...', 'testing');
   
   try {
     const response = await fetch(`https://api.github.com/gists/${gistId}`, {
