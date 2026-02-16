@@ -5,6 +5,8 @@
 
 let isSyncing = false;
 const FILE_NAME = 'bookmarks.json';
+const DEBUG_FILE_NAME = 'sync-debug.json';
+const MAX_DEBUG_LOGS = 10;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log('[Background] Mensagem recebida:', message);
@@ -315,6 +317,22 @@ function buildGistBookmarkMap(bookmarks, map = new Map()) {
   return map;
 }
 
+function findFolderByTitle(tree, title) {
+  function search(nodes) {
+    for (const node of nodes) {
+      if (!node.url && node.title === title && node.id !== '0' && node.id !== '1') {
+        return node;
+      }
+      if (node.children) {
+        const found = search(node.children);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+  return search(tree);
+}
+
 function getParentIdFromTitle(title, folderMap) {
   if (!title || title === 'Barra de favoritos' || title === 'Bookmarks Bar') {
     return '1'; // Barra de favoritos
@@ -345,8 +363,6 @@ async function buildFolderMap() {
 }
 
 async function getOrCreateFolder(title, folderMap) {
-  // Se título é null, undefined ou vazio, retornar ID raiz diretamente
-  // (não criar pasta para favoritos na raiz)
   if (!title || title === '') {
     return getParentIdFromTitle(title, folderMap);
   }
@@ -355,6 +371,13 @@ async function getOrCreateFolder(title, folderMap) {
   
   if (folderMap.has(title)) {
     return folderMap.get(title);
+  }
+  
+  const tree = await chrome.bookmarks.getTree();
+  const existingFolder = findFolderByTitle(tree, title);
+  if (existingFolder) {
+    folderMap.set(title, existingFolder.id);
+    return existingFolder.id;
   }
   
   try {
@@ -368,6 +391,61 @@ async function getOrCreateFolder(title, folderMap) {
     console.error('[Sync] Erro ao criar pasta:', e);
     return parentId;
   }
+}
+
+async function cleanDuplicateFolders() {
+  const tree = await chrome.bookmarks.getTree();
+  const folderMap = new Map();
+  const duplicates = [];
+  
+  function processNode(nodes, parentPath = '') {
+    for (const node of nodes) {
+      if (node.id !== '0' && node.id !== '1' && !node.url) {
+        const fullPath = parentPath ? `${parentPath}/${node.title}` : node.title;
+        
+        if (folderMap.has(node.title)) {
+          duplicates.push({
+            originalId: folderMap.get(node.title),
+            duplicateId: node.id,
+            title: node.title,
+            path: fullPath
+          });
+        } else {
+          folderMap.set(node.title, node.id);
+        }
+      }
+      if (node.children) {
+        const newPath = parentPath ? `${parentPath}/${node.title}` : node.title;
+        processNode(node.children, newPath);
+      }
+    }
+  }
+  
+  processNode(tree);
+  
+  if (duplicates.length > 0) {
+    console.log(`[Clean] Found ${duplicates.length} duplicate folders:`, duplicates.map(d => d.title));
+    
+    for (const dup of duplicates) {
+      try {
+        const children = await chrome.bookmarks.getChildren(dup.duplicateId);
+        
+        for (const child of children) {
+          await chrome.bookmarks.move(child.id, { parentId: dup.originalId });
+          console.log(`[Clean] Moved "${child.title}" from duplicate to original folder`);
+        }
+        
+        await chrome.bookmarks.removeTree(dup.duplicateId);
+        console.log(`[Clean] Removed duplicate folder: ${dup.title}`);
+      } catch (e) {
+        console.error(`[Clean] Error cleaning folder ${dup.title}:`, e);
+      }
+    }
+    
+    return duplicates.length;
+  }
+  
+  return 0;
 }
 
 // ============================================
@@ -392,9 +470,8 @@ function mergeBookmarks(localMap, gistMap, deletedBookmarks, myLastSync = 0) {
     if (gistBm.deleted) {
       // Se existe localmente
       if (localBm) {
-        // Verificar se foi modificado localmente depois do último sync
-        // Se sim → NÃO deletar (reviver)
-        // Se não → deletar localmente
+        // Dogear Rule: Se deletado remotamente mas modificado localmente depois do último sync → REVIVER
+        // Se não foi modificado localmente depois do último sync → deletar localmente
         if (localBm.dateModified > myLastSync) {
           console.log('[Merge] Reviver (modificado local depois do sync):', key);
           merged.set(key, { ...localBm, action: 'keep' });
@@ -425,16 +502,8 @@ function mergeBookmarks(localMap, gistMap, deletedBookmarks, myLastSync = 0) {
       }
     } else if (!localBm && !wasDeletedLocally) {
       // Existe no Gist, não existe local E não foi deletado localmente
-      // Verificar se foi modificado ANTES do último sync deste dispositivo
-      // Se sim, provavelmente foi deletado aqui (mas não rastreado) → não criar
-      if (myLastSync > 0 && gistBm.dateModified < myLastSync) {
-        console.log('[Merge] Ignorando (modificado antes do último sync):', key, 'gistBm.dateModified:', gistBm.dateModified, 'myLastSync:', myLastSync);
-        // Marcar como deleted no Gist (soft delete)
-        merged.set(key, { ...gistBm, action: 'delete' });
-      } else {
-        // Criar normalmente
-        merged.set(key, { ...gistBm, action: 'create' });
-      }
+      // Sempre criar - é um favorito novo do Gist
+      merged.set(key, { ...gistBm, action: 'create' });
     } else if (localBm) {
       // Existe em ambos - verificar deleted e dateModified
       
@@ -471,7 +540,25 @@ async function executeLocalMerge(merged, folderMap) {
   
   for (const [key, bm] of merged) {
     if (bm.action === 'create') {
-      const parentId = await getOrCreateFolder(bm.parentTitle, folderMap);
+      console.log('[Create] Trying to create:', bm.title, 'parentTitle:', bm.parentTitle);
+      let parentId = await getOrCreateFolder(bm.parentTitle, folderMap);
+      console.log('[Create] ParentId for', bm.parentTitle, ':', parentId);
+      
+      // Verificar se o parentId ainda é válido
+      try {
+        const parent = await chrome.bookmarks.get(parentId);
+        if (!parent || parent.length === 0) {
+          console.log('[Create] Parent não existe, tentando recriar:', bm.parentTitle);
+          folderMap.delete(bm.parentTitle); // Remove do cache
+          parentId = await getOrCreateFolder(bm.parentTitle, folderMap);
+          console.log('[Create] Novo parentId:', parentId);
+        }
+      } catch (e) {
+        console.log('[Create] Erro ao verificar parent, recriando:', bm.parentTitle);
+        folderMap.delete(bm.parentTitle);
+        parentId = await getOrCreateFolder(bm.parentTitle, folderMap);
+      }
+      
       try {
         await chrome.bookmarks.create({
           parentId: parentId,
@@ -481,7 +568,7 @@ async function executeLocalMerge(merged, folderMap) {
         await clearDeletedBookmark(key);
         created++;
       } catch (e) {
-        console.error('[Sync] Erro ao criar favorito:', e);
+        console.error('[Sync] Erro ao criar favorito:', bm.title, bm.url, 'parentId:', parentId, 'parentTitle:', bm.parentTitle, e);
       }
     } else if (bm.action === 'delete') {
       try {
@@ -534,7 +621,7 @@ function prepareGistBookmarks(merged) {
   for (const [key, bm] of merged) {
     const parentTitle = normalizeParentTitle(bm.parentTitle);
     
-    if (bm.action === 'upload' || bm.action === 'keep') {
+    if (bm.action === 'upload' || bm.action === 'keep' || bm.action === 'create') {
       bookmarks.push({
         id: key,
         title: bm.title,
@@ -710,6 +797,194 @@ async function updateGist(token, gistId, data) {
   return response.json();
 }
 
+async function fetchDebugGist(token, gistId) {
+  const mockConfig = await getMockConfig();
+  
+  if (mockConfig.useMockServer && mockConfig.mockServerUrl) {
+    try {
+      const response = await fetch(`${mockConfig.mockServerUrl}/gists/${gistId}`);
+      if (response.status === 404) {
+        return { logs: [] };
+      }
+      const gist = await response.json();
+      const file = gist.files[DEBUG_FILE_NAME];
+      if (!file || !file.content || file.content.trim() === '') {
+        return { logs: [] };
+      }
+      try {
+        return JSON.parse(file.content);
+      } catch (e) {
+        return { logs: [] };
+      }
+    } catch (e) {
+      console.error('[Debug] Error fetching debug gist:', e);
+      return { logs: [] };
+    }
+  }
+  
+  try {
+    const response = await fetch(`https://api.github.com/gists/${gistId}`, {
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    
+    if (response.status === 404) {
+      return { logs: [] };
+    }
+    
+    const gist = await response.json();
+    const file = gist.files[DEBUG_FILE_NAME];
+    
+    if (!file || !file.content || file.content.trim() === '') {
+      return { logs: [] };
+    }
+    
+    return JSON.parse(file.content);
+  } catch (e) {
+    console.error('[Debug] Error fetching debug gist:', e);
+    return { logs: [] };
+  }
+}
+
+async function updateDebugGist(token, gistId, debugData) {
+  const mockConfig = await getMockConfig();
+  const config = await chrome.storage.local.get('gistExists');
+  const gistExists = config.gistExists !== false;
+  
+  if (mockConfig.useMockServer && mockConfig.mockServerUrl) {
+    try {
+      let currentData = { version: 3, lastSync: 0, lastSyncBy: null, devices: {}, bookmarks: [], deletedBookmarks: {} };
+      
+      if (gistExists) {
+        try {
+          const response = await fetch(`${mockConfig.mockServerUrl}/gists/${gistId}`);
+          if (response.ok) {
+            const gist = await response.json();
+            const file = gist.files[FILE_NAME];
+            if (file && file.content) {
+              try {
+                currentData = JSON.parse(file.content);
+              } catch (e) {}
+            }
+          }
+        } catch (e) {}
+      }
+      
+      const method = gistExists ? 'PATCH' : 'POST';
+      const url = gistExists 
+        ? `${mockConfig.mockServerUrl}/gists/${gistId}`
+        : `${mockConfig.mockServerUrl}/gists`;
+      
+      const body = JSON.stringify({
+        description: 'Bookmark Sync - Debug Logs',
+        public: false,
+        files: {
+          [FILE_NAME]: {
+            content: JSON.stringify(currentData, null, 2)
+          },
+          [DEBUG_FILE_NAME]: {
+            content: JSON.stringify(debugData, null, 2)
+          }
+        }
+      });
+      
+      await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body
+      });
+      return;
+    } catch (e) {
+      console.error('[Debug] Error updating debug gist:', e);
+    }
+  }
+  
+  try {
+    let currentData = { version: 3, lastSync: 0, lastSyncBy: null, devices: {}, bookmarks: [], deletedBookmarks: {} };
+    
+    if (gistExists) {
+      try {
+        const response = await fetch(`https://api.github.com/gists/${gistId}`, {
+          headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if (response.ok) {
+          const gist = await response.json();
+          const file = gist.files[FILE_NAME];
+          if (file && file.content) {
+            try {
+              currentData = JSON.parse(file.content);
+            } catch (e) {}
+          }
+        }
+      } catch (e) {}
+    }
+    
+    const method = gistExists ? 'PATCH' : 'POST';
+    const url = gistExists 
+      ? `https://api.github.com/gists/${gistId}`
+      : 'https://api.github.com/gists';
+    
+    const body = JSON.stringify({
+      description: 'Bookmark Sync - Debug Logs',
+      public: false,
+      files: {
+        [FILE_NAME]: {
+          content: JSON.stringify(currentData, null, 2)
+        },
+        [DEBUG_FILE_NAME]: {
+          content: JSON.stringify(debugData, null, 2)
+        }
+      }
+    });
+    
+    await fetch(url, {
+      method,
+      headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body
+    });
+  } catch (e) {
+    console.error('[Debug] Error updating debug gist:', e);
+  }
+}
+
+async function saveSyncLog(data) {
+  const config = await chrome.storage.local.get(['githubToken', 'gistId', 'useMockServer', 'mockServerUrl']);
+  
+  if (!config.gistId) {
+    if (config.useMockServer) {
+      config.gistId = 'mock-test-gist';
+    } else {
+      console.log('[Debug] No gistId configured, skipping debug log');
+      return;
+    }
+  }
+  
+  try {
+    const debugData = await fetchDebugGist(config.githubToken || '', config.gistId);
+    
+    if (!debugData.logs) {
+      debugData.logs = [];
+    }
+    
+    debugData.logs.unshift(data);
+    
+    if (debugData.logs.length > MAX_DEBUG_LOGS) {
+      debugData.logs = debugData.logs.slice(0, MAX_DEBUG_LOGS);
+    }
+    
+    await updateDebugGist(config.githubToken || '', config.gistId, debugData);
+    console.log('[Debug] Sync log saved');
+  } catch (e) {
+    console.error('[Debug] Error saving sync log:', e);
+  }
+}
+
 // ============================================
 // Função Principal de Sincronização
 // ============================================
@@ -744,9 +1019,11 @@ async function handleSync(isAutoSync = false) {
   if (isMockMode && !config.gistId) {
     console.log('[Sync] Usando modo mock - definindo Gist ID padrão');
     config.gistId = 'mock-test-gist';
+    await chrome.storage.local.set({ gistId: config.gistId });
   }
 
   isSyncing = true;
+  const syncStartTime = Date.now();
   console.log('[Sync] Iniciando sincronização bidirecional...');
 
   try {
@@ -792,7 +1069,13 @@ async function handleSync(isAutoSync = false) {
     
     console.log(`[Sync] Merge: ${toCreate.length} criar, ${toDelete.length} deletar, ${toUpload.length} enviar, ${toKeep.length} manter`);
     
-    // 5. Executar mudanças no local
+    // 5. Limpar pastas duplicadas antes de executar merge
+    const cleanedCount = await cleanDuplicateFolders();
+    if (cleanedCount > 0) {
+      console.log(`[Sync] Limpas ${cleanedCount} pastas duplicadas`);
+    }
+    
+    // 6. Executar mudanças no local
     const folderMap = await buildFolderMap();
     const localResult = await executeLocalMerge(merged, folderMap);
     
@@ -821,9 +1104,49 @@ async function handleSync(isAutoSync = false) {
     // 7. Salvar lastSync local
     await chrome.storage.local.set({ lastSync: now });
     
+    // 8. Salvar log de debug
+    const syncDuration = Date.now() - syncStartTime;
+    
+    // Incluir estrutura local e do Gist para debug (limitado a 50 items cada)
+    const localStructure = [...localMap.values()].slice(0, 50).map(b => ({
+      key: b.key,
+      title: b.title,
+      url: b.url,
+      parentTitle: b.parentTitle,
+      dateModified: b.dateModified
+    }));
+    const gistStructure = [...gistMap.values()].slice(0, 50).map(b => ({
+      key: b.key,
+      title: b.title,
+      url: b.url,
+      parentTitle: b.parentTitle,
+      deleted: b.deleted,
+      dateModified: b.dateModified
+    }));
+    
+    await saveSyncLog({
+      timestamp: now,
+      deviceId: deviceId,
+      deviceName: deviceName,
+      localCount: localMap.size,
+      gistCount: gistMap.size,
+      deletedLocal: Object.keys(localDeletedBookmarks).length,
+      deletedGist: Object.keys(gistDeletedBookmarks).length,
+      merged: {
+        create: toCreate.length,
+        delete: toDelete.length,
+        upload: toUpload.length,
+        keep: toKeep.length
+      },
+      result: localResult,
+      duration: syncDuration,
+      localStructure,
+      gistStructure
+    });
+    
     console.log('[Sync] Concluído!', localResult);
     
-    // 8. Notificação se sync automático e houve mudanças
+    // 9. Notificação se sync automático e houve mudanças
     if (isAutoSync && (localResult.created || localResult.deleted || toUpload.length > 0)) {
       let msg = '';
       if (localResult.created > 0) msg += `${localResult.created} criados, `;
