@@ -1,6 +1,1538 @@
 {
   "logs": [
     {
+      "timestamp": 1771210071199,
+      "deviceId": "device_9g0yencnl",
+      "deviceName": "Brave (Linux)",
+      "localCount": 333,
+      "gistCount": 334,
+      "deletedLocal": 8,
+      "deletedGist": 8,
+      "merged": {
+        "create": 1,
+        "delete": 0,
+        "upload": 0,
+        "keep": 333
+      },
+      "result": {
+        "created": 1,
+        "deleted": 0
+      },
+      "duration": 105,
+      "localStructure": [
+        {
+          "key": "bm_url_97qh9f",
+          "title": "Bookmarks",
+          "url": "chrome://bookmarks/",
+          "parentTitle": null,
+          "dateModified": 1771208273490
+        },
+        {
+          "key": "bm_folder_5iephw",
+          "title": "BANCOS",
+          "parentTitle": null,
+          "dateModified": 1771208273518
+        },
+        {
+          "key": "bm_url_8dr5m1",
+          "title": "BRB",
+          "url": "http://portal.brb.com.br/",
+          "parentTitle": "BANCOS",
+          "dateModified": 1771208273504
+        },
+        {
+          "key": "bm_url_b5r6d7",
+          "title": "Bco Brasil",
+          "url": "https://www2.bancobrasil.com.br/aapf/login.jsp?aapf.IDH=sim",
+          "parentTitle": "BANCOS",
+          "dateModified": 1771208273507
+        },
+        {
+          "key": "bm_url_n18j6l",
+          "title": "Banco Itaú - Feito Para Você",
+          "url": "http://www.itau.com.br/",
+          "parentTitle": "BANCOS",
+          "dateModified": 1771208273514
+        },
+        {
+          "key": "bm_url_azw4k",
+          "title": "Santander",
+          "url": "http://www.santander.com.br/",
+          "parentTitle": "BANCOS",
+          "dateModified": 1771208273518
+        },
+        {
+          "key": "bm_folder_s2v06u",
+          "title": "graficosfree",
+          "parentTitle": null,
+          "dateModified": 1771208273560
+        },
+        {
+          "key": "bm_url_skunpz",
+          "title": "uiGradients - Beautiful colored gradients",
+          "url": "https://uigradients.com/#SeaBlizz",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273529
+        },
+        {
+          "key": "bm_url_uwk507",
+          "title": "- Pixabay",
+          "url": "https://pixabay.com/pt/",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273532
+        },
+        {
+          "key": "bm_url_gyjjv1",
+          "title": "Free Vectors, Stock Photos & PSD Downloads | Freepik",
+          "url": "https://www.freepik.com/",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273535
+        },
+        {
+          "key": "bm_url_7xieko",
+          "title": "Mobile Ui designs, themes, templates and downloadable graphic elements on Dribbble",
+          "url": "https://dribbble.com/tags/mobile_ui",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273541
+        },
+        {
+          "key": "bm_url_aurdwa",
+          "title": "Video Templates – Customizable & Easy to Use | Artlist.io",
+          "url": "https://artlist.io/video-templates",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273544
+        },
+        {
+          "key": "bm_url_iitn9i",
+          "title": "Home | Clipchamp",
+          "url": "https://app.clipchamp.com/",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273547
+        },
+        {
+          "key": "bm_url_kw8boa",
+          "title": "Play.ht dashboard",
+          "url": "https://play.ht/app/audio-files",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273550
+        },
+        {
+          "key": "bm_url_7dy696",
+          "title": "Velozes e Furiosos 10 Torrent (2023) Dual Áudio / Legendado WEB-DL 720p | 1080p | 2160p 4K – Download",
+          "url": "https://thepiratemovieshd.tech/velozes-e-furiosos-10-torrent-2023-dual-audio-legendado-web-dl-720p-1080p-2160p-4k-download/",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273553
+        },
+        {
+          "key": "bm_url_cyn1wq",
+          "title": "The Pirate Filmes | Filmes e Séries de Qualidade! -",
+          "url": "https://thepiratemovieshd.tech/",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273557
+        },
+        {
+          "key": "bm_folder_xphz0t",
+          "title": "3D",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273579
+        },
+        {
+          "key": "bm_url_vlhkyj",
+          "title": "3D models database | Printables.com",
+          "url": "https://www.printables.com/",
+          "parentTitle": "3D",
+          "dateModified": 1771208273563
+        },
+        {
+          "key": "bm_url_w4vb90",
+          "title": "Discover STL files for 3D printing ideas and high-quality 3D printer models. | MyMiniFactory",
+          "url": "https://www.myminifactory.com/",
+          "parentTitle": "3D",
+          "dateModified": 1771208273565
+        },
+        {
+          "key": "bm_url_lnrcvb",
+          "title": "Thingiverse - Digital Designs for Physical Objects",
+          "url": "https://www.thingiverse.com/",
+          "parentTitle": "3D",
+          "dateModified": 1771208273568
+        },
+        {
+          "key": "bm_url_4slaja",
+          "title": "Popular models for 3D enthusiasts | Free Downloads | Thangs",
+          "url": "https://thangs.com/?sort=likes&range=month",
+          "parentTitle": "3D",
+          "dateModified": 1771208273573
+        },
+        {
+          "key": "bm_url_7hj7va",
+          "title": "Cults・Download free 3D printer models・STL, OBJ, 3MF, CAD",
+          "url": "https://cults3d.com/en",
+          "parentTitle": "3D",
+          "dateModified": 1771208273576
+        },
+        {
+          "key": "bm_url_rpmnqz",
+          "title": "Portal e-TCE",
+          "url": "https://portal.tce.rn.gov.br/#/login",
+          "parentTitle": "3D",
+          "dateModified": 1771208273579
+        },
+        {
+          "key": "bm_folder_28ken",
+          "title": "AIs",
+          "parentTitle": null,
+          "dateModified": 1771208273669
+        },
+        {
+          "key": "bm_url_4ysiji",
+          "title": "Free Text to Speech Online with Realistic AI Voices",
+          "url": "https://www.naturalreaders.com/online/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273586
+        },
+        {
+          "key": "bm_url_c5mcze",
+          "title": "Home | Leonardo.Ai",
+          "url": "https://app.leonardo.ai/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273596
+        },
+        {
+          "key": "bm_url_ku0xyu",
+          "title": "Pi, your personal AI",
+          "url": "https://pi.ai/discover",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273601
+        },
+        {
+          "key": "bm_url_v9fpau",
+          "title": "Bard",
+          "url": "https://bard.google.com/chat/dfa2173e39f556d7",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273604
+        },
+        {
+          "key": "bm_url_ij0lzx",
+          "title": "Kits AI - the ultimate AI voice generation toolkit to supercharge your music",
+          "url": "https://app.kits.ai/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273610
+        },
+        {
+          "key": "bm_url_m7t9rf",
+          "title": "HeyGen - AI Spokesperson Video Creator",
+          "url": "https://app.heygen.com/home",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273613
+        },
+        {
+          "key": "bm_url_9betv4",
+          "title": "Free AI Paragraph Rewriter",
+          "url": "https://ahrefs.com/writing-tools/paragraph-rewriter",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273615
+        },
+        {
+          "key": "bm_url_ngp3e5",
+          "title": "Dashboard",
+          "url": "https://seowriting.ai/dashboard",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273618
+        },
+        {
+          "key": "bm_url_561rq0",
+          "title": "Detector De Plagio - Um Detector de Plágio Online Grátis",
+          "url": "https://smallseotools.com/pt/plagiarism-checker/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273621
+        },
+        {
+          "key": "bm_url_ewk38b",
+          "title": "Helping people become more creative.",
+          "url": "https://ideogram.ai/login",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273626
+        },
+        {
+          "key": "bm_url_u7emkc",
+          "title": "Opus Clip - AI-powered Video Repurposing",
+          "url": "https://www.opus.pro/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273628
+        },
+        {
+          "key": "bm_url_5ifcyl",
+          "title": "Napkin AI - The visual AI for business storytelling",
+          "url": "https://www.napkin.ai/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273630
+        },
+        {
+          "key": "bm_url_fyz6j8",
+          "title": "Multimodal Canvas",
+          "url": "https://labs.google/multimodal-canvas",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273633
+        },
+        {
+          "key": "bm_url_915swl",
+          "title": "Gammas - Gamma",
+          "url": "https://gamma.app/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273635
+        },
+        {
+          "key": "bm_url_jemkeh",
+          "title": "ChatGPT",
+          "url": "https://chatgpt.com/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273637
+        },
+        {
+          "key": "bm_url_ta5fwj",
+          "title": "Tudo para o seu vídeo em um só lugar | Clipchamp",
+          "url": "https://clipchamp.com/pt-br/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273642
+        },
+        {
+          "key": "bm_url_2m4ckf",
+          "title": "Microsoft Designer - Designs impressionantes em um flash",
+          "url": "https://designer.microsoft.com/home",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273644
+        },
+        {
+          "key": "bm_url_ns4vy9",
+          "title": "Qwen",
+          "url": "https://chat.qwenlm.ai/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273646
+        },
+        {
+          "key": "bm_url_vm9brt",
+          "title": "Google AI Studio",
+          "url": "https://aistudio.google.com/prompts/new_chat",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273649
+        },
+        {
+          "key": "bm_url_u5klih",
+          "title": "Grok",
+          "url": "https://grok.com/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273651
+        },
+        {
+          "key": "bm_url_62wro5",
+          "title": "Claude",
+          "url": "https://claude.ai/login?returnTo=%2F%3F",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273653
+        },
+        {
+          "key": "bm_url_dlmrwm",
+          "title": "Old Photo Animation AI - Bring Ancestors to Life | Veo3.io",
+          "url": "https://www.veo3.io/old-photo-animation-maker",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273657
+        },
+        {
+          "key": "bm_url_2ac8h3",
+          "title": "Perplexity",
+          "url": "https://www.perplexity.ai/?login-source=oneTapHome&login-new=true",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273660
+        },
+        {
+          "key": "bm_url_oijec1",
+          "title": "Stitch - Design with AI",
+          "url": "https://stitch.withgoogle.com/?pli=1",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273662
+        },
+        {
+          "key": "bm_url_fnd4rh",
+          "title": "Genspark - Seu espaço de trabalho de IA completo",
+          "url": "https://www.genspark.ai/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273664
+        },
+        {
+          "key": "bm_url_60sfyd",
+          "title": "Manus",
+          "url": "https://manus.im/app",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273666
+        }
+      ],
+      "gistStructure": [
+        {
+          "key": "bm_url_97qh9f",
+          "title": "Bookmarks",
+          "url": "chrome://bookmarks/",
+          "parentTitle": null,
+          "deleted": false,
+          "dateModified": 1771208273490
+        },
+        {
+          "key": "bm_folder_5iephw",
+          "title": "BANCOS",
+          "parentTitle": null,
+          "deleted": false,
+          "dateModified": 1771208273518
+        },
+        {
+          "key": "bm_url_8dr5m1",
+          "title": "BRB",
+          "url": "http://portal.brb.com.br/",
+          "parentTitle": "BANCOS",
+          "deleted": false,
+          "dateModified": 1771208273504
+        },
+        {
+          "key": "bm_url_b5r6d7",
+          "title": "Bco Brasil",
+          "url": "https://www2.bancobrasil.com.br/aapf/login.jsp?aapf.IDH=sim",
+          "parentTitle": "BANCOS",
+          "deleted": false,
+          "dateModified": 1771208273507
+        },
+        {
+          "key": "bm_url_n18j6l",
+          "title": "Banco Itaú - Feito Para Você",
+          "url": "http://www.itau.com.br/",
+          "parentTitle": "BANCOS",
+          "deleted": false,
+          "dateModified": 1771208273514
+        },
+        {
+          "key": "bm_url_azw4k",
+          "title": "Santander",
+          "url": "http://www.santander.com.br/",
+          "parentTitle": "BANCOS",
+          "deleted": false,
+          "dateModified": 1771208273518
+        },
+        {
+          "key": "bm_folder_s2v06u",
+          "title": "graficosfree",
+          "parentTitle": null,
+          "deleted": false,
+          "dateModified": 1771208273560
+        },
+        {
+          "key": "bm_url_skunpz",
+          "title": "uiGradients - Beautiful colored gradients",
+          "url": "https://uigradients.com/#SeaBlizz",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273529
+        },
+        {
+          "key": "bm_url_uwk507",
+          "title": "- Pixabay",
+          "url": "https://pixabay.com/pt/",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273532
+        },
+        {
+          "key": "bm_url_gyjjv1",
+          "title": "Free Vectors, Stock Photos & PSD Downloads | Freepik",
+          "url": "https://www.freepik.com/",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273535
+        },
+        {
+          "key": "bm_url_7xieko",
+          "title": "Mobile Ui designs, themes, templates and downloadable graphic elements on Dribbble",
+          "url": "https://dribbble.com/tags/mobile_ui",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273541
+        },
+        {
+          "key": "bm_url_aurdwa",
+          "title": "Video Templates – Customizable & Easy to Use | Artlist.io",
+          "url": "https://artlist.io/video-templates",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273544
+        },
+        {
+          "key": "bm_url_iitn9i",
+          "title": "Home | Clipchamp",
+          "url": "https://app.clipchamp.com/",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273547
+        },
+        {
+          "key": "bm_url_kw8boa",
+          "title": "Play.ht dashboard",
+          "url": "https://play.ht/app/audio-files",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273550
+        },
+        {
+          "key": "bm_url_7dy696",
+          "title": "Velozes e Furiosos 10 Torrent (2023) Dual Áudio / Legendado WEB-DL 720p | 1080p | 2160p 4K – Download",
+          "url": "https://thepiratemovieshd.tech/velozes-e-furiosos-10-torrent-2023-dual-audio-legendado-web-dl-720p-1080p-2160p-4k-download/",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273553
+        },
+        {
+          "key": "bm_url_cyn1wq",
+          "title": "The Pirate Filmes | Filmes e Séries de Qualidade! -",
+          "url": "https://thepiratemovieshd.tech/",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273557
+        },
+        {
+          "key": "bm_folder_xphz0t",
+          "title": "3D",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273579
+        },
+        {
+          "key": "bm_url_vlhkyj",
+          "title": "3D models database | Printables.com",
+          "url": "https://www.printables.com/",
+          "parentTitle": "3D",
+          "deleted": false,
+          "dateModified": 1771208273563
+        },
+        {
+          "key": "bm_url_w4vb90",
+          "title": "Discover STL files for 3D printing ideas and high-quality 3D printer models. | MyMiniFactory",
+          "url": "https://www.myminifactory.com/",
+          "parentTitle": "3D",
+          "deleted": false,
+          "dateModified": 1771208273565
+        },
+        {
+          "key": "bm_url_lnrcvb",
+          "title": "Thingiverse - Digital Designs for Physical Objects",
+          "url": "https://www.thingiverse.com/",
+          "parentTitle": "3D",
+          "deleted": false,
+          "dateModified": 1771208273568
+        },
+        {
+          "key": "bm_url_4slaja",
+          "title": "Popular models for 3D enthusiasts | Free Downloads | Thangs",
+          "url": "https://thangs.com/?sort=likes&range=month",
+          "parentTitle": "3D",
+          "deleted": false,
+          "dateModified": 1771208273573
+        },
+        {
+          "key": "bm_url_7hj7va",
+          "title": "Cults・Download free 3D printer models・STL, OBJ, 3MF, CAD",
+          "url": "https://cults3d.com/en",
+          "parentTitle": "3D",
+          "deleted": false,
+          "dateModified": 1771208273576
+        },
+        {
+          "key": "bm_url_rpmnqz",
+          "title": "Portal e-TCE",
+          "url": "https://portal.tce.rn.gov.br/#/login",
+          "parentTitle": "3D",
+          "deleted": false,
+          "dateModified": 1771208273579
+        },
+        {
+          "key": "bm_folder_28ken",
+          "title": "AIs",
+          "parentTitle": null,
+          "deleted": false,
+          "dateModified": 1771208273669
+        },
+        {
+          "key": "bm_url_4ysiji",
+          "title": "Free Text to Speech Online with Realistic AI Voices",
+          "url": "https://www.naturalreaders.com/online/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273586
+        },
+        {
+          "key": "bm_url_c5mcze",
+          "title": "Home | Leonardo.Ai",
+          "url": "https://app.leonardo.ai/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273596
+        },
+        {
+          "key": "bm_url_ku0xyu",
+          "title": "Pi, your personal AI",
+          "url": "https://pi.ai/discover",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273601
+        },
+        {
+          "key": "bm_url_v9fpau",
+          "title": "Bard",
+          "url": "https://bard.google.com/chat/dfa2173e39f556d7",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273604
+        },
+        {
+          "key": "bm_url_ij0lzx",
+          "title": "Kits AI - the ultimate AI voice generation toolkit to supercharge your music",
+          "url": "https://app.kits.ai/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273610
+        },
+        {
+          "key": "bm_url_m7t9rf",
+          "title": "HeyGen - AI Spokesperson Video Creator",
+          "url": "https://app.heygen.com/home",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273613
+        },
+        {
+          "key": "bm_url_9betv4",
+          "title": "Free AI Paragraph Rewriter",
+          "url": "https://ahrefs.com/writing-tools/paragraph-rewriter",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273615
+        },
+        {
+          "key": "bm_url_ngp3e5",
+          "title": "Dashboard",
+          "url": "https://seowriting.ai/dashboard",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273618
+        },
+        {
+          "key": "bm_url_561rq0",
+          "title": "Detector De Plagio - Um Detector de Plágio Online Grátis",
+          "url": "https://smallseotools.com/pt/plagiarism-checker/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273621
+        },
+        {
+          "key": "bm_url_ewk38b",
+          "title": "Helping people become more creative.",
+          "url": "https://ideogram.ai/login",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273626
+        },
+        {
+          "key": "bm_url_u7emkc",
+          "title": "Opus Clip - AI-powered Video Repurposing",
+          "url": "https://www.opus.pro/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273628
+        },
+        {
+          "key": "bm_url_5ifcyl",
+          "title": "Napkin AI - The visual AI for business storytelling",
+          "url": "https://www.napkin.ai/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273630
+        },
+        {
+          "key": "bm_url_fyz6j8",
+          "title": "Multimodal Canvas",
+          "url": "https://labs.google/multimodal-canvas",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273633
+        },
+        {
+          "key": "bm_url_915swl",
+          "title": "Gammas - Gamma",
+          "url": "https://gamma.app/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273635
+        },
+        {
+          "key": "bm_url_jemkeh",
+          "title": "ChatGPT",
+          "url": "https://chatgpt.com/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273637
+        },
+        {
+          "key": "bm_url_ta5fwj",
+          "title": "Tudo para o seu vídeo em um só lugar | Clipchamp",
+          "url": "https://clipchamp.com/pt-br/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273642
+        },
+        {
+          "key": "bm_url_2m4ckf",
+          "title": "Microsoft Designer - Designs impressionantes em um flash",
+          "url": "https://designer.microsoft.com/home",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273644
+        },
+        {
+          "key": "bm_url_ns4vy9",
+          "title": "Qwen",
+          "url": "https://chat.qwenlm.ai/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273646
+        },
+        {
+          "key": "bm_url_vm9brt",
+          "title": "Google AI Studio",
+          "url": "https://aistudio.google.com/prompts/new_chat",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273649
+        },
+        {
+          "key": "bm_url_u5klih",
+          "title": "Grok",
+          "url": "https://grok.com/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273651
+        },
+        {
+          "key": "bm_url_62wro5",
+          "title": "Claude",
+          "url": "https://claude.ai/login?returnTo=%2F%3F",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273653
+        },
+        {
+          "key": "bm_url_dlmrwm",
+          "title": "Old Photo Animation AI - Bring Ancestors to Life | Veo3.io",
+          "url": "https://www.veo3.io/old-photo-animation-maker",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273657
+        },
+        {
+          "key": "bm_url_2ac8h3",
+          "title": "Perplexity",
+          "url": "https://www.perplexity.ai/?login-source=oneTapHome&login-new=true",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273660
+        },
+        {
+          "key": "bm_url_oijec1",
+          "title": "Stitch - Design with AI",
+          "url": "https://stitch.withgoogle.com/?pli=1",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273662
+        },
+        {
+          "key": "bm_url_fnd4rh",
+          "title": "Genspark - Seu espaço de trabalho de IA completo",
+          "url": "https://www.genspark.ai/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273664
+        },
+        {
+          "key": "bm_url_60sfyd",
+          "title": "Manus",
+          "url": "https://manus.im/app",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273666
+        }
+      ]
+    },
+    {
+      "timestamp": 1771210023071,
+      "deviceId": "device_9g0yencnl",
+      "deviceName": "Brave (Linux)",
+      "localCount": 334,
+      "gistCount": 334,
+      "deletedLocal": 8,
+      "deletedGist": 8,
+      "merged": {
+        "create": 0,
+        "delete": 0,
+        "upload": 0,
+        "keep": 334
+      },
+      "result": {
+        "created": 0,
+        "deleted": 0
+      },
+      "duration": 127,
+      "localStructure": [
+        {
+          "key": "bm_url_97qh9f",
+          "title": "Bookmarks",
+          "url": "chrome://bookmarks/",
+          "parentTitle": null,
+          "dateModified": 1771208273490
+        },
+        {
+          "key": "bm_folder_5iephw",
+          "title": "BANCOS",
+          "parentTitle": null,
+          "dateModified": 1771208273518
+        },
+        {
+          "key": "bm_url_8dr5m1",
+          "title": "BRB",
+          "url": "http://portal.brb.com.br/",
+          "parentTitle": "BANCOS",
+          "dateModified": 1771208273504
+        },
+        {
+          "key": "bm_url_b5r6d7",
+          "title": "Bco Brasil",
+          "url": "https://www2.bancobrasil.com.br/aapf/login.jsp?aapf.IDH=sim",
+          "parentTitle": "BANCOS",
+          "dateModified": 1771208273507
+        },
+        {
+          "key": "bm_url_n18j6l",
+          "title": "Banco Itaú - Feito Para Você",
+          "url": "http://www.itau.com.br/",
+          "parentTitle": "BANCOS",
+          "dateModified": 1771208273514
+        },
+        {
+          "key": "bm_url_azw4k",
+          "title": "Santander",
+          "url": "http://www.santander.com.br/",
+          "parentTitle": "BANCOS",
+          "dateModified": 1771208273518
+        },
+        {
+          "key": "bm_folder_s2v06u",
+          "title": "graficosfree",
+          "parentTitle": null,
+          "dateModified": 1771208273560
+        },
+        {
+          "key": "bm_url_skunpz",
+          "title": "uiGradients - Beautiful colored gradients",
+          "url": "https://uigradients.com/#SeaBlizz",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273529
+        },
+        {
+          "key": "bm_url_uwk507",
+          "title": "- Pixabay",
+          "url": "https://pixabay.com/pt/",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273532
+        },
+        {
+          "key": "bm_url_gyjjv1",
+          "title": "Free Vectors, Stock Photos & PSD Downloads | Freepik",
+          "url": "https://www.freepik.com/",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273535
+        },
+        {
+          "key": "bm_url_7xieko",
+          "title": "Mobile Ui designs, themes, templates and downloadable graphic elements on Dribbble",
+          "url": "https://dribbble.com/tags/mobile_ui",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273541
+        },
+        {
+          "key": "bm_url_aurdwa",
+          "title": "Video Templates – Customizable & Easy to Use | Artlist.io",
+          "url": "https://artlist.io/video-templates",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273544
+        },
+        {
+          "key": "bm_url_iitn9i",
+          "title": "Home | Clipchamp",
+          "url": "https://app.clipchamp.com/",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273547
+        },
+        {
+          "key": "bm_url_kw8boa",
+          "title": "Play.ht dashboard",
+          "url": "https://play.ht/app/audio-files",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273550
+        },
+        {
+          "key": "bm_url_7dy696",
+          "title": "Velozes e Furiosos 10 Torrent (2023) Dual Áudio / Legendado WEB-DL 720p | 1080p | 2160p 4K – Download",
+          "url": "https://thepiratemovieshd.tech/velozes-e-furiosos-10-torrent-2023-dual-audio-legendado-web-dl-720p-1080p-2160p-4k-download/",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273553
+        },
+        {
+          "key": "bm_url_cyn1wq",
+          "title": "The Pirate Filmes | Filmes e Séries de Qualidade! -",
+          "url": "https://thepiratemovieshd.tech/",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273557
+        },
+        {
+          "key": "bm_folder_xphz0t",
+          "title": "3D",
+          "parentTitle": "graficosfree",
+          "dateModified": 1771208273579
+        },
+        {
+          "key": "bm_url_vlhkyj",
+          "title": "3D models database | Printables.com",
+          "url": "https://www.printables.com/",
+          "parentTitle": "3D",
+          "dateModified": 1771208273563
+        },
+        {
+          "key": "bm_url_w4vb90",
+          "title": "Discover STL files for 3D printing ideas and high-quality 3D printer models. | MyMiniFactory",
+          "url": "https://www.myminifactory.com/",
+          "parentTitle": "3D",
+          "dateModified": 1771208273565
+        },
+        {
+          "key": "bm_url_lnrcvb",
+          "title": "Thingiverse - Digital Designs for Physical Objects",
+          "url": "https://www.thingiverse.com/",
+          "parentTitle": "3D",
+          "dateModified": 1771208273568
+        },
+        {
+          "key": "bm_url_4slaja",
+          "title": "Popular models for 3D enthusiasts | Free Downloads | Thangs",
+          "url": "https://thangs.com/?sort=likes&range=month",
+          "parentTitle": "3D",
+          "dateModified": 1771208273573
+        },
+        {
+          "key": "bm_url_7hj7va",
+          "title": "Cults・Download free 3D printer models・STL, OBJ, 3MF, CAD",
+          "url": "https://cults3d.com/en",
+          "parentTitle": "3D",
+          "dateModified": 1771208273576
+        },
+        {
+          "key": "bm_url_rpmnqz",
+          "title": "Portal e-TCE",
+          "url": "https://portal.tce.rn.gov.br/#/login",
+          "parentTitle": "3D",
+          "dateModified": 1771208273579
+        },
+        {
+          "key": "bm_folder_28ken",
+          "title": "AIs",
+          "parentTitle": null,
+          "dateModified": 1771208273669
+        },
+        {
+          "key": "bm_url_4ysiji",
+          "title": "Free Text to Speech Online with Realistic AI Voices",
+          "url": "https://www.naturalreaders.com/online/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273586
+        },
+        {
+          "key": "bm_url_c5mcze",
+          "title": "Home | Leonardo.Ai",
+          "url": "https://app.leonardo.ai/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273596
+        },
+        {
+          "key": "bm_url_ku0xyu",
+          "title": "Pi, your personal AI",
+          "url": "https://pi.ai/discover",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273601
+        },
+        {
+          "key": "bm_url_v9fpau",
+          "title": "Bard",
+          "url": "https://bard.google.com/chat/dfa2173e39f556d7",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273604
+        },
+        {
+          "key": "bm_url_ij0lzx",
+          "title": "Kits AI - the ultimate AI voice generation toolkit to supercharge your music",
+          "url": "https://app.kits.ai/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273610
+        },
+        {
+          "key": "bm_url_m7t9rf",
+          "title": "HeyGen - AI Spokesperson Video Creator",
+          "url": "https://app.heygen.com/home",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273613
+        },
+        {
+          "key": "bm_url_9betv4",
+          "title": "Free AI Paragraph Rewriter",
+          "url": "https://ahrefs.com/writing-tools/paragraph-rewriter",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273615
+        },
+        {
+          "key": "bm_url_ngp3e5",
+          "title": "Dashboard",
+          "url": "https://seowriting.ai/dashboard",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273618
+        },
+        {
+          "key": "bm_url_561rq0",
+          "title": "Detector De Plagio - Um Detector de Plágio Online Grátis",
+          "url": "https://smallseotools.com/pt/plagiarism-checker/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273621
+        },
+        {
+          "key": "bm_url_ewk38b",
+          "title": "Helping people become more creative.",
+          "url": "https://ideogram.ai/login",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273626
+        },
+        {
+          "key": "bm_url_u7emkc",
+          "title": "Opus Clip - AI-powered Video Repurposing",
+          "url": "https://www.opus.pro/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273628
+        },
+        {
+          "key": "bm_url_5ifcyl",
+          "title": "Napkin AI - The visual AI for business storytelling",
+          "url": "https://www.napkin.ai/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273630
+        },
+        {
+          "key": "bm_url_fyz6j8",
+          "title": "Multimodal Canvas",
+          "url": "https://labs.google/multimodal-canvas",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273633
+        },
+        {
+          "key": "bm_url_915swl",
+          "title": "Gammas - Gamma",
+          "url": "https://gamma.app/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273635
+        },
+        {
+          "key": "bm_url_jemkeh",
+          "title": "ChatGPT",
+          "url": "https://chatgpt.com/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273637
+        },
+        {
+          "key": "bm_url_ta5fwj",
+          "title": "Tudo para o seu vídeo em um só lugar | Clipchamp",
+          "url": "https://clipchamp.com/pt-br/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273642
+        },
+        {
+          "key": "bm_url_2m4ckf",
+          "title": "Microsoft Designer - Designs impressionantes em um flash",
+          "url": "https://designer.microsoft.com/home",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273644
+        },
+        {
+          "key": "bm_url_ns4vy9",
+          "title": "Qwen",
+          "url": "https://chat.qwenlm.ai/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273646
+        },
+        {
+          "key": "bm_url_vm9brt",
+          "title": "Google AI Studio",
+          "url": "https://aistudio.google.com/prompts/new_chat",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273649
+        },
+        {
+          "key": "bm_url_u5klih",
+          "title": "Grok",
+          "url": "https://grok.com/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273651
+        },
+        {
+          "key": "bm_url_62wro5",
+          "title": "Claude",
+          "url": "https://claude.ai/login?returnTo=%2F%3F",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273653
+        },
+        {
+          "key": "bm_url_dlmrwm",
+          "title": "Old Photo Animation AI - Bring Ancestors to Life | Veo3.io",
+          "url": "https://www.veo3.io/old-photo-animation-maker",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273657
+        },
+        {
+          "key": "bm_url_2ac8h3",
+          "title": "Perplexity",
+          "url": "https://www.perplexity.ai/?login-source=oneTapHome&login-new=true",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273660
+        },
+        {
+          "key": "bm_url_oijec1",
+          "title": "Stitch - Design with AI",
+          "url": "https://stitch.withgoogle.com/?pli=1",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273662
+        },
+        {
+          "key": "bm_url_fnd4rh",
+          "title": "Genspark - Seu espaço de trabalho de IA completo",
+          "url": "https://www.genspark.ai/",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273664
+        },
+        {
+          "key": "bm_url_60sfyd",
+          "title": "Manus",
+          "url": "https://manus.im/app",
+          "parentTitle": "AIs",
+          "dateModified": 1771208273666
+        }
+      ],
+      "gistStructure": [
+        {
+          "key": "bm_url_97qh9f",
+          "title": "Bookmarks",
+          "url": "chrome://bookmarks/",
+          "parentTitle": null,
+          "deleted": false,
+          "dateModified": 1771208273490
+        },
+        {
+          "key": "bm_folder_5iephw",
+          "title": "BANCOS",
+          "parentTitle": null,
+          "deleted": false,
+          "dateModified": 1771208273518
+        },
+        {
+          "key": "bm_url_8dr5m1",
+          "title": "BRB",
+          "url": "http://portal.brb.com.br/",
+          "parentTitle": "BANCOS",
+          "deleted": false,
+          "dateModified": 1771208273504
+        },
+        {
+          "key": "bm_url_b5r6d7",
+          "title": "Bco Brasil",
+          "url": "https://www2.bancobrasil.com.br/aapf/login.jsp?aapf.IDH=sim",
+          "parentTitle": "BANCOS",
+          "deleted": false,
+          "dateModified": 1771208273507
+        },
+        {
+          "key": "bm_url_n18j6l",
+          "title": "Banco Itaú - Feito Para Você",
+          "url": "http://www.itau.com.br/",
+          "parentTitle": "BANCOS",
+          "deleted": false,
+          "dateModified": 1771208273514
+        },
+        {
+          "key": "bm_url_azw4k",
+          "title": "Santander",
+          "url": "http://www.santander.com.br/",
+          "parentTitle": "BANCOS",
+          "deleted": false,
+          "dateModified": 1771208273518
+        },
+        {
+          "key": "bm_folder_s2v06u",
+          "title": "graficosfree",
+          "parentTitle": null,
+          "deleted": false,
+          "dateModified": 1771208273560
+        },
+        {
+          "key": "bm_url_skunpz",
+          "title": "uiGradients - Beautiful colored gradients",
+          "url": "https://uigradients.com/#SeaBlizz",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273529
+        },
+        {
+          "key": "bm_url_uwk507",
+          "title": "- Pixabay",
+          "url": "https://pixabay.com/pt/",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273532
+        },
+        {
+          "key": "bm_url_gyjjv1",
+          "title": "Free Vectors, Stock Photos & PSD Downloads | Freepik",
+          "url": "https://www.freepik.com/",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273535
+        },
+        {
+          "key": "bm_url_7xieko",
+          "title": "Mobile Ui designs, themes, templates and downloadable graphic elements on Dribbble",
+          "url": "https://dribbble.com/tags/mobile_ui",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273541
+        },
+        {
+          "key": "bm_url_aurdwa",
+          "title": "Video Templates – Customizable & Easy to Use | Artlist.io",
+          "url": "https://artlist.io/video-templates",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273544
+        },
+        {
+          "key": "bm_url_iitn9i",
+          "title": "Home | Clipchamp",
+          "url": "https://app.clipchamp.com/",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273547
+        },
+        {
+          "key": "bm_url_kw8boa",
+          "title": "Play.ht dashboard",
+          "url": "https://play.ht/app/audio-files",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273550
+        },
+        {
+          "key": "bm_url_7dy696",
+          "title": "Velozes e Furiosos 10 Torrent (2023) Dual Áudio / Legendado WEB-DL 720p | 1080p | 2160p 4K – Download",
+          "url": "https://thepiratemovieshd.tech/velozes-e-furiosos-10-torrent-2023-dual-audio-legendado-web-dl-720p-1080p-2160p-4k-download/",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273553
+        },
+        {
+          "key": "bm_url_cyn1wq",
+          "title": "The Pirate Filmes | Filmes e Séries de Qualidade! -",
+          "url": "https://thepiratemovieshd.tech/",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273557
+        },
+        {
+          "key": "bm_folder_xphz0t",
+          "title": "3D",
+          "parentTitle": "graficosfree",
+          "deleted": false,
+          "dateModified": 1771208273579
+        },
+        {
+          "key": "bm_url_vlhkyj",
+          "title": "3D models database | Printables.com",
+          "url": "https://www.printables.com/",
+          "parentTitle": "3D",
+          "deleted": false,
+          "dateModified": 1771208273563
+        },
+        {
+          "key": "bm_url_w4vb90",
+          "title": "Discover STL files for 3D printing ideas and high-quality 3D printer models. | MyMiniFactory",
+          "url": "https://www.myminifactory.com/",
+          "parentTitle": "3D",
+          "deleted": false,
+          "dateModified": 1771208273565
+        },
+        {
+          "key": "bm_url_lnrcvb",
+          "title": "Thingiverse - Digital Designs for Physical Objects",
+          "url": "https://www.thingiverse.com/",
+          "parentTitle": "3D",
+          "deleted": false,
+          "dateModified": 1771208273568
+        },
+        {
+          "key": "bm_url_4slaja",
+          "title": "Popular models for 3D enthusiasts | Free Downloads | Thangs",
+          "url": "https://thangs.com/?sort=likes&range=month",
+          "parentTitle": "3D",
+          "deleted": false,
+          "dateModified": 1771208273573
+        },
+        {
+          "key": "bm_url_7hj7va",
+          "title": "Cults・Download free 3D printer models・STL, OBJ, 3MF, CAD",
+          "url": "https://cults3d.com/en",
+          "parentTitle": "3D",
+          "deleted": false,
+          "dateModified": 1771208273576
+        },
+        {
+          "key": "bm_url_rpmnqz",
+          "title": "Portal e-TCE",
+          "url": "https://portal.tce.rn.gov.br/#/login",
+          "parentTitle": "3D",
+          "deleted": false,
+          "dateModified": 1771208273579
+        },
+        {
+          "key": "bm_folder_28ken",
+          "title": "AIs",
+          "parentTitle": null,
+          "deleted": false,
+          "dateModified": 1771208273669
+        },
+        {
+          "key": "bm_url_4ysiji",
+          "title": "Free Text to Speech Online with Realistic AI Voices",
+          "url": "https://www.naturalreaders.com/online/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273586
+        },
+        {
+          "key": "bm_url_c5mcze",
+          "title": "Home | Leonardo.Ai",
+          "url": "https://app.leonardo.ai/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273596
+        },
+        {
+          "key": "bm_url_ku0xyu",
+          "title": "Pi, your personal AI",
+          "url": "https://pi.ai/discover",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273601
+        },
+        {
+          "key": "bm_url_v9fpau",
+          "title": "Bard",
+          "url": "https://bard.google.com/chat/dfa2173e39f556d7",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273604
+        },
+        {
+          "key": "bm_url_ij0lzx",
+          "title": "Kits AI - the ultimate AI voice generation toolkit to supercharge your music",
+          "url": "https://app.kits.ai/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273610
+        },
+        {
+          "key": "bm_url_m7t9rf",
+          "title": "HeyGen - AI Spokesperson Video Creator",
+          "url": "https://app.heygen.com/home",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273613
+        },
+        {
+          "key": "bm_url_9betv4",
+          "title": "Free AI Paragraph Rewriter",
+          "url": "https://ahrefs.com/writing-tools/paragraph-rewriter",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273615
+        },
+        {
+          "key": "bm_url_ngp3e5",
+          "title": "Dashboard",
+          "url": "https://seowriting.ai/dashboard",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273618
+        },
+        {
+          "key": "bm_url_561rq0",
+          "title": "Detector De Plagio - Um Detector de Plágio Online Grátis",
+          "url": "https://smallseotools.com/pt/plagiarism-checker/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273621
+        },
+        {
+          "key": "bm_url_ewk38b",
+          "title": "Helping people become more creative.",
+          "url": "https://ideogram.ai/login",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273626
+        },
+        {
+          "key": "bm_url_u7emkc",
+          "title": "Opus Clip - AI-powered Video Repurposing",
+          "url": "https://www.opus.pro/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273628
+        },
+        {
+          "key": "bm_url_5ifcyl",
+          "title": "Napkin AI - The visual AI for business storytelling",
+          "url": "https://www.napkin.ai/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273630
+        },
+        {
+          "key": "bm_url_fyz6j8",
+          "title": "Multimodal Canvas",
+          "url": "https://labs.google/multimodal-canvas",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273633
+        },
+        {
+          "key": "bm_url_915swl",
+          "title": "Gammas - Gamma",
+          "url": "https://gamma.app/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273635
+        },
+        {
+          "key": "bm_url_jemkeh",
+          "title": "ChatGPT",
+          "url": "https://chatgpt.com/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273637
+        },
+        {
+          "key": "bm_url_ta5fwj",
+          "title": "Tudo para o seu vídeo em um só lugar | Clipchamp",
+          "url": "https://clipchamp.com/pt-br/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273642
+        },
+        {
+          "key": "bm_url_2m4ckf",
+          "title": "Microsoft Designer - Designs impressionantes em um flash",
+          "url": "https://designer.microsoft.com/home",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273644
+        },
+        {
+          "key": "bm_url_ns4vy9",
+          "title": "Qwen",
+          "url": "https://chat.qwenlm.ai/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273646
+        },
+        {
+          "key": "bm_url_vm9brt",
+          "title": "Google AI Studio",
+          "url": "https://aistudio.google.com/prompts/new_chat",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273649
+        },
+        {
+          "key": "bm_url_u5klih",
+          "title": "Grok",
+          "url": "https://grok.com/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273651
+        },
+        {
+          "key": "bm_url_62wro5",
+          "title": "Claude",
+          "url": "https://claude.ai/login?returnTo=%2F%3F",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273653
+        },
+        {
+          "key": "bm_url_dlmrwm",
+          "title": "Old Photo Animation AI - Bring Ancestors to Life | Veo3.io",
+          "url": "https://www.veo3.io/old-photo-animation-maker",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273657
+        },
+        {
+          "key": "bm_url_2ac8h3",
+          "title": "Perplexity",
+          "url": "https://www.perplexity.ai/?login-source=oneTapHome&login-new=true",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273660
+        },
+        {
+          "key": "bm_url_oijec1",
+          "title": "Stitch - Design with AI",
+          "url": "https://stitch.withgoogle.com/?pli=1",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273662
+        },
+        {
+          "key": "bm_url_fnd4rh",
+          "title": "Genspark - Seu espaço de trabalho de IA completo",
+          "url": "https://www.genspark.ai/",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273664
+        },
+        {
+          "key": "bm_url_60sfyd",
+          "title": "Manus",
+          "url": "https://manus.im/app",
+          "parentTitle": "AIs",
+          "deleted": false,
+          "dateModified": 1771208273666
+        }
+      ]
+    },
+    {
       "timestamp": 1771209761112,
       "deviceId": "device_9g0yencnl",
       "deviceName": "Brave (Linux)",
@@ -6125,1538 +7657,6 @@
           "parentTitle": "AIs",
           "deleted": false,
           "dateModified": 1771208273666
-        }
-      ]
-    },
-    {
-      "timestamp": 1771208560967,
-      "deviceId": "device_9g0yencnl",
-      "deviceName": "Brave (Linux)",
-      "localCount": 331,
-      "gistCount": 334,
-      "deletedLocal": 8,
-      "deletedGist": 0,
-      "merged": {
-        "create": 3,
-        "delete": 2,
-        "upload": 1,
-        "keep": 328
-      },
-      "result": {
-        "created": 3,
-        "deleted": 2
-      },
-      "duration": 119,
-      "localStructure": [
-        {
-          "key": "bm_url_97qh9f",
-          "title": "Bookmarks",
-          "url": "chrome://bookmarks/",
-          "parentTitle": null,
-          "dateModified": 1771208273490
-        },
-        {
-          "key": "bm_folder_5iephw",
-          "title": "BANCOS",
-          "parentTitle": null,
-          "dateModified": 1771208273518
-        },
-        {
-          "key": "bm_url_8dr5m1",
-          "title": "BRB",
-          "url": "http://portal.brb.com.br/",
-          "parentTitle": "BANCOS",
-          "dateModified": 1771208273504
-        },
-        {
-          "key": "bm_url_b5r6d7",
-          "title": "Bco Brasil",
-          "url": "https://www2.bancobrasil.com.br/aapf/login.jsp?aapf.IDH=sim",
-          "parentTitle": "BANCOS",
-          "dateModified": 1771208273507
-        },
-        {
-          "key": "bm_url_n18j6l",
-          "title": "Banco Itaú - Feito Para Você",
-          "url": "http://www.itau.com.br/",
-          "parentTitle": "BANCOS",
-          "dateModified": 1771208273514
-        },
-        {
-          "key": "bm_url_azw4k",
-          "title": "Santander",
-          "url": "http://www.santander.com.br/",
-          "parentTitle": "BANCOS",
-          "dateModified": 1771208273518
-        },
-        {
-          "key": "bm_folder_s2v06u",
-          "title": "graficosfree",
-          "parentTitle": null,
-          "dateModified": 1771208273560
-        },
-        {
-          "key": "bm_url_skunpz",
-          "title": "uiGradients - Beautiful colored gradients",
-          "url": "https://uigradients.com/#SeaBlizz",
-          "parentTitle": "graficosfree",
-          "dateModified": 1771208273529
-        },
-        {
-          "key": "bm_url_uwk507",
-          "title": "- Pixabay",
-          "url": "https://pixabay.com/pt/",
-          "parentTitle": "graficosfree",
-          "dateModified": 1771208273532
-        },
-        {
-          "key": "bm_url_gyjjv1",
-          "title": "Free Vectors, Stock Photos & PSD Downloads | Freepik",
-          "url": "https://www.freepik.com/",
-          "parentTitle": "graficosfree",
-          "dateModified": 1771208273535
-        },
-        {
-          "key": "bm_url_7xieko",
-          "title": "Mobile Ui designs, themes, templates and downloadable graphic elements on Dribbble",
-          "url": "https://dribbble.com/tags/mobile_ui",
-          "parentTitle": "graficosfree",
-          "dateModified": 1771208273541
-        },
-        {
-          "key": "bm_url_aurdwa",
-          "title": "Video Templates – Customizable & Easy to Use | Artlist.io",
-          "url": "https://artlist.io/video-templates",
-          "parentTitle": "graficosfree",
-          "dateModified": 1771208273544
-        },
-        {
-          "key": "bm_url_iitn9i",
-          "title": "Home | Clipchamp",
-          "url": "https://app.clipchamp.com/",
-          "parentTitle": "graficosfree",
-          "dateModified": 1771208273547
-        },
-        {
-          "key": "bm_url_kw8boa",
-          "title": "Play.ht dashboard",
-          "url": "https://play.ht/app/audio-files",
-          "parentTitle": "graficosfree",
-          "dateModified": 1771208273550
-        },
-        {
-          "key": "bm_url_7dy696",
-          "title": "Velozes e Furiosos 10 Torrent (2023) Dual Áudio / Legendado WEB-DL 720p | 1080p | 2160p 4K – Download",
-          "url": "https://thepiratemovieshd.tech/velozes-e-furiosos-10-torrent-2023-dual-audio-legendado-web-dl-720p-1080p-2160p-4k-download/",
-          "parentTitle": "graficosfree",
-          "dateModified": 1771208273553
-        },
-        {
-          "key": "bm_url_cyn1wq",
-          "title": "The Pirate Filmes | Filmes e Séries de Qualidade! -",
-          "url": "https://thepiratemovieshd.tech/",
-          "parentTitle": "graficosfree",
-          "dateModified": 1771208273557
-        },
-        {
-          "key": "bm_folder_xphz0t",
-          "title": "3D",
-          "parentTitle": "graficosfree",
-          "dateModified": 1771208273579
-        },
-        {
-          "key": "bm_url_vlhkyj",
-          "title": "3D models database | Printables.com",
-          "url": "https://www.printables.com/",
-          "parentTitle": "3D",
-          "dateModified": 1771208273563
-        },
-        {
-          "key": "bm_url_w4vb90",
-          "title": "Discover STL files for 3D printing ideas and high-quality 3D printer models. | MyMiniFactory",
-          "url": "https://www.myminifactory.com/",
-          "parentTitle": "3D",
-          "dateModified": 1771208273565
-        },
-        {
-          "key": "bm_url_lnrcvb",
-          "title": "Thingiverse - Digital Designs for Physical Objects",
-          "url": "https://www.thingiverse.com/",
-          "parentTitle": "3D",
-          "dateModified": 1771208273568
-        },
-        {
-          "key": "bm_url_4slaja",
-          "title": "Popular models for 3D enthusiasts | Free Downloads | Thangs",
-          "url": "https://thangs.com/?sort=likes&range=month",
-          "parentTitle": "3D",
-          "dateModified": 1771208273573
-        },
-        {
-          "key": "bm_url_7hj7va",
-          "title": "Cults・Download free 3D printer models・STL, OBJ, 3MF, CAD",
-          "url": "https://cults3d.com/en",
-          "parentTitle": "3D",
-          "dateModified": 1771208273576
-        },
-        {
-          "key": "bm_url_rpmnqz",
-          "title": "Portal e-TCE",
-          "url": "https://portal.tce.rn.gov.br/#/login",
-          "parentTitle": "3D",
-          "dateModified": 1771208273579
-        },
-        {
-          "key": "bm_folder_28ken",
-          "title": "AIs",
-          "parentTitle": null,
-          "dateModified": 1771208273669
-        },
-        {
-          "key": "bm_url_4ysiji",
-          "title": "Free Text to Speech Online with Realistic AI Voices",
-          "url": "https://www.naturalreaders.com/online/",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273586
-        },
-        {
-          "key": "bm_url_c5mcze",
-          "title": "Home | Leonardo.Ai",
-          "url": "https://app.leonardo.ai/",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273596
-        },
-        {
-          "key": "bm_url_ku0xyu",
-          "title": "Pi, your personal AI",
-          "url": "https://pi.ai/discover",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273601
-        },
-        {
-          "key": "bm_url_v9fpau",
-          "title": "Bard",
-          "url": "https://bard.google.com/chat/dfa2173e39f556d7",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273604
-        },
-        {
-          "key": "bm_url_ij0lzx",
-          "title": "Kits AI - the ultimate AI voice generation toolkit to supercharge your music",
-          "url": "https://app.kits.ai/",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273610
-        },
-        {
-          "key": "bm_url_m7t9rf",
-          "title": "HeyGen - AI Spokesperson Video Creator",
-          "url": "https://app.heygen.com/home",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273613
-        },
-        {
-          "key": "bm_url_9betv4",
-          "title": "Free AI Paragraph Rewriter",
-          "url": "https://ahrefs.com/writing-tools/paragraph-rewriter",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273615
-        },
-        {
-          "key": "bm_url_ngp3e5",
-          "title": "Dashboard",
-          "url": "https://seowriting.ai/dashboard",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273618
-        },
-        {
-          "key": "bm_url_561rq0",
-          "title": "Detector De Plagio - Um Detector de Plágio Online Grátis",
-          "url": "https://smallseotools.com/pt/plagiarism-checker/",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273621
-        },
-        {
-          "key": "bm_url_ewk38b",
-          "title": "Helping people become more creative.",
-          "url": "https://ideogram.ai/login",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273626
-        },
-        {
-          "key": "bm_url_u7emkc",
-          "title": "Opus Clip - AI-powered Video Repurposing",
-          "url": "https://www.opus.pro/",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273628
-        },
-        {
-          "key": "bm_url_5ifcyl",
-          "title": "Napkin AI - The visual AI for business storytelling",
-          "url": "https://www.napkin.ai/",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273630
-        },
-        {
-          "key": "bm_url_fyz6j8",
-          "title": "Multimodal Canvas",
-          "url": "https://labs.google/multimodal-canvas",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273633
-        },
-        {
-          "key": "bm_url_915swl",
-          "title": "Gammas - Gamma",
-          "url": "https://gamma.app/",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273635
-        },
-        {
-          "key": "bm_url_jemkeh",
-          "title": "ChatGPT",
-          "url": "https://chatgpt.com/",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273637
-        },
-        {
-          "key": "bm_url_ta5fwj",
-          "title": "Tudo para o seu vídeo em um só lugar | Clipchamp",
-          "url": "https://clipchamp.com/pt-br/",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273642
-        },
-        {
-          "key": "bm_url_2m4ckf",
-          "title": "Microsoft Designer - Designs impressionantes em um flash",
-          "url": "https://designer.microsoft.com/home",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273644
-        },
-        {
-          "key": "bm_url_ns4vy9",
-          "title": "Qwen",
-          "url": "https://chat.qwenlm.ai/",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273646
-        },
-        {
-          "key": "bm_url_vm9brt",
-          "title": "Google AI Studio",
-          "url": "https://aistudio.google.com/prompts/new_chat",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273649
-        },
-        {
-          "key": "bm_url_u5klih",
-          "title": "Grok",
-          "url": "https://grok.com/",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273651
-        },
-        {
-          "key": "bm_url_62wro5",
-          "title": "Claude",
-          "url": "https://claude.ai/login?returnTo=%2F%3F",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273653
-        },
-        {
-          "key": "bm_url_dlmrwm",
-          "title": "Old Photo Animation AI - Bring Ancestors to Life | Veo3.io",
-          "url": "https://www.veo3.io/old-photo-animation-maker",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273657
-        },
-        {
-          "key": "bm_url_2ac8h3",
-          "title": "Perplexity",
-          "url": "https://www.perplexity.ai/?login-source=oneTapHome&login-new=true",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273660
-        },
-        {
-          "key": "bm_url_oijec1",
-          "title": "Stitch - Design with AI",
-          "url": "https://stitch.withgoogle.com/?pli=1",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273662
-        },
-        {
-          "key": "bm_url_fnd4rh",
-          "title": "Genspark - Seu espaço de trabalho de IA completo",
-          "url": "https://www.genspark.ai/",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273664
-        },
-        {
-          "key": "bm_url_60sfyd",
-          "title": "Manus",
-          "url": "https://manus.im/app",
-          "parentTitle": "AIs",
-          "dateModified": 1771208273666
-        }
-      ],
-      "gistStructure": [
-        {
-          "key": "bm_url_97qh9f",
-          "title": "Bookmarks",
-          "url": "chrome://bookmarks/",
-          "parentTitle": null,
-          "deleted": false,
-          "dateModified": 1434018035000
-        },
-        {
-          "key": "bm_folder_5iephw",
-          "title": "BANCOS",
-          "parentTitle": null,
-          "deleted": false,
-          "dateModified": 1771195072856
-        },
-        {
-          "key": "bm_url_8dr5m1",
-          "title": "BRB",
-          "url": "http://portal.brb.com.br/",
-          "parentTitle": "BANCOS",
-          "deleted": false,
-          "dateModified": 1285430521000
-        },
-        {
-          "key": "bm_url_b5r6d7",
-          "title": "Bco Brasil",
-          "url": "https://www2.bancobrasil.com.br/aapf/login.jsp?aapf.IDH=sim",
-          "parentTitle": "BANCOS",
-          "deleted": false,
-          "dateModified": 1220993476000
-        },
-        {
-          "key": "bm_url_n18j6l",
-          "title": "Banco Itaú - Feito Para Você",
-          "url": "http://www.itau.com.br/",
-          "parentTitle": "BANCOS",
-          "deleted": false,
-          "dateModified": 1273623921000
-        },
-        {
-          "key": "bm_url_azw4k",
-          "title": "Santander",
-          "url": "http://www.santander.com.br/",
-          "parentTitle": "BANCOS",
-          "deleted": false,
-          "dateModified": 1355768118000
-        },
-        {
-          "key": "bm_folder_s2v06u",
-          "title": "graficosfree",
-          "parentTitle": null,
-          "deleted": false,
-          "dateModified": 1771195072857
-        },
-        {
-          "key": "bm_url_skunpz",
-          "title": "uiGradients - Beautiful colored gradients",
-          "url": "https://uigradients.com/#SeaBlizz",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1591796489000
-        },
-        {
-          "key": "bm_url_uwk507",
-          "title": "- Pixabay",
-          "url": "https://pixabay.com/pt/",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1591985237000
-        },
-        {
-          "key": "bm_url_gyjjv1",
-          "title": "Free Vectors, Stock Photos & PSD Downloads | Freepik",
-          "url": "https://www.freepik.com/",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1591985340000
-        },
-        {
-          "key": "bm_url_7xieko",
-          "title": "Mobile Ui designs, themes, templates and downloadable graphic elements on Dribbble",
-          "url": "https://dribbble.com/tags/mobile_ui",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1592059083000
-        },
-        {
-          "key": "bm_url_aurdwa",
-          "title": "Video Templates – Customizable & Easy to Use | Artlist.io",
-          "url": "https://artlist.io/video-templates",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1685798780000
-        },
-        {
-          "key": "bm_url_iitn9i",
-          "title": "Home | Clipchamp",
-          "url": "https://app.clipchamp.com/",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1685798812000
-        },
-        {
-          "key": "bm_url_kw8boa",
-          "title": "Play.ht dashboard",
-          "url": "https://play.ht/app/audio-files",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1685914603000
-        },
-        {
-          "key": "bm_url_7dy696",
-          "title": "Velozes e Furiosos 10 Torrent (2023) Dual Áudio / Legendado WEB-DL 720p | 1080p | 2160p 4K – Download",
-          "url": "https://thepiratemovieshd.tech/velozes-e-furiosos-10-torrent-2023-dual-audio-legendado-web-dl-720p-1080p-2160p-4k-download/",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1687007180000
-        },
-        {
-          "key": "bm_url_cyn1wq",
-          "title": "The Pirate Filmes | Filmes e Séries de Qualidade! -",
-          "url": "https://thepiratemovieshd.tech/",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1687007218000
-        },
-        {
-          "key": "bm_folder_xphz0t",
-          "title": "3D",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1771195072858
-        },
-        {
-          "key": "bm_url_vlhkyj",
-          "title": "3D models database | Printables.com",
-          "url": "https://www.printables.com/",
-          "parentTitle": "3D",
-          "deleted": false,
-          "dateModified": 1687036747000
-        },
-        {
-          "key": "bm_url_w4vb90",
-          "title": "Discover STL files for 3D printing ideas and high-quality 3D printer models. | MyMiniFactory",
-          "url": "https://www.myminifactory.com/",
-          "parentTitle": "3D",
-          "deleted": false,
-          "dateModified": 1687036784000
-        },
-        {
-          "key": "bm_url_lnrcvb",
-          "title": "Thingiverse - Digital Designs for Physical Objects",
-          "url": "https://www.thingiverse.com/",
-          "parentTitle": "3D",
-          "deleted": false,
-          "dateModified": 1687036809000
-        },
-        {
-          "key": "bm_url_4slaja",
-          "title": "Popular models for 3D enthusiasts | Free Downloads | Thangs",
-          "url": "https://thangs.com/?sort=likes&range=month",
-          "parentTitle": "3D",
-          "deleted": false,
-          "dateModified": 1687036819000
-        },
-        {
-          "key": "bm_url_7hj7va",
-          "title": "Cults・Download free 3D printer models・STL, OBJ, 3MF, CAD",
-          "url": "https://cults3d.com/en",
-          "parentTitle": "3D",
-          "deleted": false,
-          "dateModified": 1687036833000
-        },
-        {
-          "key": "bm_url_rpmnqz",
-          "title": "Portal e-TCE",
-          "url": "https://portal.tce.rn.gov.br/#/login",
-          "parentTitle": "3D",
-          "deleted": false,
-          "dateModified": 1687213579000
-        },
-        {
-          "key": "bm_folder_28ken",
-          "title": "AIs",
-          "parentTitle": null,
-          "deleted": false,
-          "dateModified": 1771195072859
-        },
-        {
-          "key": "bm_url_4ysiji",
-          "title": "Free Text to Speech Online with Realistic AI Voices",
-          "url": "https://www.naturalreaders.com/online/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1703537182000
-        },
-        {
-          "key": "bm_url_c5mcze",
-          "title": "Home | Leonardo.Ai",
-          "url": "https://app.leonardo.ai/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1703537209000
-        },
-        {
-          "key": "bm_url_ku0xyu",
-          "title": "Pi, your personal AI",
-          "url": "https://pi.ai/discover",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1706727965000
-        },
-        {
-          "key": "bm_url_v9fpau",
-          "title": "Bard",
-          "url": "https://bard.google.com/chat/dfa2173e39f556d7",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1706729563000
-        },
-        {
-          "key": "bm_url_ij0lzx",
-          "title": "Kits AI - the ultimate AI voice generation toolkit to supercharge your music",
-          "url": "https://app.kits.ai/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1706735160000
-        },
-        {
-          "key": "bm_url_m7t9rf",
-          "title": "HeyGen - AI Spokesperson Video Creator",
-          "url": "https://app.heygen.com/home",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1706737670000
-        },
-        {
-          "key": "bm_url_9betv4",
-          "title": "Free AI Paragraph Rewriter",
-          "url": "https://ahrefs.com/writing-tools/paragraph-rewriter",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1707510889000
-        },
-        {
-          "key": "bm_url_ngp3e5",
-          "title": "Dashboard",
-          "url": "https://seowriting.ai/dashboard",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1707524875000
-        },
-        {
-          "key": "bm_url_561rq0",
-          "title": "Detector De Plagio - Um Detector de Plágio Online Grátis",
-          "url": "https://smallseotools.com/pt/plagiarism-checker/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1707842058000
-        },
-        {
-          "key": "bm_url_ewk38b",
-          "title": "Helping people become more creative.",
-          "url": "https://ideogram.ai/login",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1708388324000
-        },
-        {
-          "key": "bm_url_u7emkc",
-          "title": "Opus Clip - AI-powered Video Repurposing",
-          "url": "https://www.opus.pro/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1708464866000
-        },
-        {
-          "key": "bm_url_5ifcyl",
-          "title": "Napkin AI - The visual AI for business storytelling",
-          "url": "https://www.napkin.ai/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1736414412000
-        },
-        {
-          "key": "bm_url_fyz6j8",
-          "title": "Multimodal Canvas",
-          "url": "https://labs.google/multimodal-canvas",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1736633268000
-        },
-        {
-          "key": "bm_url_915swl",
-          "title": "Gammas - Gamma",
-          "url": "https://gamma.app/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1736794517000
-        },
-        {
-          "key": "bm_url_jemkeh",
-          "title": "ChatGPT",
-          "url": "https://chatgpt.com/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1737206213000
-        },
-        {
-          "key": "bm_url_ta5fwj",
-          "title": "Tudo para o seu vídeo em um só lugar | Clipchamp",
-          "url": "https://clipchamp.com/pt-br/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1737409472000
-        },
-        {
-          "key": "bm_url_2m4ckf",
-          "title": "Microsoft Designer - Designs impressionantes em um flash",
-          "url": "https://designer.microsoft.com/home",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1737550705000
-        },
-        {
-          "key": "bm_url_ns4vy9",
-          "title": "Qwen",
-          "url": "https://chat.qwenlm.ai/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1738520325000
-        },
-        {
-          "key": "bm_url_vm9brt",
-          "title": "Google AI Studio",
-          "url": "https://aistudio.google.com/prompts/new_chat",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1739223843000
-        },
-        {
-          "key": "bm_url_u5klih",
-          "title": "Grok",
-          "url": "https://grok.com/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1740169702000
-        },
-        {
-          "key": "bm_url_62wro5",
-          "title": "Claude",
-          "url": "https://claude.ai/login?returnTo=%2F%3F",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1740516692000
-        },
-        {
-          "key": "bm_url_dlmrwm",
-          "title": "Old Photo Animation AI - Bring Ancestors to Life | Veo3.io",
-          "url": "https://www.veo3.io/old-photo-animation-maker",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1750079543000
-        },
-        {
-          "key": "bm_url_2ac8h3",
-          "title": "Perplexity",
-          "url": "https://www.perplexity.ai/?login-source=oneTapHome&login-new=true",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1752856181000
-        },
-        {
-          "key": "bm_url_oijec1",
-          "title": "Stitch - Design with AI",
-          "url": "https://stitch.withgoogle.com/?pli=1",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1765799677000
-        },
-        {
-          "key": "bm_url_fnd4rh",
-          "title": "Genspark - Seu espaço de trabalho de IA completo",
-          "url": "https://www.genspark.ai/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1767908677000
-        },
-        {
-          "key": "bm_url_60sfyd",
-          "title": "Manus",
-          "url": "https://manus.im/app",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1768768263000
-        }
-      ]
-    },
-    {
-      "timestamp": 1771208401230,
-      "deviceId": "device_9xv3mwvxz",
-      "deviceName": "Chrome (Linux)",
-      "localCount": 334,
-      "gistCount": 334,
-      "deletedLocal": 0,
-      "deletedGist": 8,
-      "merged": {
-        "create": 0,
-        "delete": 3,
-        "upload": 0,
-        "keep": 331
-      },
-      "result": {
-        "created": 0,
-        "deleted": 3
-      },
-      "duration": 171,
-      "localStructure": [
-        {
-          "key": "bm_url_97qh9f",
-          "title": "Bookmarks",
-          "url": "chrome://bookmarks/",
-          "parentTitle": null,
-          "dateModified": 1434018035000
-        },
-        {
-          "key": "bm_folder_5iephw",
-          "title": "BANCOS",
-          "parentTitle": null,
-          "dateModified": 1771195072856
-        },
-        {
-          "key": "bm_url_8dr5m1",
-          "title": "BRB",
-          "url": "http://portal.brb.com.br/",
-          "parentTitle": "BANCOS",
-          "dateModified": 1285430521000
-        },
-        {
-          "key": "bm_url_b5r6d7",
-          "title": "Bco Brasil",
-          "url": "https://www2.bancobrasil.com.br/aapf/login.jsp?aapf.IDH=sim",
-          "parentTitle": "BANCOS",
-          "dateModified": 1220993476000
-        },
-        {
-          "key": "bm_url_n18j6l",
-          "title": "Banco Itaú - Feito Para Você",
-          "url": "http://www.itau.com.br/",
-          "parentTitle": "BANCOS",
-          "dateModified": 1273623921000
-        },
-        {
-          "key": "bm_url_azw4k",
-          "title": "Santander",
-          "url": "http://www.santander.com.br/",
-          "parentTitle": "BANCOS",
-          "dateModified": 1355768118000
-        },
-        {
-          "key": "bm_folder_s2v06u",
-          "title": "graficosfree",
-          "parentTitle": null,
-          "dateModified": 1771195072857
-        },
-        {
-          "key": "bm_url_skunpz",
-          "title": "uiGradients - Beautiful colored gradients",
-          "url": "https://uigradients.com/#SeaBlizz",
-          "parentTitle": "graficosfree",
-          "dateModified": 1591796489000
-        },
-        {
-          "key": "bm_url_uwk507",
-          "title": "- Pixabay",
-          "url": "https://pixabay.com/pt/",
-          "parentTitle": "graficosfree",
-          "dateModified": 1591985237000
-        },
-        {
-          "key": "bm_url_gyjjv1",
-          "title": "Free Vectors, Stock Photos & PSD Downloads | Freepik",
-          "url": "https://www.freepik.com/",
-          "parentTitle": "graficosfree",
-          "dateModified": 1591985340000
-        },
-        {
-          "key": "bm_url_7xieko",
-          "title": "Mobile Ui designs, themes, templates and downloadable graphic elements on Dribbble",
-          "url": "https://dribbble.com/tags/mobile_ui",
-          "parentTitle": "graficosfree",
-          "dateModified": 1592059083000
-        },
-        {
-          "key": "bm_url_aurdwa",
-          "title": "Video Templates – Customizable & Easy to Use | Artlist.io",
-          "url": "https://artlist.io/video-templates",
-          "parentTitle": "graficosfree",
-          "dateModified": 1685798780000
-        },
-        {
-          "key": "bm_url_iitn9i",
-          "title": "Home | Clipchamp",
-          "url": "https://app.clipchamp.com/",
-          "parentTitle": "graficosfree",
-          "dateModified": 1685798812000
-        },
-        {
-          "key": "bm_url_kw8boa",
-          "title": "Play.ht dashboard",
-          "url": "https://play.ht/app/audio-files",
-          "parentTitle": "graficosfree",
-          "dateModified": 1685914603000
-        },
-        {
-          "key": "bm_url_7dy696",
-          "title": "Velozes e Furiosos 10 Torrent (2023) Dual Áudio / Legendado WEB-DL 720p | 1080p | 2160p 4K – Download",
-          "url": "https://thepiratemovieshd.tech/velozes-e-furiosos-10-torrent-2023-dual-audio-legendado-web-dl-720p-1080p-2160p-4k-download/",
-          "parentTitle": "graficosfree",
-          "dateModified": 1687007180000
-        },
-        {
-          "key": "bm_url_cyn1wq",
-          "title": "The Pirate Filmes | Filmes e Séries de Qualidade! -",
-          "url": "https://thepiratemovieshd.tech/",
-          "parentTitle": "graficosfree",
-          "dateModified": 1687007218000
-        },
-        {
-          "key": "bm_folder_xphz0t",
-          "title": "3D",
-          "parentTitle": "graficosfree",
-          "dateModified": 1771195072858
-        },
-        {
-          "key": "bm_url_vlhkyj",
-          "title": "3D models database | Printables.com",
-          "url": "https://www.printables.com/",
-          "parentTitle": "3D",
-          "dateModified": 1687036747000
-        },
-        {
-          "key": "bm_url_w4vb90",
-          "title": "Discover STL files for 3D printing ideas and high-quality 3D printer models. | MyMiniFactory",
-          "url": "https://www.myminifactory.com/",
-          "parentTitle": "3D",
-          "dateModified": 1687036784000
-        },
-        {
-          "key": "bm_url_lnrcvb",
-          "title": "Thingiverse - Digital Designs for Physical Objects",
-          "url": "https://www.thingiverse.com/",
-          "parentTitle": "3D",
-          "dateModified": 1687036809000
-        },
-        {
-          "key": "bm_url_4slaja",
-          "title": "Popular models for 3D enthusiasts | Free Downloads | Thangs",
-          "url": "https://thangs.com/?sort=likes&range=month",
-          "parentTitle": "3D",
-          "dateModified": 1687036819000
-        },
-        {
-          "key": "bm_url_7hj7va",
-          "title": "Cults・Download free 3D printer models・STL, OBJ, 3MF, CAD",
-          "url": "https://cults3d.com/en",
-          "parentTitle": "3D",
-          "dateModified": 1687036833000
-        },
-        {
-          "key": "bm_url_rpmnqz",
-          "title": "Portal e-TCE",
-          "url": "https://portal.tce.rn.gov.br/#/login",
-          "parentTitle": "3D",
-          "dateModified": 1687213579000
-        },
-        {
-          "key": "bm_folder_28ken",
-          "title": "AIs",
-          "parentTitle": null,
-          "dateModified": 1771195072859
-        },
-        {
-          "key": "bm_url_4ysiji",
-          "title": "Free Text to Speech Online with Realistic AI Voices",
-          "url": "https://www.naturalreaders.com/online/",
-          "parentTitle": "AIs",
-          "dateModified": 1703537182000
-        },
-        {
-          "key": "bm_url_c5mcze",
-          "title": "Home | Leonardo.Ai",
-          "url": "https://app.leonardo.ai/",
-          "parentTitle": "AIs",
-          "dateModified": 1703537209000
-        },
-        {
-          "key": "bm_url_ku0xyu",
-          "title": "Pi, your personal AI",
-          "url": "https://pi.ai/discover",
-          "parentTitle": "AIs",
-          "dateModified": 1706727965000
-        },
-        {
-          "key": "bm_url_v9fpau",
-          "title": "Bard",
-          "url": "https://bard.google.com/chat/dfa2173e39f556d7",
-          "parentTitle": "AIs",
-          "dateModified": 1706729563000
-        },
-        {
-          "key": "bm_url_ij0lzx",
-          "title": "Kits AI - the ultimate AI voice generation toolkit to supercharge your music",
-          "url": "https://app.kits.ai/",
-          "parentTitle": "AIs",
-          "dateModified": 1706735160000
-        },
-        {
-          "key": "bm_url_m7t9rf",
-          "title": "HeyGen - AI Spokesperson Video Creator",
-          "url": "https://app.heygen.com/home",
-          "parentTitle": "AIs",
-          "dateModified": 1706737670000
-        },
-        {
-          "key": "bm_url_9betv4",
-          "title": "Free AI Paragraph Rewriter",
-          "url": "https://ahrefs.com/writing-tools/paragraph-rewriter",
-          "parentTitle": "AIs",
-          "dateModified": 1707510889000
-        },
-        {
-          "key": "bm_url_ngp3e5",
-          "title": "Dashboard",
-          "url": "https://seowriting.ai/dashboard",
-          "parentTitle": "AIs",
-          "dateModified": 1707524875000
-        },
-        {
-          "key": "bm_url_561rq0",
-          "title": "Detector De Plagio - Um Detector de Plágio Online Grátis",
-          "url": "https://smallseotools.com/pt/plagiarism-checker/",
-          "parentTitle": "AIs",
-          "dateModified": 1707842058000
-        },
-        {
-          "key": "bm_url_ewk38b",
-          "title": "Helping people become more creative.",
-          "url": "https://ideogram.ai/login",
-          "parentTitle": "AIs",
-          "dateModified": 1708388324000
-        },
-        {
-          "key": "bm_url_u7emkc",
-          "title": "Opus Clip - AI-powered Video Repurposing",
-          "url": "https://www.opus.pro/",
-          "parentTitle": "AIs",
-          "dateModified": 1708464866000
-        },
-        {
-          "key": "bm_url_5ifcyl",
-          "title": "Napkin AI - The visual AI for business storytelling",
-          "url": "https://www.napkin.ai/",
-          "parentTitle": "AIs",
-          "dateModified": 1736414412000
-        },
-        {
-          "key": "bm_url_fyz6j8",
-          "title": "Multimodal Canvas",
-          "url": "https://labs.google/multimodal-canvas",
-          "parentTitle": "AIs",
-          "dateModified": 1736633268000
-        },
-        {
-          "key": "bm_url_915swl",
-          "title": "Gammas - Gamma",
-          "url": "https://gamma.app/",
-          "parentTitle": "AIs",
-          "dateModified": 1736794517000
-        },
-        {
-          "key": "bm_url_jemkeh",
-          "title": "ChatGPT",
-          "url": "https://chatgpt.com/",
-          "parentTitle": "AIs",
-          "dateModified": 1737206213000
-        },
-        {
-          "key": "bm_url_ta5fwj",
-          "title": "Tudo para o seu vídeo em um só lugar | Clipchamp",
-          "url": "https://clipchamp.com/pt-br/",
-          "parentTitle": "AIs",
-          "dateModified": 1737409472000
-        },
-        {
-          "key": "bm_url_2m4ckf",
-          "title": "Microsoft Designer - Designs impressionantes em um flash",
-          "url": "https://designer.microsoft.com/home",
-          "parentTitle": "AIs",
-          "dateModified": 1737550705000
-        },
-        {
-          "key": "bm_url_ns4vy9",
-          "title": "Qwen",
-          "url": "https://chat.qwenlm.ai/",
-          "parentTitle": "AIs",
-          "dateModified": 1738520325000
-        },
-        {
-          "key": "bm_url_vm9brt",
-          "title": "Google AI Studio",
-          "url": "https://aistudio.google.com/prompts/new_chat",
-          "parentTitle": "AIs",
-          "dateModified": 1739223843000
-        },
-        {
-          "key": "bm_url_u5klih",
-          "title": "Grok",
-          "url": "https://grok.com/",
-          "parentTitle": "AIs",
-          "dateModified": 1740169702000
-        },
-        {
-          "key": "bm_url_62wro5",
-          "title": "Claude",
-          "url": "https://claude.ai/login?returnTo=%2F%3F",
-          "parentTitle": "AIs",
-          "dateModified": 1740516692000
-        },
-        {
-          "key": "bm_url_dlmrwm",
-          "title": "Old Photo Animation AI - Bring Ancestors to Life | Veo3.io",
-          "url": "https://www.veo3.io/old-photo-animation-maker",
-          "parentTitle": "AIs",
-          "dateModified": 1750079543000
-        },
-        {
-          "key": "bm_url_2ac8h3",
-          "title": "Perplexity",
-          "url": "https://www.perplexity.ai/?login-source=oneTapHome&login-new=true",
-          "parentTitle": "AIs",
-          "dateModified": 1752856181000
-        },
-        {
-          "key": "bm_url_oijec1",
-          "title": "Stitch - Design with AI",
-          "url": "https://stitch.withgoogle.com/?pli=1",
-          "parentTitle": "AIs",
-          "dateModified": 1765799677000
-        },
-        {
-          "key": "bm_url_fnd4rh",
-          "title": "Genspark - Seu espaço de trabalho de IA completo",
-          "url": "https://www.genspark.ai/",
-          "parentTitle": "AIs",
-          "dateModified": 1767908677000
-        },
-        {
-          "key": "bm_url_60sfyd",
-          "title": "Manus",
-          "url": "https://manus.im/app",
-          "parentTitle": "AIs",
-          "dateModified": 1768768263000
-        }
-      ],
-      "gistStructure": [
-        {
-          "key": "bm_url_97qh9f",
-          "title": "Bookmarks",
-          "url": "chrome://bookmarks/",
-          "parentTitle": null,
-          "deleted": false,
-          "dateModified": 1434018035000
-        },
-        {
-          "key": "bm_folder_5iephw",
-          "title": "BANCOS",
-          "parentTitle": null,
-          "deleted": false,
-          "dateModified": 1771195072856
-        },
-        {
-          "key": "bm_url_8dr5m1",
-          "title": "BRB",
-          "url": "http://portal.brb.com.br/",
-          "parentTitle": "BANCOS",
-          "deleted": false,
-          "dateModified": 1285430521000
-        },
-        {
-          "key": "bm_url_b5r6d7",
-          "title": "Bco Brasil",
-          "url": "https://www2.bancobrasil.com.br/aapf/login.jsp?aapf.IDH=sim",
-          "parentTitle": "BANCOS",
-          "deleted": false,
-          "dateModified": 1220993476000
-        },
-        {
-          "key": "bm_url_n18j6l",
-          "title": "Banco Itaú - Feito Para Você",
-          "url": "http://www.itau.com.br/",
-          "parentTitle": "BANCOS",
-          "deleted": false,
-          "dateModified": 1273623921000
-        },
-        {
-          "key": "bm_url_azw4k",
-          "title": "Santander",
-          "url": "http://www.santander.com.br/",
-          "parentTitle": "BANCOS",
-          "deleted": false,
-          "dateModified": 1355768118000
-        },
-        {
-          "key": "bm_folder_s2v06u",
-          "title": "graficosfree",
-          "parentTitle": null,
-          "deleted": false,
-          "dateModified": 1771195072857
-        },
-        {
-          "key": "bm_url_skunpz",
-          "title": "uiGradients - Beautiful colored gradients",
-          "url": "https://uigradients.com/#SeaBlizz",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1591796489000
-        },
-        {
-          "key": "bm_url_uwk507",
-          "title": "- Pixabay",
-          "url": "https://pixabay.com/pt/",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1591985237000
-        },
-        {
-          "key": "bm_url_gyjjv1",
-          "title": "Free Vectors, Stock Photos & PSD Downloads | Freepik",
-          "url": "https://www.freepik.com/",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1591985340000
-        },
-        {
-          "key": "bm_url_7xieko",
-          "title": "Mobile Ui designs, themes, templates and downloadable graphic elements on Dribbble",
-          "url": "https://dribbble.com/tags/mobile_ui",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1592059083000
-        },
-        {
-          "key": "bm_url_aurdwa",
-          "title": "Video Templates – Customizable & Easy to Use | Artlist.io",
-          "url": "https://artlist.io/video-templates",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1685798780000
-        },
-        {
-          "key": "bm_url_iitn9i",
-          "title": "Home | Clipchamp",
-          "url": "https://app.clipchamp.com/",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1685798812000
-        },
-        {
-          "key": "bm_url_kw8boa",
-          "title": "Play.ht dashboard",
-          "url": "https://play.ht/app/audio-files",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1685914603000
-        },
-        {
-          "key": "bm_url_7dy696",
-          "title": "Velozes e Furiosos 10 Torrent (2023) Dual Áudio / Legendado WEB-DL 720p | 1080p | 2160p 4K – Download",
-          "url": "https://thepiratemovieshd.tech/velozes-e-furiosos-10-torrent-2023-dual-audio-legendado-web-dl-720p-1080p-2160p-4k-download/",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1687007180000
-        },
-        {
-          "key": "bm_url_cyn1wq",
-          "title": "The Pirate Filmes | Filmes e Séries de Qualidade! -",
-          "url": "https://thepiratemovieshd.tech/",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1687007218000
-        },
-        {
-          "key": "bm_folder_xphz0t",
-          "title": "3D",
-          "parentTitle": "graficosfree",
-          "deleted": false,
-          "dateModified": 1771195072858
-        },
-        {
-          "key": "bm_url_vlhkyj",
-          "title": "3D models database | Printables.com",
-          "url": "https://www.printables.com/",
-          "parentTitle": "3D",
-          "deleted": false,
-          "dateModified": 1687036747000
-        },
-        {
-          "key": "bm_url_w4vb90",
-          "title": "Discover STL files for 3D printing ideas and high-quality 3D printer models. | MyMiniFactory",
-          "url": "https://www.myminifactory.com/",
-          "parentTitle": "3D",
-          "deleted": false,
-          "dateModified": 1687036784000
-        },
-        {
-          "key": "bm_url_lnrcvb",
-          "title": "Thingiverse - Digital Designs for Physical Objects",
-          "url": "https://www.thingiverse.com/",
-          "parentTitle": "3D",
-          "deleted": false,
-          "dateModified": 1687036809000
-        },
-        {
-          "key": "bm_url_4slaja",
-          "title": "Popular models for 3D enthusiasts | Free Downloads | Thangs",
-          "url": "https://thangs.com/?sort=likes&range=month",
-          "parentTitle": "3D",
-          "deleted": false,
-          "dateModified": 1687036819000
-        },
-        {
-          "key": "bm_url_7hj7va",
-          "title": "Cults・Download free 3D printer models・STL, OBJ, 3MF, CAD",
-          "url": "https://cults3d.com/en",
-          "parentTitle": "3D",
-          "deleted": false,
-          "dateModified": 1687036833000
-        },
-        {
-          "key": "bm_url_rpmnqz",
-          "title": "Portal e-TCE",
-          "url": "https://portal.tce.rn.gov.br/#/login",
-          "parentTitle": "3D",
-          "deleted": false,
-          "dateModified": 1687213579000
-        },
-        {
-          "key": "bm_folder_28ken",
-          "title": "AIs",
-          "parentTitle": null,
-          "deleted": false,
-          "dateModified": 1771195072859
-        },
-        {
-          "key": "bm_url_4ysiji",
-          "title": "Free Text to Speech Online with Realistic AI Voices",
-          "url": "https://www.naturalreaders.com/online/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1703537182000
-        },
-        {
-          "key": "bm_url_c5mcze",
-          "title": "Home | Leonardo.Ai",
-          "url": "https://app.leonardo.ai/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1703537209000
-        },
-        {
-          "key": "bm_url_ku0xyu",
-          "title": "Pi, your personal AI",
-          "url": "https://pi.ai/discover",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1706727965000
-        },
-        {
-          "key": "bm_url_v9fpau",
-          "title": "Bard",
-          "url": "https://bard.google.com/chat/dfa2173e39f556d7",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1706729563000
-        },
-        {
-          "key": "bm_url_ij0lzx",
-          "title": "Kits AI - the ultimate AI voice generation toolkit to supercharge your music",
-          "url": "https://app.kits.ai/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1706735160000
-        },
-        {
-          "key": "bm_url_m7t9rf",
-          "title": "HeyGen - AI Spokesperson Video Creator",
-          "url": "https://app.heygen.com/home",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1706737670000
-        },
-        {
-          "key": "bm_url_9betv4",
-          "title": "Free AI Paragraph Rewriter",
-          "url": "https://ahrefs.com/writing-tools/paragraph-rewriter",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1707510889000
-        },
-        {
-          "key": "bm_url_ngp3e5",
-          "title": "Dashboard",
-          "url": "https://seowriting.ai/dashboard",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1707524875000
-        },
-        {
-          "key": "bm_url_561rq0",
-          "title": "Detector De Plagio - Um Detector de Plágio Online Grátis",
-          "url": "https://smallseotools.com/pt/plagiarism-checker/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1707842058000
-        },
-        {
-          "key": "bm_url_ewk38b",
-          "title": "Helping people become more creative.",
-          "url": "https://ideogram.ai/login",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1708388324000
-        },
-        {
-          "key": "bm_url_u7emkc",
-          "title": "Opus Clip - AI-powered Video Repurposing",
-          "url": "https://www.opus.pro/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1708464866000
-        },
-        {
-          "key": "bm_url_5ifcyl",
-          "title": "Napkin AI - The visual AI for business storytelling",
-          "url": "https://www.napkin.ai/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1736414412000
-        },
-        {
-          "key": "bm_url_fyz6j8",
-          "title": "Multimodal Canvas",
-          "url": "https://labs.google/multimodal-canvas",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1736633268000
-        },
-        {
-          "key": "bm_url_915swl",
-          "title": "Gammas - Gamma",
-          "url": "https://gamma.app/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1736794517000
-        },
-        {
-          "key": "bm_url_jemkeh",
-          "title": "ChatGPT",
-          "url": "https://chatgpt.com/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1737206213000
-        },
-        {
-          "key": "bm_url_ta5fwj",
-          "title": "Tudo para o seu vídeo em um só lugar | Clipchamp",
-          "url": "https://clipchamp.com/pt-br/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1737409472000
-        },
-        {
-          "key": "bm_url_2m4ckf",
-          "title": "Microsoft Designer - Designs impressionantes em um flash",
-          "url": "https://designer.microsoft.com/home",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1737550705000
-        },
-        {
-          "key": "bm_url_ns4vy9",
-          "title": "Qwen",
-          "url": "https://chat.qwenlm.ai/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1738520325000
-        },
-        {
-          "key": "bm_url_vm9brt",
-          "title": "Google AI Studio",
-          "url": "https://aistudio.google.com/prompts/new_chat",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1739223843000
-        },
-        {
-          "key": "bm_url_u5klih",
-          "title": "Grok",
-          "url": "https://grok.com/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1740169702000
-        },
-        {
-          "key": "bm_url_62wro5",
-          "title": "Claude",
-          "url": "https://claude.ai/login?returnTo=%2F%3F",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1740516692000
-        },
-        {
-          "key": "bm_url_dlmrwm",
-          "title": "Old Photo Animation AI - Bring Ancestors to Life | Veo3.io",
-          "url": "https://www.veo3.io/old-photo-animation-maker",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1750079543000
-        },
-        {
-          "key": "bm_url_2ac8h3",
-          "title": "Perplexity",
-          "url": "https://www.perplexity.ai/?login-source=oneTapHome&login-new=true",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1752856181000
-        },
-        {
-          "key": "bm_url_oijec1",
-          "title": "Stitch - Design with AI",
-          "url": "https://stitch.withgoogle.com/?pli=1",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1765799677000
-        },
-        {
-          "key": "bm_url_fnd4rh",
-          "title": "Genspark - Seu espaço de trabalho de IA completo",
-          "url": "https://www.genspark.ai/",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1767908677000
-        },
-        {
-          "key": "bm_url_60sfyd",
-          "title": "Manus",
-          "url": "https://manus.im/app",
-          "parentTitle": "AIs",
-          "deleted": false,
-          "dateModified": 1768768263000
         }
       ]
     }

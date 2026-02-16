@@ -1,6 +1,6 @@
 {
   "version": 3,
-  "lastSync": 1771209761112,
+  "lastSync": 1771210071199,
   "lastSyncBy": "device_9g0yencnl",
   "devices": {
     "device_9xv3mwvxz": {
@@ -9,7 +9,7 @@
     },
     "device_9g0yencnl": {
       "name": "Brave (Linux)",
-      "lastSync": 1771209761112
+      "lastSync": 1771210071199
     }
   },
   "bookmarks": [
@@ -2964,8 +2964,8 @@
     {
       "id": "bm_folder_rquyw1",
       "title": "torrents",
-      "dateAdded": 1771208749876,
-      "dateModified": 1771208749876,
+      "dateAdded": 1771209761109,
+      "dateModified": 1771209761109,
       "parentTitle": null,
       "deleted": false
     },

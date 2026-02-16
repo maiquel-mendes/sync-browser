@@ -17,10 +17,11 @@ const Logger = {
     }).join(' | ');
   },
 
-  async log(level, message, context = null) {
+  async log(level, message) {
+    console[level === 'ERROR' ? 'error' : 'log'](message);
+    
     const config = await chrome.storage.local.get(['mockServerUrl', 'useMockServer']);
-    const fullMessage = context ? `[${context}] ${message}` : message;
-    const logEntry = { level, message: fullMessage };
+    const logEntry = { level, message };
     
     if (config.useMockServer && config.mockServerUrl) {
       try {
@@ -32,14 +33,22 @@ const Logger = {
       } catch (e) {}
     }
   },
+
+  debug(...args) {
+    this.log('DEBUG', this.formatMessage(...args));
+  },
   
-  ...(['debug', 'info', 'warn', 'error'].reduce((acc, level) => {
-    acc[level] = (...args) => {
-      const msg = level === 'error' || level === 'warn' ? 'ERROR' : 'INFO';
-      this.log(msg, this.formatMessage(...args));
-    };
-    return acc;
-  }, {}))
+  info(...args) {
+    this.log('INFO', this.formatMessage(...args));
+  },
+  
+  warn(...args) {
+    this.log('ERROR', this.formatMessage(...args));
+  },
+  
+  error(...args) {
+    this.log('ERROR', this.formatMessage(...args));
+  }
 };
 
 let isSyncing = false;

@@ -4,6 +4,19 @@ const lastSyncEl = document.getElementById('lastSync');
 const logEl = document.getElementById('log');
 
 const Logger = {
+  formatMessage(...args) {
+    return args.map(arg => {
+      if (typeof arg === 'object') {
+        try {
+          return JSON.stringify(arg);
+        } catch (e) {
+          return String(arg);
+        }
+      }
+      return String(arg);
+    }).join(' ');
+  },
+
   async log(level, message) {
     const config = await chrome.storage.local.get(['mockServerUrl', 'useMockServer']);
     if (config.useMockServer && config.mockServerUrl) {
@@ -11,13 +24,19 @@ const Logger = {
         await fetch(`${config.mockServerUrl}/logs`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ level, message, context: 'Popup' })
+          body: JSON.stringify({ level, message })
         });
       } catch (e) {}
     }
   },
-  info(message) { this.log('INFO', message); },
-  error(message) { this.log('ERROR', message); }
+
+  info(...args) {
+    this.log('INFO', this.formatMessage(...args));
+  },
+  
+  error(...args) {
+    this.log('ERROR', this.formatMessage(...args));
+  }
 };
 
 document.addEventListener('DOMContentLoaded', init);
