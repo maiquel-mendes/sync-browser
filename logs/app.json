@@ -1,0 +1,16 @@
+{
+  "logs": [
+    {
+      "timestamp": "2026-02-16T02:41:27.584Z",
+      "level": "DEBUG",
+      "message": "GET /logs",
+      "context": "HTTP"
+    },
+    {
+      "timestamp": "2026-02-16T02:41:21.681Z",
+      "level": "INFO",
+      "message": "Mock server running on http://localhost:3000",
+      "context": "SERVER"
+    }
+  ]
+}

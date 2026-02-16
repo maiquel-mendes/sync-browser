@@ -21,7 +21,7 @@ function formatLogLevel(level) {
   return levels[level] || 'INFO ';
 }
 
-function formatTxtMessage(data) {
+function formatLogMessage(data) {
   const { level, message, context, timestamp } = data;
   const time = new Date(timestamp).toLocaleString('pt-BR');
   const contextStr = context ? ` [${context}]` : '';
