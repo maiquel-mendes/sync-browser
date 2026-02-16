@@ -1,2 +1,13 @@
 15/02/2026, 23:41:21 | INFO  | Mock server running on http://localhost:3000 [SERVER]
 15/02/2026, 23:41:27 | DEBUG | GET /logs [HTTP]
+15/02/2026, 23:42:38 | DEBUG | POST /logs [HTTP]
+15/02/2026, 23:42:38 | INFO  | [Popup] Config recuperada: [Popup]
+15/02/2026, 23:42:41 | DEBUG | GET /gists/a7a55188508d4502ae7a255a522d3a91 [HTTP]
+15/02/2026, 23:42:41 | DEBUG | PATCH /gists/a7a55188508d4502ae7a255a522d3a91 [HTTP]
+15/02/2026, 23:42:41 | DEBUG | GET /gists/a7a55188508d4502ae7a255a522d3a91 [HTTP]
+15/02/2026, 23:42:41 | DEBUG | GET /gists/a7a55188508d4502ae7a255a522d3a91 [HTTP]
+15/02/2026, 23:42:41 | DEBUG | PATCH /gists/a7a55188508d4502ae7a255a522d3a91 [HTTP]
+15/02/2026, 23:42:41 | DEBUG | POST /logs [HTTP]
+15/02/2026, 23:42:41 | INFO  | [Popup] Resposta: [Popup]
+15/02/2026, 23:45:49 | DEBUG | POST /logs [HTTP]
+15/02/2026, 23:45:49 | INFO  | [Sync] Testando log com objeto: {"test":123}

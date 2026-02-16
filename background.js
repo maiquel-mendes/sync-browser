@@ -4,9 +4,23 @@
 // ============================================
 
 const Logger = {
+  formatMessage(...args) {
+    return args.map(arg => {
+      if (typeof arg === 'object') {
+        try {
+          return JSON.stringify(arg);
+        } catch (e) {
+          return String(arg);
+        }
+      }
+      return String(arg);
+    }).join(' | ');
+  },
+
   async log(level, message, context = null) {
     const config = await chrome.storage.local.get(['mockServerUrl', 'useMockServer']);
-    const logEntry = { level, message, context };
+    const fullMessage = context ? `[${context}] ${message}` : message;
+    const logEntry = { level, message: fullMessage };
     
     if (config.useMockServer && config.mockServerUrl) {
       try {
@@ -15,27 +29,17 @@ const Logger = {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(logEntry)
         });
-      } catch (e) {
-        // Silently fail if logging server is unavailable
-      }
+      } catch (e) {}
     }
   },
   
-  debug(message, context = null) {
-    this.log('DEBUG', message, context);
-  },
-  
-  info(message, context = null) {
-    this.log('INFO', message, context);
-  },
-  
-  warn(message, context = null) {
-    this.log('WARN', message, context);
-  },
-  
-  error(message, context = null) {
-    this.log('ERROR', message, context);
-  }
+  ...(['debug', 'info', 'warn', 'error'].reduce((acc, level) => {
+    acc[level] = (...args) => {
+      const msg = level === 'error' || level === 'warn' ? 'ERROR' : 'INFO';
+      this.log(msg, this.formatMessage(...args));
+    };
+    return acc;
+  }, {}))
 };
 
 let isSyncing = false;
@@ -48,11 +52,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'sync') {
     handleSync(false)
       .then(result => {
-        Logger.info('Sync OK', 'Background');
+        Logger.info('Sync OK');
         sendResponse({ success: true });
       })
       .catch(err => {
-        Logger.error('Sync ERRO: ' + err.message, 'Background');
+        Logger.error('Sync ERRO:', err.message);
         sendResponse({ success: false, error: err.message });
       });
     return true;

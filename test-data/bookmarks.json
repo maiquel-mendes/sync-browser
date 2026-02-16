@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "lastSync": 1771209606705,
-  "lastSyncBy": "device_9xv3mwvxz",
+  "lastSync": 1771209761112,
+  "lastSyncBy": "device_9g0yencnl",
   "devices": {
     "device_9xv3mwvxz": {
       "name": "Chrome (Linux)",
@@ -9,7 +9,7 @@
     },
     "device_9g0yencnl": {
       "name": "Brave (Linux)",
-      "lastSync": 1771208863156
+      "lastSync": 1771209761112
     }
   },
   "bookmarks": [
@@ -496,7 +496,7 @@
     },
     {
       "id": "bm_url_caa3x4",
-      "title": "PostgreSQL + Docker: executando uma inst����ncia e o pgAdmin 4 a partir de containers | iMasters",
+      "title": "PostgreSQL + Docker: executando uma instância e o pgAdmin 4 a partir de containers | iMasters",
       "url": "https://imasters.com.br/banco-de-dados/postgresql-docker-executando-uma-instancia-e-o-pgadmin-4-partir-de-containers",
       "dateAdded": 1771208273682,
       "dateModified": 1771208273682,
@@ -2986,5 +2986,47 @@
       "deleted": false
     }
   ],
-  "deletedBookmarks": {}
+  "deletedBookmarks": {
+    "bm_folder_28tm6": {
+      "deletedAt": 1771206697951,
+      "parentTitle": null,
+      "title": "N95"
+    },
+    "bm_folder_2l7x": {
+      "deletedAt": 1771206700004,
+      "parentTitle": null,
+      "title": "3D"
+    },
+    "bm_folder_eablpm": {
+      "deletedAt": 1771207376539,
+      "parentTitle": null,
+      "title": "Noticias"
+    },
+    "bm_folder_eggcnn": {
+      "deletedAt": 1771206697949,
+      "parentTitle": null,
+      "title": "Blackberry"
+    },
+    "bm_folder_i5czzp": {
+      "deletedAt": 1771207376636,
+      "parentTitle": null,
+      "title": "Importado"
+    },
+    "bm_folder_ryha30": {
+      "deletedAt": 1771206697953,
+      "parentTitle": null,
+      "title": "placas"
+    },
+    "bm_folder_unmedv": {
+      "deletedAt": 1771207428508,
+      "parentTitle": null,
+      "title": "certificado digital"
+    },
+    "bm_url_yvx21n": {
+      "deletedAt": 1771207374216,
+      "parentTitle": null,
+      "title": "Estação Rastreando GPS",
+      "url": "http://www.secumore1818.com/zdrlogin.aspx?language=pt"
+    }
+  }
 }
