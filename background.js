@@ -3,21 +3,56 @@
 // Sincronização Bidirecional com Merge (Manifest V3)
 // ============================================
 
+const Logger = {
+  async log(level, message, context = null) {
+    const config = await chrome.storage.local.get(['mockServerUrl', 'useMockServer']);
+    const logEntry = { level, message, context };
+    
+    if (config.useMockServer && config.mockServerUrl) {
+      try {
+        await fetch(`${config.mockServerUrl}/logs`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(logEntry)
+        });
+      } catch (e) {
+        // Silently fail if logging server is unavailable
+      }
+    }
+  },
+  
+  debug(message, context = null) {
+    this.log('DEBUG', message, context);
+  },
+  
+  info(message, context = null) {
+    this.log('INFO', message, context);
+  },
+  
+  warn(message, context = null) {
+    this.log('WARN', message, context);
+  },
+  
+  error(message, context = null) {
+    this.log('ERROR', message, context);
+  }
+};
+
 let isSyncing = false;
 const FILE_NAME = 'bookmarks.json';
 const DEBUG_FILE_NAME = 'sync-debug.json';
 const MAX_DEBUG_LOGS = 10;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log('[Background] Mensagem recebida:', message);
+  Logger.info('Mensagem recebida: ' + message.action, 'Background');
   if (message.action === 'sync') {
     handleSync(false)
       .then(result => {
-        console.log('[Background] Sync OK');
+        Logger.info('Sync OK', 'Background');
         sendResponse({ success: true });
       })
       .catch(err => {
-        console.error('[Background] Sync ERRO:', err.message);
+        Logger.error('Sync ERRO: ' + err.message, 'Background');
         sendResponse({ success: false, error: err.message });
       });
     return true;
@@ -26,7 +61,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === 'install' || details.reason === 'update') {
-    console.log('[Extensão] Instalada/atualizada, verificando sincronização inicial...');
+    Logger.info('[Extensão] Instalada/atualizada, verificando sincronização inicial...');
     const config = await chrome.storage.local.get(['autoSync', 'syncOnStartup']);
     if (config.autoSync !== false && config.syncOnStartup !== false) {
       setTimeout(() => handleSync(true), 3000);
@@ -35,13 +70,13 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 });
 
 chrome.runtime.onStartup.addListener(() => {
-  console.log('[Browser] Navegador iniciou...');
+  Logger.info('[Browser] Navegador iniciou...');
   chrome.storage.local.get(['autoSync', 'syncOnStartup']).then(config => {
     if (config.autoSync !== false && config.syncOnStartup !== false) {
-      console.log('[Browser] Sync automático ativado, esperando 5s...');
+      Logger.info('[Browser] Sync automático ativado, esperando 5s...');
       setTimeout(() => handleSync(true), 5000);
     } else {
-      console.log('[Browser] Sync automático desativado');
+      Logger.info('[Browser] Sync automático desativado');
     }
   });
 });
@@ -92,7 +127,7 @@ async function trackDeletedBookmark(node) {
     // Normalizar parentTitle para consistente com buildLocalBookmarkMap
     const normalizedParentTitle = normalizeParentTitle(parentTitle);
     const key = generateBookmarkId(node.url, node.title, normalizedParentTitle);
-    console.log('[TrackDelete] Key gerada:', key, 'title:', node.title, 'url:', node.url, 'parentTitle:', normalizedParentTitle);
+    Logger.info('[TrackDelete] Key gerada:', key, 'title:', node.title, 'url:', node.url, 'parentTitle:', normalizedParentTitle);
     
     const result = await chrome.storage.local.get('deletedBookmarks');
     const deleted = result.deletedBookmarks || {};
@@ -113,9 +148,9 @@ async function trackDeletedBookmark(node) {
     }
     
     await chrome.storage.local.set({ deletedBookmarks: deleted });
-    console.log('[Sync] Favorito deletado rastreado:', key, 'parentTitle:', parentTitle);
+    Logger.info('[Sync] Favorito deletado rastreado:', key, 'parentTitle:', parentTitle);
   } catch (e) {
-    console.error('[Sync] Erro ao rastrear favorito deletado:', e);
+    Logger.error('[Sync] Erro ao rastrear favorito deletado:', e);
   }
 }
 
@@ -231,7 +266,7 @@ function showNotification(title, message) {
     title: title,
     message: message
   }, (notificationId) => {
-    console.log('[Notification] Criada:', notificationId);
+    Logger.info('[Notification] Criada:', notificationId);
   });
 }
 
@@ -388,7 +423,7 @@ async function getOrCreateFolder(title, folderMap) {
     folderMap.set(title, folder.id);
     return folder.id;
   } catch (e) {
-    console.error('[Sync] Erro ao criar pasta:', e);
+    Logger.error('[Sync] Erro ao criar pasta:', e);
     return parentId;
   }
 }
@@ -424,7 +459,7 @@ async function cleanDuplicateFolders() {
   processNode(tree);
   
   if (duplicates.length > 0) {
-    console.log(`[Clean] Found ${duplicates.length} duplicate folders:`, duplicates.map(d => d.title));
+    Logger.info(`[Clean] Found ${duplicates.length} duplicate folders:`, duplicates.map(d => d.title));
     
     for (const dup of duplicates) {
       try {
@@ -432,13 +467,13 @@ async function cleanDuplicateFolders() {
         
         for (const child of children) {
           await chrome.bookmarks.move(child.id, { parentId: dup.originalId });
-          console.log(`[Clean] Moved "${child.title}" from duplicate to original folder`);
+          Logger.info(`[Clean] Moved "${child.title}" from duplicate to original folder`);
         }
         
         await chrome.bookmarks.removeTree(dup.duplicateId);
-        console.log(`[Clean] Removed duplicate folder: ${dup.title}`);
+        Logger.info(`[Clean] Removed duplicate folder: ${dup.title}`);
       } catch (e) {
-        console.error(`[Clean] Error cleaning folder ${dup.title}:`, e);
+        Logger.error(`[Clean] Error cleaning folder ${dup.title}:`, e);
       }
     }
     
@@ -456,9 +491,9 @@ function mergeBookmarks(localMap, gistMap, deletedBookmarks, myLastSync = 0) {
   const merged = new Map();
   const now = Date.now();
   
-  console.log('[Merge] deletedBookmarks keys:', Object.keys(deletedBookmarks));
-  console.log('[Merge] myLastSync:', myLastSync);
-  console.log('[Merge] gistMap keys (not deleted):', [...gistMap.keys()].filter(k => !gistMap.get(k).deleted));
+  Logger.info('[Merge] deletedBookmarks keys:', Object.keys(deletedBookmarks));
+  Logger.info('[Merge] myLastSync:', myLastSync);
+  Logger.info('[Merge] gistMap keys (not deleted):', [...gistMap.keys()].filter(k => !gistMap.get(k).deleted));
   
   // Processar todos os favoritos do Gist
   for (const [key, gistBm] of gistMap) {
@@ -473,10 +508,10 @@ function mergeBookmarks(localMap, gistMap, deletedBookmarks, myLastSync = 0) {
         // Dogear Rule: Se deletado remotamente mas modificado localmente depois do último sync → REVIVER
         // Se não foi modificado localmente depois do último sync → deletar localmente
         if (localBm.dateModified > myLastSync) {
-          console.log('[Merge] Reviver (modificado local depois do sync):', key);
+          Logger.info('[Merge] Reviver (modificado local depois do sync):', key);
           merged.set(key, { ...localBm, action: 'keep' });
         } else {
-          console.log('[Merge] Deletar local (gist tem deleted=true):', key);
+          Logger.info('[Merge] Deletar local (gist tem deleted=true):', key);
           merged.set(key, { ...localBm, action: 'delete' });
         }
       }
@@ -486,7 +521,7 @@ function mergeBookmarks(localMap, gistMap, deletedBookmarks, myLastSync = 0) {
     
     // Dogear Rule: Se deletado de um lado mas modificado do outro → IGNORAR DELEÇÃO, REVIVER
     if (!localBm && wasDeletedLocally) {
-      console.log('[Merge] Encontrado deletado localmente:', key, 'gistBm.dateModified:', gistBm.dateModified, 'deleteInfo.deletedAt:', deleteInfo?.deletedAt);
+      Logger.info('[Merge] Encontrado deletado localmente:', key, 'gistBm.dateModified:', gistBm.dateModified, 'deleteInfo.deletedAt:', deleteInfo?.deletedAt);
       // Verificar se foi modificado no Gist depois da deleção local
       if (deleteInfo && gistBm.dateModified > deleteInfo.deletedAt) {
         // Modificado no Gist depois da deleção local → REVIVER (ignorar delete)
@@ -540,21 +575,21 @@ async function executeLocalMerge(merged, folderMap) {
   
   for (const [key, bm] of merged) {
     if (bm.action === 'create') {
-      console.log('[Create] Trying to create:', bm.title, 'parentTitle:', bm.parentTitle);
+      Logger.info('[Create] Trying to create:', bm.title, 'parentTitle:', bm.parentTitle);
       let parentId = await getOrCreateFolder(bm.parentTitle, folderMap);
-      console.log('[Create] ParentId for', bm.parentTitle, ':', parentId);
+      Logger.info('[Create] ParentId for', bm.parentTitle, ':', parentId);
       
       // Verificar se o parentId ainda é válido
       try {
         const parent = await chrome.bookmarks.get(parentId);
         if (!parent || parent.length === 0) {
-          console.log('[Create] Parent não existe, tentando recriar:', bm.parentTitle);
+          Logger.info('[Create] Parent não existe, tentando recriar:', bm.parentTitle);
           folderMap.delete(bm.parentTitle); // Remove do cache
           parentId = await getOrCreateFolder(bm.parentTitle, folderMap);
-          console.log('[Create] Novo parentId:', parentId);
+          Logger.info('[Create] Novo parentId:', parentId);
         }
       } catch (e) {
-        console.log('[Create] Erro ao verificar parent, recriando:', bm.parentTitle);
+        Logger.info('[Create] Erro ao verificar parent, recriando:', bm.parentTitle);
         folderMap.delete(bm.parentTitle);
         parentId = await getOrCreateFolder(bm.parentTitle, folderMap);
       }
@@ -568,7 +603,7 @@ async function executeLocalMerge(merged, folderMap) {
         await clearDeletedBookmark(key);
         created++;
       } catch (e) {
-        console.error('[Sync] Erro ao criar favorito:', bm.title, bm.url, 'parentId:', parentId, 'parentTitle:', bm.parentTitle, e);
+        Logger.error('[Sync] Erro ao criar favorito:', bm.title, bm.url, 'parentId:', parentId, 'parentTitle:', bm.parentTitle, e);
       }
     } else if (bm.action === 'delete') {
       try {
@@ -605,7 +640,7 @@ async function executeLocalMerge(merged, folderMap) {
           }
         }
       } catch (e) {
-        console.error('[Sync] Erro ao deletar favorito:', e);
+        Logger.error('[Sync] Erro ao deletar favorito:', e);
       }
     }
   }
@@ -616,7 +651,7 @@ async function executeLocalMerge(merged, folderMap) {
 function prepareGistBookmarks(merged) {
   const bookmarks = [];
   const deleteCount = [...merged.values()].filter(b => b.action === 'delete').length;
-  console.log('[PrepareGist] Total merged:', merged.size, 'To delete:', deleteCount);
+  Logger.info('[PrepareGist] Total merged:', merged.size, 'To delete:', deleteCount);
   
   for (const [key, bm] of merged) {
     const parentTitle = normalizeParentTitle(bm.parentTitle);
@@ -660,7 +695,7 @@ async function fetchGist(token, gistId) {
   const mockConfig = await getMockConfig();
   
   if (mockConfig.useMockServer && mockConfig.mockServerUrl) {
-    console.log('[Mock] Fetching from mock server');
+    Logger.info('[Mock] Fetching from mock server');
     try {
       const response = await fetch(`${mockConfig.mockServerUrl}/gists/${gistId}`);
       if (response.status === 404) {
@@ -679,7 +714,7 @@ async function fetchGist(token, gistId) {
         return getDefaultGistData();
       }
     } catch (e) {
-      console.error('[Mock] Error fetching from mock server:', e);
+      Logger.error('[Mock] Error fetching from mock server:', e);
       throw new Error('Mock server unavailable. Execute "node mock-server.js"');
     }
   }
@@ -724,7 +759,7 @@ async function updateGist(token, gistId, data) {
   const gistExists = config.gistExists !== false;
   
   if (mockConfig.useMockServer && mockConfig.mockServerUrl) {
-    console.log('[Mock] Updating mock server');
+    Logger.info('[Mock] Updating mock server');
     try {
       const method = gistExists ? 'PATCH' : 'POST';
       const url = gistExists 
@@ -757,7 +792,7 @@ async function updateGist(token, gistId, data) {
       await chrome.storage.local.set({ gistExists: true });
       return response.json();
     } catch (e) {
-      console.error('[Mock] Error updating mock server:', e);
+      Logger.error('[Mock] Error updating mock server:', e);
       throw new Error('Mock server unavailable. Execute "node mock-server.js"');
     }
   }
@@ -817,7 +852,7 @@ async function fetchDebugGist(token, gistId) {
         return { logs: [] };
       }
     } catch (e) {
-      console.error('[Debug] Error fetching debug gist:', e);
+      Logger.error('[Debug] Error fetching debug gist:', e);
       return { logs: [] };
     }
   }
@@ -843,7 +878,7 @@ async function fetchDebugGist(token, gistId) {
     
     return JSON.parse(file.content);
   } catch (e) {
-    console.error('[Debug] Error fetching debug gist:', e);
+    Logger.error('[Debug] Error fetching debug gist:', e);
     return { logs: [] };
   }
 }
@@ -897,7 +932,7 @@ async function updateDebugGist(token, gistId, debugData) {
       });
       return;
     } catch (e) {
-      console.error('[Debug] Error updating debug gist:', e);
+      Logger.error('[Debug] Error updating debug gist:', e);
     }
   }
   
@@ -949,7 +984,7 @@ async function updateDebugGist(token, gistId, debugData) {
       body
     });
   } catch (e) {
-    console.error('[Debug] Error updating debug gist:', e);
+    Logger.error('[Debug] Error updating debug gist:', e);
   }
 }
 
@@ -960,7 +995,7 @@ async function saveSyncLog(data) {
     if (config.useMockServer) {
       config.gistId = 'mock-test-gist';
     } else {
-      console.log('[Debug] No gistId configured, skipping debug log');
+      Logger.info('[Debug] No gistId configured, skipping debug log');
       return;
     }
   }
@@ -979,9 +1014,9 @@ async function saveSyncLog(data) {
     }
     
     await updateDebugGist(config.githubToken || '', config.gistId, debugData);
-    console.log('[Debug] Sync log saved');
+    Logger.info('[Debug] Sync log saved');
   } catch (e) {
-    console.error('[Debug] Error saving sync log:', e);
+    Logger.error('[Debug] Error saving sync log:', e);
   }
 }
 
@@ -991,40 +1026,40 @@ async function saveSyncLog(data) {
 
 async function handleSync(isAutoSync = false) {
   if (isSyncing) {
-    console.log('[Sync] Já está sincronizando, ignorando...');
+    Logger.info('[Sync] Já está sincronizando, ignorando...');
     return;
   }
 
   const config = await chrome.storage.local.get(['githubToken', 'gistId', 'autoSync', 'useMockServer', 'mockServerUrl']);
-  console.log('[Sync] Config:', config);
+  Logger.info('[Sync] Config:', config);
   
   if (config.useMockServer && config.mockServerUrl) {
-    console.log('[Sync] Modo MOCK ativado:', config.mockServerUrl);
+    Logger.info('[Sync] Modo MOCK ativado:', config.mockServerUrl);
   }
   
   const isMockMode = config.useMockServer && config.mockServerUrl;
   
   if (!isMockMode && (!config.githubToken || !config.gistId)) {
-    console.log('[Sync] Configuração incompleta');
+    Logger.info('[Sync] Configuração incompleta');
     if (!isAutoSync) throw new Error('Configure o Token e Gist ID nas opções.');
     return;
   }
   
   if (isMockMode && !config.mockServerUrl) {
-    console.log('[Sync] Configuração de mock incompleta');
+    Logger.info('[Sync] Configuração de mock incompleta');
     if (!isAutoSync) throw new Error('Configure a URL do Servidor Mock nas opções.');
     return;
   }
   
   if (isMockMode && !config.gistId) {
-    console.log('[Sync] Usando modo mock - definindo Gist ID padrão');
+    Logger.info('[Sync] Usando modo mock - definindo Gist ID padrão');
     config.gistId = 'mock-test-gist';
     await chrome.storage.local.set({ gistId: config.gistId });
   }
 
   isSyncing = true;
   const syncStartTime = Date.now();
-  console.log('[Sync] Iniciando sincronização bidirecional...');
+  Logger.info('[Sync] Iniciando sincronização bidirecional...');
 
   try {
     const deviceId = await getDeviceId();
@@ -1035,18 +1070,18 @@ async function handleSync(isAutoSync = false) {
     const localMap = buildLocalBookmarkMap(localTree);
     const localTimestamp = await getLocalTimestamp();
     
-    console.log(`[Sync] Locais: ${localMap.size} favoritos`);
+    Logger.info(`[Sync] Locais: ${localMap.size} favoritos`);
     
     // 2. Carregar favoritos do Gist
     const gistData = await fetchGist(config.githubToken, config.gistId);
     const gistMap = buildGistBookmarkMap(gistData.bookmarks);
     const gistTimestamp = gistData.lastSync || 0;
     
-    console.log(`[Sync] Gist: ${gistMap.size} favoritos, lastSync: ${gistTimestamp}, lastSyncBy: ${gistData.lastSyncBy}`);
+    Logger.info(`[Sync] Gist: ${gistMap.size} favoritos, lastSync: ${gistTimestamp}, lastSyncBy: ${gistData.lastSyncBy}`);
     
     // 3. Verificar se este dispositivo já syncou
     const myLastSync = gistData.devices?.[deviceId]?.lastSync || 0;
-    console.log(`[Sync] Meu último sync: ${myLastSync}`);
+    Logger.info(`[Sync] Meu último sync: ${myLastSync}`);
     
     // 4. Obter favoritos deletados localmente E do Gist
     const localDeletedBookmarks = await getDeletedBookmarks();
@@ -1054,9 +1089,9 @@ async function handleSync(isAutoSync = false) {
     
     // Mesclar: locais têm preferência sobre os do Gist
     const allDeletedBookmarks = { ...gistDeletedBookmarks, ...localDeletedBookmarks };
-    console.log(`[Sync] Favoritos deletados (local):`, Object.keys(localDeletedBookmarks));
-    console.log(`[Sync] Favoritos deletados (Gist):`, Object.keys(gistDeletedBookmarks));
-    console.log(`[Sync] Todos deletados:`, Object.keys(allDeletedBookmarks));
+    Logger.info(`[Sync] Favoritos deletados (local):`, Object.keys(localDeletedBookmarks));
+    Logger.info(`[Sync] Favoritos deletados (Gist):`, Object.keys(gistDeletedBookmarks));
+    Logger.info(`[Sync] Todos deletados:`, Object.keys(allDeletedBookmarks));
     
     // 5. Fazer merge
     const merged = mergeBookmarks(localMap, gistMap, allDeletedBookmarks, myLastSync);
@@ -1067,12 +1102,12 @@ async function handleSync(isAutoSync = false) {
     const toUpload = [...merged.values()].filter(b => b.action === 'upload');
     const toKeep = [...merged.values()].filter(b => b.action === 'keep');
     
-    console.log(`[Sync] Merge: ${toCreate.length} criar, ${toDelete.length} deletar, ${toUpload.length} enviar, ${toKeep.length} manter`);
+    Logger.info(`[Sync] Merge: ${toCreate.length} criar, ${toDelete.length} deletar, ${toUpload.length} enviar, ${toKeep.length} manter`);
     
     // 5. Limpar pastas duplicadas antes de executar merge
     const cleanedCount = await cleanDuplicateFolders();
     if (cleanedCount > 0) {
-      console.log(`[Sync] Limpas ${cleanedCount} pastas duplicadas`);
+      Logger.info(`[Sync] Limpas ${cleanedCount} pastas duplicadas`);
     }
     
     // 6. Executar mudanças no local
@@ -1082,7 +1117,7 @@ async function handleSync(isAutoSync = false) {
     // 6. Atualizar Gist
     const bookmarksToSave = prepareGistBookmarks(merged);
     const deletedBookmarksToSave = await getDeletedBookmarks();
-    console.log(`[Sync] Salvando ${bookmarksToSave.length} bookmarks e ${Object.keys(deletedBookmarksToSave).length} deletados no Gist`);
+    Logger.info(`[Sync] Salvando ${bookmarksToSave.length} bookmarks e ${Object.keys(deletedBookmarksToSave).length} deletados no Gist`);
     const now = Date.now();
     
     // Atualizar devices
@@ -1144,7 +1179,7 @@ async function handleSync(isAutoSync = false) {
       gistStructure
     });
     
-    console.log('[Sync] Concluído!', localResult);
+    Logger.info('[Sync] Concluído!', localResult);
     
     // 9. Notificação se sync automático e houve mudanças
     if (isAutoSync && (localResult.created || localResult.deleted || toUpload.length > 0)) {
@@ -1160,11 +1195,11 @@ async function handleSync(isAutoSync = false) {
     }
 
   } catch (error) {
-    console.error('[Sync] Erro:', error.message);
+    Logger.error('[Sync] Erro:', error.message);
     if (!isAutoSync) throw error;
   } finally {
     isSyncing = false;
   }
 }
 
-console.log('[Background] Service Worker iniciado!');
+Logger.info('[Background] Service Worker iniciado!');

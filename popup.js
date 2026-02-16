@@ -3,6 +3,23 @@ const optionsBtn = document.getElementById('optionsBtn');
 const lastSyncEl = document.getElementById('lastSync');
 const logEl = document.getElementById('log');
 
+const Logger = {
+  async log(level, message) {
+    const config = await chrome.storage.local.get(['mockServerUrl', 'useMockServer']);
+    if (config.useMockServer && config.mockServerUrl) {
+      try {
+        await fetch(`${config.mockServerUrl}/logs`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ level, message, context: 'Popup' })
+        });
+      } catch (e) {}
+    }
+  },
+  info(message) { this.log('INFO', message); },
+  error(message) { this.log('ERROR', message); }
+};
+
 document.addEventListener('DOMContentLoaded', init);
 
 async function init() {
@@ -20,7 +37,7 @@ async function updateLastSync() {
 
 async function checkConfig() {
   const result = await chrome.storage.local.get(['githubToken', 'gistId', 'useMockServer', 'mockServerUrl']);
-  console.log('[Popup] Config recuperada:', result);
+  Logger.info('[Popup] Config recuperada:', result);
   
   const isMockMode = result.useMockServer && result.mockServerUrl;
   const hasGitHubConfig = result.githubToken && result.gistId;
@@ -57,7 +74,7 @@ syncBtn.addEventListener('click', async () => {
   
   try {
     const response = await chrome.runtime.sendMessage({ action: 'sync' });
-    console.log('[Popup] Resposta:', response);
+    Logger.info('[Popup] Resposta:', response);
     if (response?.success) {
       log('✅ Sync concluído com sucesso!', 'success');
     } else {

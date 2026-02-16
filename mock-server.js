@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const Logger = require('./logger');
 
 const PORT = process.env.PORT || 3000;
 const DATA_FILE = path.join(__dirname, 'test-data', 'bookmarks.json');
@@ -9,11 +10,10 @@ const DEBUG_FILE = path.join(__dirname, 'test-data', 'sync-debug.json');
 function loadDebugData() {
   try {
     if (fs.existsSync(DEBUG_FILE)) {
-      const content = fs.readFileSync(DEBUG_FILE, 'utf8');
-      return JSON.parse(content);
+      return JSON.parse(fs.readFileSync(DEBUG_FILE, 'utf8'));
     }
   } catch (e) {
-    console.error('Error loading debug data:', e);
+    Logger.error('Error loading debug data', e.message);
   }
   return { logs: [] };
 }
@@ -23,7 +23,7 @@ function saveDebugData(data) {
     fs.writeFileSync(DEBUG_FILE, JSON.stringify(data, null, 2));
     return true;
   } catch (e) {
-    console.error('Error saving debug data:', e);
+    Logger.error('Error saving debug data', e.message);
     return false;
   }
 }
@@ -31,11 +31,10 @@ function saveDebugData(data) {
 function loadData() {
   try {
     if (fs.existsSync(DATA_FILE)) {
-      const content = fs.readFileSync(DATA_FILE, 'utf8');
-      return JSON.parse(content);
+      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
     }
   } catch (e) {
-    console.error('Error loading data:', e);
+    Logger.error('Error loading data', e.message);
   }
   return { version: 3, lastSync: 0, lastSyncBy: null, devices: {}, bookmarks: [] };
 }
@@ -45,7 +44,7 @@ function saveData(data) {
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
     return true;
   } catch (e) {
-    console.error('Error saving data:', e);
+    Logger.error('Error saving data', e.message);
     return false;
   }
 }
@@ -61,7 +60,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  console.log(`[${req.method}] ${req.url}`);
+  Logger.debug(`${req.method} ${req.url}`, 'HTTP');
 
   const urlParts = req.url.split('/').filter(Boolean);
   
@@ -79,7 +78,7 @@ const server = http.createServer((req, res) => {
         try {
           Object.assign(data, JSON.parse(bookmarksFile.content));
         } catch (e) {
-          console.error('Error parsing content:', e);
+          Logger.error('Error parsing content', e.message);
         }
       }
       
@@ -88,7 +87,7 @@ const server = http.createServer((req, res) => {
         try {
           Object.assign(debugData, JSON.parse(debugFile.content));
         } catch (e) {
-          console.error('Error parsing debug content:', e);
+          Logger.error('Error parsing debug content', e.message);
         }
       }
       
@@ -138,7 +137,7 @@ const server = http.createServer((req, res) => {
         try {
           Object.assign(data, JSON.parse(bookmarksFile.content));
         } catch (e) {
-          console.error('Error parsing content:', e);
+          Logger.error('Error parsing content', e.message);
         }
       }
       
@@ -147,7 +146,7 @@ const server = http.createServer((req, res) => {
         try {
           Object.assign(debugData, JSON.parse(debugFile.content));
         } catch (e) {
-          console.error('Error parsing debug content:', e);
+          Logger.error('Error parsing debug content', e.message);
         }
       }
       
@@ -177,6 +176,7 @@ const server = http.createServer((req, res) => {
     const initialDebugData = { logs: [] };
     saveData(initialData);
     saveDebugData(initialDebugData);
+    Logger.info('Data reset to initial state', 'MOCK');
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ success: true, message: 'Data reset to initial state' }));
     return;
@@ -189,9 +189,11 @@ const server = http.createServer((req, res) => {
       try {
         const testData = JSON.parse(body);
         saveData(testData);
+        Logger.info('Test data loaded', 'MOCK');
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ success: true, message: 'Test data loaded' }));
       } catch (e) {
+        Logger.error('Error loading test data', e.message);
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ success: false, error: e.message }));
       }
@@ -206,17 +208,50 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  if (req.url === '/debug' && req.method === 'GET') {
-    const debugData = loadDebugData();
+  if (req.url === '/logs' && req.method === 'GET') {
+    const limit = parseInt(urlParts[1]) || 100;
+    const logs = Logger.getLogs(limit);
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(debugData));
+    res.end(JSON.stringify({ logs }));
     return;
   }
 
-  if (req.url === '/debug/clear' && req.method === 'POST') {
-    saveDebugData({ logs: [] });
+  if (req.url === '/logs/txt' && req.method === 'GET') {
+    const logPath = path.join(__dirname, 'logs', 'app.log');
+    if (fs.existsSync(logPath)) {
+      const content = fs.readFileSync(logPath, 'utf8');
+      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end(content);
+    } else {
+      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('No logs yet');
+    }
+    return;
+  }
+
+  if (req.url === '/logs' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      try {
+        const { level, message, context } = JSON.parse(body);
+        Logger.write(level, message, context);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true }));
+      } catch (e) {
+        Logger.error('Error receiving log', e.message);
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, error: e.message }));
+      }
+    });
+    return;
+  }
+
+  if (req.url === '/logs/clear' && req.method === 'POST') {
+    Logger.clear();
+    Logger.info('Logs cleared', 'MOCK');
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ success: true, message: 'Debug logs cleared' }));
+    res.end(JSON.stringify({ success: true }));
     return;
   }
 
@@ -225,17 +260,7 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`========================================`);
-  console.log(`Mock Gist Server running on http://localhost:${PORT}`);
-  console.log(`========================================`);
-  console.log(`Endpoints:`);
-  console.log(`  GET  /gists/:id     - Get gist data`);
-  console.log(`  POST /gists         - Create new gist`);
-  console.log(`  PATCH /gists/:id    - Update gist`);
-  console.log(`  GET  /data          - View current data`);
-  console.log(`  GET  /debug         - View debug logs`);
-  console.log(`  POST /debug/clear   - Clear debug logs`);
-  console.log(`  POST /reset         - Reset to empty state`);
-  console.log(`  POST /load          - Load test data (JSON in body)`);
-  console.log(`========================================`);
+  Logger.info(`Mock server running on http://localhost:${PORT}`, 'SERVER');
+  // eslint-disable-next-line no-console
+  console.log(`Mock server running on http://localhost:${PORT}`);
 });
