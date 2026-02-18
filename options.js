@@ -402,10 +402,10 @@ function setMockConnected(connected) {
   if (dot && text) {
     if (connected) {
       dot.className = 'status-dot connected';
-      text.textContent = '🟢 Conectado';
+      text.textContent = 'Conectado';
     } else {
       dot.className = 'status-dot error';
-      text.textContent = '🔴 Desconectado';
+      text.textContent = 'Desconectado';
     }
   }
 }
